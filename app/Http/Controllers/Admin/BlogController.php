@@ -9,6 +9,7 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use DataTables;
 
@@ -142,10 +143,19 @@ class BlogController extends Controller
                 'arthur'=>'required',
                 'title'=>'required',
                 'description'=>'required',
+                'status'=>'required',
             ]);
             if ($validator->fails()) {
                 return sendError($validator->messages()->first(), null);
             }
+            $blog = Blog::find($request->id);
+
+            if (!$blog){
+                return sendError ('No such blog found...!!!', null);
+            }
+
+            $data = [];
+
             if (isset($request->blog_image)){
                 $validator = Validator::make($request->all(), [
                     'blog_image'=>'required|image',
@@ -153,19 +163,24 @@ class BlogController extends Controller
                 if ($validator->fails()) {
                     return sendError($validator->messages()->first(), null);
                 }
+
                 $image_path = addFile ($request->blog_image, 'blog_image/');
+                if ($image_path['file_path']){
+                    if (File::exists(public_path($blog->blog_image))) {
+                        unlink(public_path($blog->blog_image));
+                    }
+                    $data['blog_image'] = $image_path['file_path'];
+                }
             }
 
-            $blog = Blog::find($request->id);
-            $data = $blog->update([
-                'category_id' => $request->category_id,
-                'tag_id' => json_encode ($request->tag_id),
-                'arthur' => $request->arthur,
-                'blog_image' => isset($request->blog_image) && $image_path['file_path'] ?? $blog->blog_image,
-                'title' => $request->title,
-                'description' => $request->description,
-            ]);
-            if($data){
+            $data['category_id'] = $request->category_id;
+            $data['tag_id'] = json_encode ($request->tag_id);
+            $data['arthur'] = $request->arthur;
+            $data['title'] = $request->title;
+            $data['description'] = $request->description;
+            $data['status'] = $request->status;
+
+            if($blog->update($data)){
                 return sendSuccess('Blog updated successfully...!!!', null);
             }
             return sendError ('Something went wrong...!!!', null);

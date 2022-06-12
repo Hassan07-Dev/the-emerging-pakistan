@@ -156,7 +156,6 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit_btn">Save changes</button>
                         </div>
                 </div>
             </div>
@@ -287,11 +286,11 @@
                             toastr.success(data.message);
 
                         }
-                        buttonEnabled('submit_btn', 'Add Tag');
+                        buttonEnabled('submit_btn', 'Add Blog');
                     })
                     .catch(function (error) {
                         if (error.response.data.status == false) {
-                            buttonEnabled('submit_btn', 'Add Tag');
+                            buttonEnabled('submit_btn', 'Add Blog');
                             toastr.error(error.response.data.message);
                         }
                     });

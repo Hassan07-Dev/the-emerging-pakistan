@@ -42,6 +42,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item {{ (Request::segment(2) == 'logo') ? 'menu-open' : '' }}">
+                    <a href="{{ route ('admin.logo') }}" class="nav-link {{ (Request::segment(2) == 'logo') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Logo Change
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item {{ (Request::segment(2) == 'blog') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ (Request::segment(2) == 'blog') ? 'active' : '' }}">
                         <i class="nav-icon fa-solid fa-blog"></i>
@@ -70,6 +78,30 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item {{ (Request::segment(2) == 'services') ? 'menu-open' : '' }}">
+                    <a href="{{ route ('admin.services.index') }}" class="nav-link {{ (Request::segment(2) == 'services') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Services Management
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item {{ (Request::segment(2) == 'client-testimonials') ? 'menu-open' : '' }}">
+                    <a href="{{ route ('admin.clientTestimonials.index') }}" class="nav-link {{ (Request::segment(2) == 'client-testimonials') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Client Testimonials
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item {{ (Request::segment(2) == 'faq') ? 'menu-open' : '' }}">
+                    <a href="{{ route ('admin.faq.index') }}" class="nav-link {{ (Request::segment(2) == 'faq') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Faq's Management
+                        </p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route ('admin.logout') }}" class="nav-link">

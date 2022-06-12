@@ -17,8 +17,10 @@ class Blog extends Model
     }
 
     public function getTagIdAttribute($value){
-        $value = json_decode ($value);
-        return Tag::whereIn('id', $value)->get();
+        if($value != null) {
+            $value = json_decode ($value);
+            return Tag::whereIn ('id', $value)->get ();
+        }
     }
 
     /**

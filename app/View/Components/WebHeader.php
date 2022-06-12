@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Logo;
 use Illuminate\View\Component;
 
 class WebHeader extends Component
@@ -23,6 +24,7 @@ class WebHeader extends Component
      */
     public function render()
     {
-        return view('components.web-header');
+        $logo = Logo::where('id', 1)->first();
+        return view('components.web-header', compact ('logo'));
     }
 }

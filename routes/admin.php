@@ -3,7 +3,11 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\ClientTestimonialsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +44,13 @@ Route::group(['middleware' => 'auth.admin'], function () {
             Route::get ('/dashboard', 'index')->name ('dashboard');
         });
 
+        Route::prefix('logo')->group(function () {
+            Route::controller (LogoController::class)->group (function (){
+                Route::get ('/', 'index')->name ('logo');
+                Route::post ('/update', 'update')->name ('logo.update');
+            });
+        });
+
         Route::prefix('blog')->group(function () {
             Route::controller (TagController::class)->group (function (){
                 Route::get ('/tags', 'index')->name ('tags');
@@ -68,5 +79,45 @@ Route::group(['middleware' => 'auth.admin'], function () {
                 Route::post ('/blog/update', 'update')->name ('blog.update');
             });
         });
+
+        Route::name('services.')->group(function () {
+            Route::prefix('services')->group(function () {
+                Route::controller (ServicesController::class)->group (function () {
+                    Route::get ('/list', 'index')->name ('index');
+                    Route::get ('/edit', 'edit')->name ('edit');
+                    Route::post ('/create', 'create')->name ('create');
+                    Route::post ('/delete', 'destroy')->name ('delete');
+                    Route::post ('/show', 'show')->name ('show');
+                    Route::post ('/update', 'update')->name ('update');
+                });
+            });
+        });
+
+        Route::name('clientTestimonials.')->group(function () {
+            Route::prefix('client-testimonials')->group(function () {
+                Route::controller (ClientTestimonialsController::class)->group (function () {
+                    Route::get ('/list', 'index')->name ('index');
+                    Route::get ('/edit', 'edit')->name ('edit');
+                    Route::post ('/create', 'create')->name ('create');
+                    Route::post ('/delete', 'destroy')->name ('delete');
+                    Route::post ('/show', 'show')->name ('show');
+                    Route::post ('/update', 'update')->name ('update');
+                });
+            });
+        });
+
+        Route::name('faq.')->group(function () {
+            Route::prefix('faq')->group(function () {
+                Route::controller (FaqController::class)->group (function () {
+                    Route::get ('/list', 'index')->name ('index');
+                    Route::get ('/edit', 'edit')->name ('edit');
+                    Route::post ('/create', 'create')->name ('create');
+                    Route::post ('/delete', 'destroy')->name ('delete');
+                    Route::post ('/show', 'show')->name ('show');
+                    Route::post ('/update', 'update')->name ('update');
+                });
+            });
+        });
+
     });
 });

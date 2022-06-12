@@ -1,4 +1,4 @@
-<footer data-background="assets/img/bg/footer-bg.jpg" class="pt-95 position-relative">
+<footer data-background="{{ url('assets/img/bg/fact-bg.jpg') }}" class="pt-95 position-relative">
     <div class="common-shape-wrapper wow slideInRight animated" data-wow-delay="0ms" data-wow-duration="1500ms">
         <div class="common-shape-inner wow slideInRight animated" data-wow-delay="0ms" data-wow-duration="1500ms"></div>
     </div>
@@ -8,7 +8,7 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="widget mb-30">
                         <div class="footer-logo mb-25">
-                            <a href="index.html"><img src="assets/img/logo/logo-white.png" class="img-fluid" alt="footer-logo"></a>
+                            <a href="{{ route ('home.index') }}"><img src="{{ asset ($logo->logo_image) }}" class="img-fluid" alt="footer-logo"></a>
                         </div>
                         <p class="mb-20 pr-35">There are many vari of pass of lorem ipsum availab but the majority have suffered in some form by injected humour or words.</p>
                         <div class="footer-social">
@@ -23,11 +23,9 @@
                     <div class="widget mb-30">
                         <h4 class="widget-title mb-35">Links</h4>
                         <ul>
-                            <li><a href="service.html">Our Services</a></li>
-                            <li><a href="about.html">Meet Our Team</a></li>
-                            <li><a href="project.html">Our Portfolio</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="contact.html">Help</a></li>
+                            <li><a href="{{ route ('services.index') }}">Our Services</a></li>
+                            <li><a href="{{ route ('contactUs.index') }}">Contact</a></li>
+                            <li><a href="{{ route ('contactUs.index') }}">Help</a></li>
                         </ul>
                     </div>
                 </div>
@@ -69,8 +67,8 @@
                         <div class="privacy-text text-center text-md-end">
                             <ul>
                                 <li>
-                                    <a href="contact.html">Terms & Condition</a>
-                                    <a href="contact.html">Privacy Policy</a>
+                                    <a href="{{ route ('contactUs.index') }}">Terms & Condition</a>
+                                    <a href="{{ route ('contactUs.index') }}">Privacy Policy</a>
                                 </li>
                             </ul>
                         </div>

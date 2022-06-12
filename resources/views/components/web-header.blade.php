@@ -5,46 +5,21 @@
                 <div class="row align-items-center">
                     <div class="col-xl-2 col-8">
                         <div class="header-logo">
-                            <a href="index.html"><img src="{{ asset ('logo/sd_1.png') }}" class="img-fluid" alt="logo-img"></a>
+                            <a href="{{ route ('home.index') }}"><img src="{{ asset ($logo->logo_image) }}" class="img-fluid" alt="logo-img"></a>
                         </div>
                     </div>
                     <div class="col-xl-6 col-4">
                         <div class="main-menu">
                             <nav id="mobile-menu">
                                 <ul>
-                                    <li class="menu-item-has-children"><a href="index.html">Home</a>
+                                    <li class="menu-item-has-children"><a href="{{ route ('home.index') }}">Home</a></li>
+                                    <li class="menu-item-has-children"><a href="{{ route ('about.index') }}">About</a></li>
+                                    <li class="menu-item-has-children"><a href="{{ route ('services.index') }}">Services</a></li>
+                                    <li class="menu-item-has-children"><a href="{{ route ('blog.index') }}">Blog</a></li>
+                                    <li class="menu-item-has-children"><a href="javascript:void(0)">More</a>
                                         <ul class="sub-menu">
-                                            <li><a href="index.html">Home Style 1</a></li>
-                                            <li><a href="index-2.html">Home Style 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li class="menu-item-has-children"><a href="service.html">Services</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="service.html">Services</a></li>
-                                            <li><a href="service-details.html">Services details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="project.html">Projects</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="project.html">Project</a></li>
-                                            <li><a href="project-details.html">Project details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="blog.html">Blog</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="blog-details.html">Blog details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="pricing.html">Pricing</a></li>
-                                            <li><a href="faq.html">Faq</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="project.html">Project</a></li>
-                                            <li><a href="project-details.html">Project Details</a></li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="{{ route ('faq.index') }}">Faq</a></li>
+                                            <li><a href="{{ route ('contactUs.index') }}">Contact</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -66,7 +41,7 @@
                                 <a class="search-btn nav-search search-trigger" href="#"><i class="far fa-search"></i></a>
                             </div>
                             <div class="header-btn">
-                                <a href="about.html" class="theme-btn theme-btn-small">Free Estimate</a>
+                                <a href="{{ route ('about.index') }}" class="theme-btn theme-btn-small">Free Estimate</a>
                             </div>
                         </div>
                     </div>
