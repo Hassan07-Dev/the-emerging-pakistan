@@ -79,45 +79,5 @@ Route::group(['middleware' => 'auth.admin'], function () {
                 Route::post ('/blog/update', 'update')->name ('blog.update');
             });
         });
-
-        Route::name('services.')->group(function () {
-            Route::prefix('services')->group(function () {
-                Route::controller (ServicesController::class)->group (function () {
-                    Route::get ('/list', 'index')->name ('index');
-                    Route::get ('/edit', 'edit')->name ('edit');
-                    Route::post ('/create', 'create')->name ('create');
-                    Route::post ('/delete', 'destroy')->name ('delete');
-                    Route::post ('/show', 'show')->name ('show');
-                    Route::post ('/update', 'update')->name ('update');
-                });
-            });
-        });
-
-        Route::name('clientTestimonials.')->group(function () {
-            Route::prefix('client-testimonials')->group(function () {
-                Route::controller (ClientTestimonialsController::class)->group (function () {
-                    Route::get ('/list', 'index')->name ('index');
-                    Route::get ('/edit', 'edit')->name ('edit');
-                    Route::post ('/create', 'create')->name ('create');
-                    Route::post ('/delete', 'destroy')->name ('delete');
-                    Route::post ('/show', 'show')->name ('show');
-                    Route::post ('/update', 'update')->name ('update');
-                });
-            });
-        });
-
-        Route::name('faq.')->group(function () {
-            Route::prefix('faq')->group(function () {
-                Route::controller (FaqController::class)->group (function () {
-                    Route::get ('/list', 'index')->name ('index');
-                    Route::get ('/edit', 'edit')->name ('edit');
-                    Route::post ('/create', 'create')->name ('create');
-                    Route::post ('/delete', 'destroy')->name ('delete');
-                    Route::post ('/show', 'show')->name ('show');
-                    Route::post ('/update', 'update')->name ('update');
-                });
-            });
-        });
-
     });
 });

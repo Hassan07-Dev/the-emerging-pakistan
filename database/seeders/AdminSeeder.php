@@ -15,10 +15,10 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $adminUser = Admin::updateOrCreate(['id' => 1],  [
-            'username' => 'Digital Agency Pakistan',
-            'email' => 'admin@dap.com',
+            'username' => 'The Emerging Pakistan',
+            'email' => 'admin@theemergingpakistan.com',
             'email_verified_at'=>\Carbon\Carbon::now(),
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('tep@123456'),
             'gender' => 'Male'
         ]);
     }
