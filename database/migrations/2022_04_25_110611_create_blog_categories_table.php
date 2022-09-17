@@ -16,6 +16,7 @@ class CreateBlogCategoriesTable extends Migration
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
             $table->string ('category_name')->nullable ();
+            $table->string ('category_image')->nullable ();
             $table->boolean ('status')->default (true)->nullable ();
             $table->timestamps();
         });

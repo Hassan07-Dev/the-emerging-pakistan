@@ -1,93 +1,419 @@
-<header>
-    <div class="transparent-header">
-        <div class="container-fluid">
-            <div class="header-space">
-                <div class="row align-items-center">
-                    <div class="col-xl-2 col-8">
-                        <div class="header-logo">
-                            <a href="{{ route ('home.index') }}"><img src="{{ asset ($logo->logo_image) }}" class="img-fluid" alt="logo-img"></a>
+<header class="site-header mo-left header-full header">
+    <!-- main header -->
+    <div class="sticky-header main-bar-wraper navbar-expand-lg">
+        <div class="main-bar clearfix ">
+            <div class="container-fluid">
+                <div class="header-content-bx">
+                    <!-- website logo -->
+                    <div class="logo-header">
+                        @isset($logo)
+                            <a href="{{ route ('home.index') }}"><img src="{{ asset ($logo->logo_image) }}" alt=""/></a>
+                        @endisset
+                    </div>
+                    <!-- nav toggle button -->
+                    <button class="navbar-toggler collapsed navicon justify-content-end kk" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <!-- extra nav -->
+                    <div class="extra-nav">
+                        <div class="extra-cell">
+                            <ul>
+                                <li class="search-btn"><a id="quik-search-btn" href="javascript:;" class="btn radius-xl gray">Search</a></li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-4">
-                        <div class="main-menu">
-                            <nav id="mobile-menu">
-                                <ul>
-                                    <li class="menu-item-has-children"><a href="{{ route ('home.index') }}">Home</a></li>
-                                    <li class="menu-item-has-children"><a href="{{ route ('about.index') }}">About</a></li>
-                                    <li class="menu-item-has-children"><a href="{{ route ('services.index') }}">Services</a></li>
-                                    <li class="menu-item-has-children"><a href="{{ route ('blog.index') }}">Blog</a></li>
-                                    <li class="menu-item-has-children"><a href="javascript:void(0)">More</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="{{ route ('faq.index') }}">Faq</a></li>
-                                            <li><a href="{{ route ('contactUs.index') }}">Contact</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div class="side-menu-icon d-xl-none text-end">
-                            <button class="side-toggle"><i class="far fa-bars"></i></button>
-                        </div>
+                    <!-- Quik search -->
+                    <div class="dlab-quik-search">
+                        <form action="#">
+                            <input name="search" value="" type="text" class="form-control" placeholder="enter your keyword ...">
+                            <span  id="quik-search-remove"><i class="ti-close"></i></span>
+                        </form>
                     </div>
-                    <div class="col-xl-4 d-none d-xl-block">
-                        <div class="header-right text-end">
-                            <div class="header-social">
-                                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                                <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-                                <a href="#" target="_blank"><i class="fab fa-pinterest-p"></i></a>
-                                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                            </div>
-                            <div class="header-search">
-                                <a class="search-btn nav-search search-trigger" href="#"><i class="far fa-search"></i></a>
-                            </div>
-                            <div class="header-btn">
-                                <a href="{{ route ('about.index') }}" class="theme-btn theme-btn-small">Free Estimate</a>
-                            </div>
+                    <!-- main nav -->
+                    <div class="header-nav navbar-collapse collapse justify-content-center nav-dark" id="navbarNavDropdown">
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="{{ route ('home.index') }}">Home</a>
+                                <!-- <ul class="sub-menu">
+                                    <li><a href="index">Home 01</a></li>
+                                    <li><a href="index-2">Home 02</a></li>
+                                    <li><a href="index-3">Home 03</a></li>
+                                    <li><a href="index-4">Home 04</a></li>
+                                    <li><a href="index-5">Home 05</a></li>
+                                </ul>	 -->
+                            </li>
+                            <!-- <li>
+                                <a href="#">Blog</a>
+                            </li> -->
+                            <li class="has-mega-menu post-slider life-style">
+                                <a href="#">Categories<i class="fa fa-chevron-down"></i></a>
+                                <div class="mega-menu">
+                                    <div class="life-style-bx">
+                                        <div class="life-style-tabs">
+                                            <ul>
+                                                <li><a href="javascript:void(0);" id="st-all" class="post-tabs active">All</a></li>
+                                                <?php
+                                                    //$data1 = array_rand($json_data, 6);
+                                                    // if(count($data1)>0){
+                                                    //     foreach($json_data as $key => $category){
+                                                    //         if(array_search($key, $data1)){
+                                                ?>
+                                                            <li><a href="javascript:void(0);" id="st-beauty" data-slug="" class="post-tabs"><?php //echo $category['category_name']; ?></a></li>
+                                                <?php
+                                                    //         }
+                                                    //     }
+                                                    // }
+                                                ?>
+                                            </ul>
+                                        </div>
+                                        <div class="life-style-post">
+                                            <div id="all" class="life-style-post-bx show">
+                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/pic1.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/pic2.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/pic3.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/pic4.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="beauty" class="life-style-post-bx">
+                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/beauty/pic1.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/beauty/pic2.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/beauty/pic3.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/beauty/pic4.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="lifestyle" class="life-style-post-bx">
+                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/lifestyle/pic1.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/lifestyle/pic2.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/lifestyle/pic3.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/lifestyle/pic4.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="fashion" class="life-style-post-bx">
+                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/fashion/pic1.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/fashion/pic2.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/fashion/pic3.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/fashion/pic4.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="travel" class="life-style-post-bx">
+                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/travel/pic1.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/travel/pic2.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/travel/pic3.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item">
+                                                        <div class="blog-post blog-sm">
+                                                            <div class="dlab-post-media">
+                                                                <a href="post-standart"><img src="{{ asset('images/category/travel/pic4.jpg') }}" alt=""></a>
+                                                            </div>
+                                                            <div class="dlab-post-info">
+                                                                <div class="dlab-post-title ">
+                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
+                                                                </div>
+                                                                <div class="date">
+                                                                    02 <span></span> 2020
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a href="{{ route ('about.index') }}">About</a></li>
+                            <li><a href="{{ route ('contactUs.index') }}">Contact</a></li>
+                        </ul>
+                        <ul class="social-icon-c">
+                            <li><a href="https://www.facebook.com/daddymagz" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://www.instagram.com/daddy_magz/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="https://www.linkedin.com/company/daddy-magz/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="https://twitter.com/daddy_magz" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        </ul>
+                        <div class="social-menu">
+                            <ul>
+                                <li><a href="https://www.facebook.com/daddymagz" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="https://www.instagram.com/daddy_magz/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="https://www.linkedin.com/company/daddy-magz/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="https://twitter.com/daddy_magz" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- main header END -->
 </header>
-<div class="fix">
-    <div class="side-info">
-        <button class="side-info-close"><i class="fal fa-times"></i></button>
-        <div class="side-info-content">
-            <div class="mobile-menu"></div>
-            <div class="contact-infos mb-30">
-                <div class="contact-list mb-30">
-                    <h4>Contact Info</h4>
-                    <ul>
-                        <li><img src="assets/img/icon/sidebar-icon-1.png" class="img-fluid" alt="icon-img">86 broklyn street road, New York</li>
-                        <li><img src="assets/img/icon/footer-icon-1.png" class="img-fluid" alt="icon-img"><a href="mailto:info@sycho24.com">needhelp@company.com</a></li>
-                        <li><img src="assets/img/icon/footer-icon-2.png" class="img-fluid" alt="icon-img"><a href="tel:926668880000">92 666 888 0000</a></li>
-                    </ul>
-                    <div class="sidebar__menu--social">
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-pinterest-p"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="offcanvas-overlay"></div>
-
-<!-- Fullscreen search -->
-<div class="search-wrap">
-    <div class="search-inner">
-        <i class="fal fa-times search-close" id="search-close"></i>
-        <div class="search-cell">
-            <form method="get">
-                <div class="search-field-holder">
-                    <input type="search" class="main-search-input" placeholder="Search Entire Store...">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- end fullscreen search -->
-

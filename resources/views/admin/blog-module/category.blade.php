@@ -30,6 +30,7 @@
                             <tr>
                                 <th>Sr. No</th>
                                 <th>Category Name</th>
+                                <th>Category Image</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -40,6 +41,7 @@
                             <tr>
                                 <th>Sr. No</th>
                                 <th>Category Name</th>
+                                <th>Category Image</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -70,6 +72,10 @@
                                 <input type="text" name="category_name" class="form-control" id="exampleInputEmail1"
                                        placeholder="Enter Tag Name...">
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Category Image</label>
+                                <input type="file" name="category_image" class="form-control" id="exampleInputEmail1">
+                            </div>
                             <div class="form-group active_status">
                                 <label for="exampleInputEmail1">Status</label><br>
                                 <input type="radio" name="status" value="1" id="option_a1" autocomplete="off"> Active
@@ -99,6 +105,14 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'category_name', name: 'category_name'},
+                    {
+                        data: 'category_image',
+                        name: 'category_image',
+                        render: function (data, type, full, meta) {
+                            path = "{{ env('APP_URL') }}/public/"
+                            return '<img src="'+path+data+'" width="150px" />';
+                        }
+                    },
                     {
                         data: 'status',
                         name: 'status',

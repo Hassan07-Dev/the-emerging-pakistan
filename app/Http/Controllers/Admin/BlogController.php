@@ -36,10 +36,11 @@ class BlogController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'category_id' => 'required',
-            'tag_id'=>'required',
+            // 'tag_id'=>'required',
             'arthur'=>'required',
             'blog_image'=>'required|image',
             'title'=>'required',
+            'excerpt'=>'required',
             'description'=>'required',
         ]);
         if ($validator->fails()) {
@@ -52,11 +53,12 @@ class BlogController extends Controller
             $input = $request->except(['_token']);
             $blog = Blog::create([
                 'category_id' => $request->category_id,
-                'tag_id' => json_encode ($request->tag_id),
+                // 'tag_id' => json_encode ($request->tag_id),
                 'arthur' => $request->arthur,
                 'blog_image' => $image_path['file_path'],
                 'title' => $request->title,
                 'description' => $request->description,
+                'excerpt' => $request->excerpt,
             ]);
             if ($blog){
                 return sendSuccess ('Created successfully...!!!', null);
@@ -139,11 +141,13 @@ class BlogController extends Controller
         try{
             $validator = Validator::make($request->all(), [
                 'category_id' => 'required',
-                'tag_id'=>'required',
+                // 'tag_id'=>'required',
                 'arthur'=>'required',
                 'title'=>'required',
                 'description'=>'required',
+                'excerpt'=>'required',
                 'status'=>'required',
+
             ]);
             if ($validator->fails()) {
                 return sendError($validator->messages()->first(), null);
@@ -166,18 +170,21 @@ class BlogController extends Controller
 
                 $image_path = addFile ($request->blog_image, 'blog_image/');
                 if ($image_path['file_path']){
-                    if (File::exists(public_path($blog->blog_image))) {
-                        unlink(public_path($blog->blog_image));
+                    if($blog->blog_image != null){
+                        if (File::exists(public_path($blog->blog_image))) {
+                            unlink(public_path($blog->blog_image));
+                        }
                     }
                     $data['blog_image'] = $image_path['file_path'];
                 }
             }
 
             $data['category_id'] = $request->category_id;
-            $data['tag_id'] = json_encode ($request->tag_id);
+            // $data['tag_id'] = json_encode ($request->tag_id);
             $data['arthur'] = $request->arthur;
             $data['title'] = $request->title;
             $data['description'] = $request->description;
+            $data['excerpt'] = $request->excerpt;
             $data['status'] = $request->status;
 
             if($blog->update($data)){

@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Blog;
 use App\Models\Logo;
 use Illuminate\View\Component;
 
@@ -25,6 +26,8 @@ class WebFooter extends Component
     public function render()
     {
         $logo = Logo::where('id', 1)->first();
-        return view('components.web-footer', compact ('logo'));
+        $blog_list = Blog::where('status', 1)->get()->random(3);
+        return view('components.web-footer', compact ('logo','blog_list'));
+
     }
 }

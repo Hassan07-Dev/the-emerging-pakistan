@@ -9,6 +9,7 @@ use App\Models\BlogCategory;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\File;
 
 class BlogCategoryController extends Controller
 {
@@ -30,17 +31,24 @@ class BlogCategoryController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'category_name' => 'required|string'
+            'category_name' => 'required|string',
+            'category_image'=>'required|image'
         ]);
         if ($validator->fails()) {
             return sendError($validator->messages()->first(), null);
         }
 
-        $input = $request->except(['_token']);
-        $input['category_name'] = $request->category_name;
-        $tag = BlogCategory::create($input);
-        if ($tag){
-            return sendSuccess ('Created successfully...!!!', null);
+        $image_path = addFile ($request->category_image, 'upload/category_image/');
+
+        if($image_path['type'] == 'image'){
+            $input = $request->except(['_token']);
+            $input['category_name'] = $request->category_name;
+            $input['category_image'] = $image_path['file_path'];
+            $tag = BlogCategory::create($input);
+            if ($tag){
+                return sendSuccess ('Created successfully...!!!', null);
+            }
+            return sendError ('Something went wrong...!!!', null);
         }
         return sendError ('Something went wrong...!!!', null);
     }
@@ -124,9 +132,34 @@ class BlogCategoryController extends Controller
             return sendError($validator->messages()->first(), null);
         }
 
+        
         try{
             $tag = BlogCategory::find($request->id);
-            if($tag->update($request->all())){
+
+            if (isset($request->category_image)){
+                $validator = Validator::make($request->all(), [
+                    'category_image'=>'required|image',
+                ]);
+                if ($validator->fails()) {
+                    return sendError($validator->messages()->first(), null);
+                }
+    
+                $image_path = addFile ($request->category_image, 'upload/category_image/');
+                if ($image_path['file_path']){
+                    if($tag->category_image != null){
+                        if (File::exists(public_path($tag->category_image))) {
+                            unlink(public_path($tag->category_image));
+                        }
+                    }
+                    $data['category_image'] = $image_path['file_path'];
+                }
+            }
+    
+
+            $data['category_name'] = $request->category_name;
+            $data['status'] = $request->status;
+
+            if($tag->update($data)){
                 return sendSuccess('Category updated successfully...!!!', null);
             }
             return sendError ('Something went wrong...!!!', null);

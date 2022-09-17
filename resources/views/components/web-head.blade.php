@@ -1,26 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/fevicon-2.jpg') }}" />
+    <title>{{ $title }} | Daddy Magz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
 
-    <!-- Place favicon.ico in the root directory -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/favicon.png">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/plugins.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/templete.css') }}">
+    <link class="skin" rel="stylesheet" type="text/css" href="{{ asset('assets/css/skin/skin-1.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
 
-    <!-- All CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/metisMenu.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/backToTop.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/custom-animation.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/meanmenu.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/spacing.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/venobox.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGQPJRD7GQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    <title>{{ $title }} | Digital Agency Pakistan</title>
+        gtag('config', 'G-FGQPJRD7GQ');
+    </script>
+    <style>
+        .icon_c>li>a{
+            color: #bf0209 !important;
+        }
+        .icon_c>li>a:hover{
+            color: #c85054 !important;
+        }
+    </style>
 </head>
+
+<body id="bg">
+    <div class="page-wraper">
+        <div id="loading-area"></div>

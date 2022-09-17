@@ -24,7 +24,9 @@
                                 <input type="file" name="logo_image" class="form-control" id="exampleInputEmail1">
                             </div>
                             <div class="form-group" id="thisdiv">
-                                <img src="{{ env ('APP_URL').'/public/'.$data->logo_image }}" width="200px" height="100px">
+                                @isset($data)
+                                    <img src="{{ env ('APP_URL').'/public/'.$data->logo_image }}" width="200px" height="100px">
+                                @endisset
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary submit_btn">Update Logo</button>

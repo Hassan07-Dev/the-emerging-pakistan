@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServicesController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,15 +21,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/migrate', function(){
+    Artisan::call('migrate', ['--force' => true]);
+});
+
+Route::get('/rollback', function(){
+    Artisan::call('migrate:rollback');
+});
+
+Route::get('/adminseeder', function(){
+    Artisan::call('db:seed');
+});
 
 Route::controller (HomeController::class)->group (function (){
     Route::get ('/', 'index')->name ('home.index');
-});
-
-Route::prefix('about')->group(function () {
-    Route::controller (AboutUsController::class)->group (function (){
-        Route::get ('/', 'index')->name ('about.index');
-    });
 });
 
 Route::prefix('services')->group(function () {
@@ -40,7 +47,9 @@ Route::prefix('services')->group(function () {
 Route::prefix('blog')->group(function () {
     Route::controller (BlogController::class)->group (function (){
         Route::get ('/', 'index')->name ('blog.index');
-        Route::get ('details/{slug}', 'test')->name ('blog.details');
+        Route::get ('details/{slug}', 'blogDetails')->name ('blog.details');
+        Route::post ('/list', 'blogList')->name ('blog_list');
+
     });
 });
 
@@ -60,4 +69,9 @@ Route::prefix('about')->group(function () {
     Route::controller (AboutUsController::class)->group (function (){
         Route::get ('/', 'index')->name ('about.index');
     });
+});
+
+Route::controller (CommentController::class)->group (function (){
+    Route::post ('/add_comments', 'index')->name ('add_comments.index');
+    Route::post ('/comments/list', 'show')->name ('comments.list');
 });

@@ -1,10 +1,4 @@
-<!doctype html>
-<html lang="en">
-    <x-web-head :title="$title" />
-    @yield('css')
-<body>
-    <!-- Preloader -->
-    <x-web-pre-loader />
+<x-web-head :title="$title" />
 
     <!-- header -->
     <x-web-header />
@@ -15,9 +9,6 @@
     <!-- footer -->
     <x-web-footer />
 
-    <!-- Optional JavaScript -->
-    <x-web-scripts />
-    @yield('script')
-
-</body>
-</html>
+<!-- Optional JavaScript -->
+<x-web-scripts />
+@yield('script')

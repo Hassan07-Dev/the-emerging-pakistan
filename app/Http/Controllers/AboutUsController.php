@@ -16,8 +16,7 @@ class AboutUsController extends Controller
      */
     public function index()
     {
-        $testimonials = ClientTestimonials::get()->random(4);
-        return view ('about', compact ('testimonials'));
+        return view ('about');
     }
 
     /**

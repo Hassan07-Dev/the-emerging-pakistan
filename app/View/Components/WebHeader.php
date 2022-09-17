@@ -24,7 +24,7 @@ class WebHeader extends Component
      */
     public function render()
     {
-        $logo = Logo::where('id', 1)->first();
-        return view('components.web-header', compact ('logo'));
+         $logo = Logo::where('id', 1)->first();
+         return view('components.web-header', compact ('logo'));
     }
 }

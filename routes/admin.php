@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\TagController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,9 +32,10 @@ Route::get('/clear-cache-all', function() {
     dd("Cache Clear All");
 });
 
+
 Route::controller (AdminController::class)->group (function (){
     Route::get ('/', 'index')->name ('admin');
-    Route::get ('login', 'index')->name ('admin.login');
+    Route::get ('login', 'index')->name ('admin.login');;
     Route::post ('login', 'loginCheck')->name ('admin.login');
     Route::get('/logout','logout')->name('admin.logout');
 });
