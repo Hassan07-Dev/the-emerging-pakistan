@@ -1,4 +1,4 @@
-@extends('layout.admin-app-layout', ['title'=>"Blogs"])
+@extends('layout.admin-app-layout', ['title'=>"Logo Change"])
 
 
 @section('content')
@@ -20,12 +20,21 @@
                         <form id="logo_form" onsubmit="return false;" action="{{ route ('admin.logo.update') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Blog Image</label>
-                                <input type="file" name="logo_image" class="form-control" id="exampleInputEmail1">
+                                <label for="exampleInputEmail1">Header logo</label>
+                                <input type="file" name="logo_image_header" class="form-control" id="exampleInputEmail1">
                             </div>
                             <div class="form-group" id="thisdiv">
                                 @isset($data)
-                                    <img src="{{ env ('APP_URL').'/public/'.$data->logo_image }}" width="200px" height="100px">
+                                    <img src="{{ asset ($data->logo_image_header)}}" width="200px" height="100px">
+                                @endisset
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Footer logo</label>
+                                <input type="file" name="logo_image_footer" class="form-control" id="exampleInputEmail1">
+                            </div>
+                            <div class="form-group" id="thisdiv1">
+                                @isset($data)
+                                    <img src="{{ asset ($data->logo_image_footer) }}" width="200px" height="100px">
                                 @endisset
                             </div>
                             <div class="d-flex justify-content-end">
@@ -64,6 +73,7 @@
                         } else if(data.status == true){
                             $('#logo_form').trigger('reset');
                             $('#thisdiv').load(document.URL +  ' #thisdiv');
+                            $('#thisdiv1').load(document.URL +  ' #thisdiv1');
                             toastr.success(data.message);
                         }
                         buttonEnabled('submit_btn', 'Update Logo');

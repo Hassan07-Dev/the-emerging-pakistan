@@ -1,56 +1,180 @@
-<footer class="site-footer">
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h4 class="footer-title text-center"><span>Trending Stories</span></h4>
-                </div>
-                <div class="col-12">
-                    <div class="trending-stories owl-loaded owl-theme owl-carousel owl-btn-center-lr owl-btn-2">
-                        @if(count($blog_list)>0)
-                            @foreach($blog_list as $val)
-                                <div class="item">
-                                    <div class="blog-card blog-grid no-gap">
-                                        <div class="blog-card-media">
-                                            <img src="{{ asset($val->blog_image) }}" alt=""/>
-                                        </div>
-                                        <div class="blog-card-info blog-card-height">
-                                            <h4 class="title"><a href="{{ route ('blog.details', [$val->slug]) }}">{{ $val->title }}</a></h4>
-                                            <div class="date">
-                                                <?php
-                                                    // $time_input = strtotime($blog_data[$val]['date_publish']);
-                                                    // $date_input = getDate($time_input);
-                                                ?>
-                                                {{ \Carbon\Carbon::parse ($val['created_at'])->format ('d') }}<span></span>{{ \Carbon\Carbon::parse ($val['created_at'])->format ('m') }}<span></span>{{ \Carbon\Carbon::parse ($val['created_at'])->format ('Y') }}
-                                            </div>
-                                        </div>
+<section class="wrapper__section p-0">
+    <div class="wrapper__section__components">
+        <!-- Footer  -->
+        <footer>
+            <div class="wrapper__footer bg__footer ">
+                <div class=" container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="widget__footer">
+                                <!-- <h4 class="footer-title">company info</h4> -->
+                                <figure>
+                                    @isset($logo)
+                                        <img src="{{ asset ($logo->logo_image_footer) }}" alt="logo-footer" class="logo-footer">
+                                    @endisset
+                                </figure>
+                                <p>
+                                    Retnews is a premium magazine template based on Bootstrap 4.
+                                    We bring you the best Premium Themes that perfect for news, magazine, personal
+                                    blog, etc.
+                                    <br>
+                                    <!-- <a href=" #" class="btn btn-primary mt-4 text-white">About us</a> -->
+                                </p>
+                            </div>
+                            <div class="border-line"></div>
+                            <div class="widget__footer">
+                                <h4 class="footer-title">follow us </h4>
+                                <!-- <p>
+                        Follow us and stay in touch to get the latest news
+                    </p> -->
+                                <p>
+                                    <button class="btn btn-social btn-social-o facebook mr-1">
+                                        <i class="fa fa-facebook-f"></i>
+                                    </button>
+                                    <button class="btn btn-social btn-social-o twitter mr-1">
+                                        <i class="fa fa-twitter"></i>
+                                    </button>
+
+                                    <button class="btn btn-social btn-social-o linkedin mr-1">
+                                        <i class="fa fa-linkedin"></i>
+                                    </button>
+                                    <button class="btn btn-social btn-social-o instagram mr-1">
+                                        <i class="fa fa-instagram"></i>
+                                    </button>
+
+                                    <button class="btn btn-social btn-social-o youtube mr-1">
+                                        <i class="fa fa-youtube"></i>
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="col-md-4">
+                            <div class="widget__footer">
+                                <h4 class="footer-title">category</h4>
+                                <div class="link__category">
+                                    <ul class="list-unstyled ">
+                                        <li class="list-inline-item">
+                                            <a href="#">apps</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">business</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">entertainment</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">fashion</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <a href="#">Food</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">Gadget</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">Gaming</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">Health</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">Lifestyle</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <a href="#">Science</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">Travel</a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <a href="#">Startup</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">Sports</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="widget__footer">
+                                <h4 class="footer-title">newsletter</h4>
+                                <!-- Form Newsletter -->
+
+                                <div class="widget__form-newsletter ">
+                                    <p>
+
+                                        Don’t miss to subscribe to our news feeds, kindly fill the form below
+                                    </p>
+                                    <div class="mt-3">
+                                        <input type="text" class="form-control mb-2"
+                                               placeholder="Your email address">
+
+                                        <button class="btn btn-primary btn-block" type="button">subscribe
+
+                                        </button>
                                     </div>
                                 </div>
-                            @endforeach
-                        @endif
+
+                            </div>
+
+
+                        </div>
                     </div>
+
                 </div>
-                <div class="col-12">
-                    <div class="footer-bottom">
-                        <div class="footer-logo">
-                            @isset($logo)
-                                <a href="{{ route ('home.index') }}"><img src="{{ asset ($logo->logo_image) }}" alt=""/></a>
-                            @endisset
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="bg__footer-bottom ">
+                <div class="container">
+                    <div class="row flex-column-reverse flex-md-row">
+                        <div class="col-md-6">
+                                <span>
+                                    © 2020 Magzrenvi - Premium laravel news & magazine theme by
+                                    <a href="#">retenvi.com</a>
+                                </span>
                         </div>
-                        <div class="footer-copy">
-                            <span>©2019. All Rights Reserved.</span>
-                        </div>
-                        <div class="footer-social">
-                            <ul class="icon_c">
-                                <li><a href="https://www.instagram.com/daddy_magz/" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="https://www.linkedin.com/company/daddy-magz/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="https://www.facebook.com/daddymagz" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="https://twitter.com/daddy_magz" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <div class="col-md-6">
+                            <ul class="list-inline ">
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        privacy
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        contact
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        about
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        faq
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </footer>
+        <!-- End Footer  -->
     </div>
-</footer>
+</section>
+
+
+<a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>

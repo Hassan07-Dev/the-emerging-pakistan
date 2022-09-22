@@ -1,5 +1,8 @@
 <x-web-head :title="$title" />
 
+<!-- Pre_loader -->
+<x-web-preloader />
+
     <!-- header -->
     <x-web-header />
 

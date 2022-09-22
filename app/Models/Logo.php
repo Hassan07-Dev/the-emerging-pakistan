@@ -9,5 +9,5 @@ class Logo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['logo_image'];
+    protected $fillable = ['logo_image_header', 'logo_image_footer'];
 }

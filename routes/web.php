@@ -37,6 +37,10 @@ Route::controller (HomeController::class)->group (function (){
     Route::get ('/', 'index')->name ('home.index');
 });
 
+Route::get ('/write-for-us', function (){
+    return view ('write-for-us');
+});
+
 Route::prefix('services')->group(function () {
     Route::controller (ServicesController::class)->group (function (){
         Route::get ('/', 'index')->name ('services.index');

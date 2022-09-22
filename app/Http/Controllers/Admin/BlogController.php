@@ -7,8 +7,11 @@ use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\BlogTag;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use DataTables;
@@ -36,7 +39,7 @@ class BlogController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'category_id' => 'required',
-            // 'tag_id'=>'required',
+            'tag_id'=>'required',
             'arthur'=>'required',
             'blog_image'=>'required|image',
             'title'=>'required',
@@ -48,20 +51,47 @@ class BlogController extends Controller
         }
 
         $image_path = addFile ($request->blog_image, 'blog_image/');
-
         if($image_path['type'] == 'image'){
             $input = $request->except(['_token']);
             $blog = Blog::create([
                 'category_id' => $request->category_id,
-                // 'tag_id' => json_encode ($request->tag_id),
+                'user_id' => isset(Auth::guard ('web')->user ()->id)?Auth::gaurd('web')->user ()->id:null,
                 'arthur' => $request->arthur,
                 'blog_image' => $image_path['file_path'],
                 'title' => $request->title,
                 'description' => $request->description,
                 'excerpt' => $request->excerpt,
             ]);
+
             if ($blog){
-                return sendSuccess ('Created successfully...!!!', null);
+                $insert_data = array ();
+                $tags_data =$request->tag_id;
+                foreach ($tags_data as $hashtag) {
+                    $hashtag_exists = Tag::where ('tag_name', $hashtag)->first ();
+                    if ($hashtag_exists) {
+                        $insert_data[] = array (
+                            'blog_id' => $blog->id,
+                            'tag_id' => $hashtag_exists->id,
+                            'created_at' => Carbon::now (),
+                            'updated_at' => Carbon::now (),
+                        );
+                    } else {
+                        $new_tag = new Tag();
+                        $new_tag->tag_name = $hashtag;
+                        $new_tag->save ();
+                        $insert_data[] = array (
+                            'blog_id' => $blog->id,
+                            'tag_id' => $new_tag->id,
+                            'created_at' => Carbon::now (),
+                            'updated_at' => Carbon::now (),
+                        );
+                    }
+                }
+                $blogtags = new BlogTag();
+                if($blogtags->insert ($insert_data)){
+                    return sendSuccess ('Created successfully...!!!', null);
+                }
+                return sendError ('Tags are not saved...!!!', null);
             }
             return sendError ('Something went wrong...!!!', null);
         }
@@ -95,7 +125,7 @@ class BlogController extends Controller
             return sendError($validator->messages()->first(), null);
         }
 
-        $blog = Blog::with ('category')->where('id', $request->id)->first();
+        $blog = Blog::with ('category', 'getTags')->where('id', $request->id)->first();
 
         $data = array(
             'blog' => $blog,
@@ -116,7 +146,7 @@ class BlogController extends Controller
     public function edit(Request $request)
     {
         if ($request->ajax()) {
-            $data = Blog::with ('category')->latest()->get();
+            $data = Blog::with ('category', 'getTags')->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action',function($row){
@@ -141,7 +171,7 @@ class BlogController extends Controller
         try{
             $validator = Validator::make($request->all(), [
                 'category_id' => 'required',
-                // 'tag_id'=>'required',
+                 'tag_id'=>'required',
                 'arthur'=>'required',
                 'title'=>'required',
                 'description'=>'required',
@@ -180,7 +210,6 @@ class BlogController extends Controller
             }
 
             $data['category_id'] = $request->category_id;
-            // $data['tag_id'] = json_encode ($request->tag_id);
             $data['arthur'] = $request->arthur;
             $data['title'] = $request->title;
             $data['description'] = $request->description;
@@ -188,6 +217,20 @@ class BlogController extends Controller
             $data['status'] = $request->status;
 
             if($blog->update($data)){
+                $insert_data = array ();
+                $tags_data =$request->tag_id;
+                foreach ($tags_data as $hashtag) {
+                    $hashtag_exists = Tag::where ('tag_name', $hashtag)->first ();
+                    if ($hashtag_exists) {
+                        array_push ($insert_data, $hashtag_exists->id);
+                    } else {
+                        $new_tag = new Tag();
+                        $new_tag->tag_name = $hashtag;
+                        $new_tag->save ();
+                        array_push ($insert_data, $new_tag->id);
+                    }
+                }
+                $blog->getTags()->sync($insert_data);
                 return sendSuccess('Blog updated successfully...!!!', null);
             }
             return sendError ('Something went wrong...!!!', null);

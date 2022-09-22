@@ -15,9 +15,10 @@ class CreateBlogsTable extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned()->nullable ();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('category_id')->unsigned()->nullable ();
             $table->foreign('category_id')->references('id')->on('blog_categories')->onDelete('cascade');
-            $table->json('tag_id')->nullable ();
             $table->string ('arthur')->nullable ();
             $table->string ('blog_image')->nullable ();
             $table->text ('title')->nullable ();

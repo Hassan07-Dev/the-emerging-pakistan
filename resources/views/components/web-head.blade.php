@@ -1,40 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/fevicon-2.jpg') }}" />
-    <title>{{ $title }} | Daddy Magz</title>
+    <title>{{ $title }} | TEP</title>
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+    <link rel="manifest" href="site.webmanifest">
+    <!-- favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" href="icon.png">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/plugins.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/templete.css') }}">
-    <link class="skin" rel="stylesheet" type="text/css" href="{{ asset('assets/css/skin/skin-1.css') }}">
+    <meta name="theme-color" content="#030303">
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;0,700;1,300;1,500&family=Poppins:ital,wght@0,300;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGQPJRD7GQ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-FGQPJRD7GQ');
-    </script>
-    <style>
-        .icon_c>li>a{
-            color: #bf0209 !important;
-        }
-        .icon_c>li>a:hover{
-            color: #c85054 !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.css') }}">
+    <link href="{{ asset('assets/css/boxicons.min.css') }}" rel='stylesheet'>
+    <link href="{{ asset('assets/css/styles.css?537a1bbd0e5129401d28') }}" rel="stylesheet">
 </head>
 
-<body id="bg">
-    <div class="page-wraper">
-        <div id="loading-area"></div>
+<body class="body-box bg-news-image">

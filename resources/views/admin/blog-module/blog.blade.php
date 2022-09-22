@@ -31,7 +31,7 @@
                                 <th>Sr. No</th>
                                 <th>Blog Title</th>
                                 <th>Category</th>
-                                {{-- <th>Tag List</th> --}}
+                                 <th>Tag List</th>
                                 <th>Arthur</th>
                                 <th>Blog Image</th>
                                 <th>Description</th>
@@ -63,7 +63,7 @@
                                 <th>Sr. No</th>
                                 <th>Blog Title</th>
                                 <th>Category</th>
-                                {{-- <th>Tag List</th> --}}
+                                 <th>Tag List</th>
                                 <th>Arthur</th>
                                 <th>Blog Image</th>
                                 <th>Description</th>
@@ -101,14 +101,14 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {{-- <div class="form-group">
+                             <div class="form-group">
                                 <label for="exampleInputEmail1">Tags</label>
                                 <select class="form-control js-example-basic-multiple" name="tag_id[]" id="tag_id" multiple="multiple">
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}" data-name="{{ $tag->tag_name }}">{{ $tag->tag_name }}</option>
+                                        <option value="{{ $tag->tag_name }}" data-name="{{ $tag->tag_name }}">{{ $tag->tag_name }}</option>
                                     @endforeach
                                 </select>
-                            </div> --}}
+                            </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Blog Title</label>
                                 <input type="text" name="title" class="form-control" id="exampleInputEmail1"
@@ -191,14 +191,7 @@
             ],
         });
         $('.js-example-basic-multiple').select2({
-            tags: true,
-            createTag: function (params) {
-                return {
-                    id: params.term,
-                    text: params.term,
-                    newOption: true
-                }
-            }
+            tags: true
         });
 
         function getdata() {
@@ -211,19 +204,19 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'title', name: 'title'},
                     {data: 'category.category_name', name: 'category.category_name'},
-                    // {
-                    //     data: 'tag_id',
-                    //     name: 'tag_id',
-                    //     render: function (data, type, full, meta) {
-                    //         // console.log(data);
-                    //         let output = '';
-                    //         data.forEach(function(element) {
-                    //             output+='<button type="button" data-id="'+element.id+'" class="btn btn-outline-secondary btn-sm disabled">'+element.tag_name+'</button>';
-                    //         });
-                    //         return output;
-                    //     },
-                    //     searchable: true
-                    // },
+                    {
+                        data: 'get_tags',
+                        name: 'get_tags',
+                        render: function (data, type, full, meta) {
+                            // console.log(data);
+                            let output = '';
+                            data.forEach(function(element) {
+                                output+='<button type="button" data-id="'+element.id+'" class="btn btn-outline-secondary btn-sm disabled">'+element.tag_name+'</button>';
+                            });
+                            return output;
+                        },
+                        searchable: true
+                    },
                     {data: 'arthur', name: 'arthur'},
                     {
                         data: 'blog_image',
@@ -269,7 +262,7 @@
                 $('#blog_modal .submit_btn').text('Add Blog');
                 $('#blog_modal_form').attr("action", "{{ route ('admin.blog.create') }}");
                 $('#blog_modal_form').trigger('reset');
-                $('.js-example-basic-multiple').select2('destroy').find('option').prop('selected', false).end().select2();
+                // $('.js-example-basic-multiple').select2('destroy').find('option').prop('selected', false).end().select2();
                 $('#description_summernote').summernote('code', '');
                 $('#blog_modal').modal({
                     backdrop: 'static',
@@ -383,12 +376,12 @@
                         $('#blog_modal_form input[name="title"]').val(blog.title);
                         $('#description_summernote').summernote('code', blog.description);
                         $('#blog_modal_form select[name="category_id"] option[value="'+blog.category.id+'"]').prop('selected', true);
-                        // tags = [];
-                        // tag = blog.tag_id;
-                        // tag.forEach(function(element) {
-                        //     tags.push(element.id);
-                        // });
-                        // $('.js-example-basic-multiple').select2().val(tags).trigger('change');
+                        tags = [];
+                        tag = blog.get_tags;
+                        tag.forEach(function(element) {
+                            tags.push(element.tag_name);
+                        });
+                        $('.js-example-basic-multiple').select2({tags: true}).val(tags).trigger('change');
                         $('.active_status input[name="status"][value="'+blog.status+'"]').prop('checked', true);
                         $('#blog_modal').modal({
                             backdrop: 'static',

@@ -1,419 +1,449 @@
-<header class="site-header mo-left header-full header">
-    <!-- main header -->
-    <div class="sticky-header main-bar-wraper navbar-expand-lg">
-        <div class="main-bar clearfix ">
-            <div class="container-fluid">
-                <div class="header-content-bx">
-                    <!-- website logo -->
-                    <div class="logo-header">
-                        @isset($logo)
-                            <a href="{{ route ('home.index') }}"><img src="{{ asset ($logo->logo_image) }}" alt=""/></a>
-                        @endisset
-                    </div>
-                    <!-- nav toggle button -->
-                    <button class="navbar-toggler collapsed navicon justify-content-end kk" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                    <!-- extra nav -->
-                    <div class="extra-nav">
-                        <div class="extra-cell">
-                            <ul>
-                                <li class="search-btn"><a id="quik-search-btn" href="javascript:;" class="btn radius-xl gray">Search</a></li>
-                            </ul>
+<header>
+    <!-- Navbar  -->
+    <div class="topbar d-none d-sm-block">
+        <div class="container ">
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+                    <div class="topbar-left">
+                        <div class="topbar-text">
+                            Monday, March 22, 2020
                         </div>
                     </div>
-                    <!-- Quik search -->
-                    <div class="dlab-quik-search">
-                        <form action="#">
-                            <input name="search" value="" type="text" class="form-control" placeholder="enter your keyword ...">
-                            <span  id="quik-search-remove"><i class="ti-close"></i></span>
-                        </form>
-                    </div>
-                    <!-- main nav -->
-                    <div class="header-nav navbar-collapse collapse justify-content-center nav-dark" id="navbarNavDropdown">
-                        <ul class="nav navbar-nav">
-                            <li class="active">
-                                <a href="{{ route ('home.index') }}">Home</a>
-                                <!-- <ul class="sub-menu">
-                                    <li><a href="index">Home 01</a></li>
-                                    <li><a href="index-2">Home 02</a></li>
-                                    <li><a href="index-3">Home 03</a></li>
-                                    <li><a href="index-4">Home 04</a></li>
-                                    <li><a href="index-5">Home 05</a></li>
-                                </ul>	 -->
-                            </li>
-                            <!-- <li>
-                                <a href="#">Blog</a>
-                            </li> -->
-                            <li class="has-mega-menu post-slider life-style">
-                                <a href="#">Categories<i class="fa fa-chevron-down"></i></a>
-                                <div class="mega-menu">
-                                    <div class="life-style-bx">
-                                        <div class="life-style-tabs">
-                                            <ul>
-                                                <li><a href="javascript:void(0);" id="st-all" class="post-tabs active">All</a></li>
-                                                <?php
-                                                    //$data1 = array_rand($json_data, 6);
-                                                    // if(count($data1)>0){
-                                                    //     foreach($json_data as $key => $category){
-                                                    //         if(array_search($key, $data1)){
-                                                ?>
-                                                            <li><a href="javascript:void(0);" id="st-beauty" data-slug="" class="post-tabs"><?php //echo $category['category_name']; ?></a></li>
-                                                <?php
-                                                    //         }
-                                                    //     }
-                                                    // }
-                                                ?>
-                                            </ul>
-                                        </div>
-                                        <div class="life-style-post">
-                                            <div id="all" class="life-style-post-bx show">
-                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/pic1.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/pic2.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/pic3.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/pic4.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="beauty" class="life-style-post-bx">
-                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/beauty/pic1.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/beauty/pic2.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/beauty/pic3.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/beauty/pic4.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="lifestyle" class="life-style-post-bx">
-                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/lifestyle/pic1.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/lifestyle/pic2.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/lifestyle/pic3.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/lifestyle/pic4.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="fashion" class="life-style-post-bx">
-                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/fashion/pic1.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/fashion/pic2.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/fashion/pic3.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/fashion/pic4.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="travel" class="life-style-post-bx">
-                                                <div class="header-blog-carousel owl-carousel owl-btn-center-lr">
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/travel/pic1.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Oh Christmas Tree</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/travel/pic2.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Winter Looks Revolve</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/travel/pic3.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Dress Like a Parisian</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="blog-post blog-sm">
-                                                            <div class="dlab-post-media">
-                                                                <a href="post-standart"><img src="{{ asset('images/category/travel/pic4.jpg') }}" alt=""></a>
-                                                            </div>
-                                                            <div class="dlab-post-info">
-                                                                <div class="dlab-post-title ">
-                                                                    <h5 class="post-title"><a href="post-standart">Night Look Holiday</a></h5>
-                                                                </div>
-                                                                <div class="date">
-                                                                    02 <span></span> 2020
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="{{ route ('about.index') }}">About</a></li>
-                            <li><a href="{{ route ('contactUs.index') }}">Contact</a></li>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="list-unstyled topbar-right">
+                        <ul class="topbar-link">
+                            <li><a href="#" title="">Contact Us</a></li>
+                            <li><a href="#" title="">Login / Register</a></li>
                         </ul>
-                        <ul class="social-icon-c">
-                            <li><a href="https://www.facebook.com/daddymagz" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="https://www.instagram.com/daddy_magz/" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                            <li><a href="https://www.linkedin.com/company/daddy-magz/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="https://twitter.com/daddy_magz" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <ul class="topbar-sosmed">
+                            <li>
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </li>
                         </ul>
-                        <div class="social-menu">
-                            <ul>
-                                <li><a href="https://www.facebook.com/daddymagz" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="https://www.instagram.com/daddy_magz/" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="https://www.linkedin.com/company/daddy-magz/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="https://twitter.com/daddy_magz" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- main header END -->
+
+    <!-- logo -->
+    <div class="bg-white ">
+        <div class="container">
+            <div class="row">
+                <div class=" col-sm-12 col-md-4 my-auto d-none d-sm-block ">
+                    <figure class="mb-0">
+                        <a href="{{ route ('home.index') }}">
+                            @isset($logo)
+                                <img src="{{ asset ($logo->logo_image_header) }}" alt="Logo" class="img-fluid logo">
+                            @endisset
+                        </a>
+                    </figure>
+                </div>
+                <div class="col-md-8 d-none d-sm-block ">
+                    <figure class="mt-3 ">
+                        <a href="#">
+                            <img src="images/placeholder/950x150.jpg" alt="" class="img-fluid">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end logo -->
+
+    <!-- navbar -->
+    <div class="navigation-wrap navigation-shadow bg-white">
+        <nav class="navbar navbar-hover navbar-expand-lg navbar-soft  ">
+            <div class="container">
+                <div class="offcanvas-header">
+                    <div data-toggle="modal" data-target="#modal_aside_right" class="btn-md">
+                        <span class="navbar-toggler-icon"></span>
+                    </div>
+                </div>
+                <figure class="mb-0 mx-auto d-block d-sm-none sticky-logo">
+                    <a href="{{ route ('home.index') }}">
+                        @isset($logo)
+                            <img src="{{ asset ($logo->logo_image_header) }}" alt="Logo" class="img-fluid logo">
+                        @endisset
+                    </a>
+                </figure>
+                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav99">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+                <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active" href="{{ route ('home.index') }}"> Home </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#"> Blogs </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"> About </a>
+                        </li>
+
+                        <li class="nav-item dropdown has-megamenu">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> News </a>
+                            <div class="dropdown-menu animate fade-down megamenu mx-auto" role="menu">
+                                <div class="container wrap__mobile-megamenu">
+                                    <div class="col-megamenu">
+                                        <h5 class="title">Recent news</h5>
+                                        <hr>
+                                        <!-- Popular news carousel -->
+                                        <div class="popular__news-header-carousel">
+
+                                            <div class="top__news__slider">
+                                                <div class="item">
+                                                    <!-- Post Article -->
+                                                    <div class="article__entry">
+                                                        <div class="article__image">
+                                                            <a href="#">
+                                                                <img src="images/placeholder/500x400.jpg" alt=""
+                                                                     class="img-fluid">
+                                                            </a>
+                                                        </div>
+                                                        <div class="article__content">
+                                                            <ul class="list-inline">
+                                                                <li class="list-inline-item">
+                                                                        <span class="text-primary">
+                                                                            by david hall
+                                                                        </span>,
+                                                                </li>
+
+                                                                <li class="list-inline-item">
+                                                                        <span>
+                                                                            descember 09, 2016
+                                                                        </span>
+                                                                </li>
+                                                            </ul>
+                                                            <h5>
+                                                                <a href="#">
+                                                                    Proin eu nisl et arcu iaculis placerat
+                                                                    sollicitudin ut est.
+                                                                </a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <!-- Post Article -->
+                                                    <div class="article__entry">
+                                                        <div class="article__image">
+                                                            <a href="#">
+                                                                <img src="images/placeholder/500x400.jpg" alt=""
+                                                                     class="img-fluid">
+                                                            </a>
+                                                        </div>
+                                                        <div class="article__content">
+                                                            <ul class="list-inline">
+                                                                <li class="list-inline-item">
+                                                                        <span class="text-primary">
+                                                                            by david hall
+                                                                        </span>,
+                                                                </li>
+
+                                                                <li class="list-inline-item">
+                                                                        <span>
+                                                                            descember 09, 2016
+                                                                        </span>
+                                                                </li>
+                                                            </ul>
+                                                            <h5>
+                                                                <a href="#">
+                                                                    Proin eu nisl et arcu iaculis placerat
+                                                                    sollicitudin ut est.
+                                                                </a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <!-- Post Article -->
+                                                    <div class="article__entry">
+                                                        <div class="article__image">
+                                                            <a href="#">
+                                                                <img src="images/placeholder/500x400.jpg" alt=""
+                                                                     class="img-fluid">
+                                                            </a>
+                                                        </div>
+                                                        <div class="article__content">
+                                                            <ul class="list-inline">
+                                                                <li class="list-inline-item">
+                                                                        <span class="text-primary">
+                                                                            by david hall
+                                                                        </span>,
+                                                                </li>
+
+                                                                <li class="list-inline-item">
+                                                                        <span>
+                                                                            descember 09, 2016
+                                                                        </span>
+                                                                </li>
+                                                            </ul>
+                                                            <h5>
+                                                                <a href="#">
+                                                                    Proin eu nisl et arcu iaculis placerat
+                                                                    sollicitudin ut est.
+                                                                </a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <!-- Post Article -->
+                                                    <div class="article__entry">
+                                                        <div class="article__image">
+                                                            <a href="#">
+                                                                <img src="images/placeholder/500x400.jpg" alt=""
+                                                                     class="img-fluid">
+                                                            </a>
+                                                        </div>
+                                                        <div class="article__content">
+                                                            <ul class="list-inline">
+                                                                <li class="list-inline-item">
+                                                                        <span class="text-primary">
+                                                                            by david hall
+                                                                        </span>,
+                                                                </li>
+
+                                                                <li class="list-inline-item">
+                                                                        <span>
+                                                                            descember 09, 2016
+                                                                        </span>
+                                                                </li>
+                                                            </ul>
+                                                            <h5>
+                                                                <a href="#">
+                                                                    Proin eu nisl et arcu iaculis placerat
+                                                                    sollicitudin ut est.
+                                                                </a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <!-- Post Article -->
+                                                    <div class="article__entry">
+                                                        <div class="article__image">
+                                                            <a href="#">
+                                                                <img src="images/placeholder/500x400.jpg" alt=""
+                                                                     class="img-fluid">
+                                                            </a>
+                                                        </div>
+                                                        <div class="article__content">
+                                                            <ul class="list-inline">
+                                                                <li class="list-inline-item">
+                                                                        <span class="text-primary">
+                                                                            by david hall
+                                                                        </span>,
+                                                                </li>
+
+                                                                <li class="list-inline-item">
+                                                                        <span>
+                                                                            descember 09, 2016
+                                                                        </span>
+                                                                </li>
+                                                            </ul>
+                                                            <h5>
+                                                                <a href="#">
+                                                                    Proin eu nisl et arcu iaculis placerat
+                                                                    sollicitudin ut est.
+                                                                </a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div> <!-- col-megamenu.// -->
+                                </div>
+                            </div> <!-- dropdown-mega-menu.// -->
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/contact.html"> Contact </a></li>
+                    </ul>
+
+
+                    <!-- Search bar.// -->
+                    <ul class="navbar-nav ">
+                        <li class="nav-item search hidden-xs hidden-sm "><a class="nav-link" href="#">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Search content bar.// -->
+                    <div class="top-search navigation-shadow">
+                        <div class="container">
+                            <div class="input-group ">
+                                <form action="#">
+                                    <div class="row no-gutters mt-3">
+                                        <div class="col">
+                                            <input class="form-control border-secondary border-right-0 rounded-0"
+                                                   type="search" value="" placeholder="Search">
+                                        </div>
+                                        <div class="col-auto">
+                                            <a class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"
+                                               href="/search-result.html">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Search content bar.// -->
+
+
+                </div> <!-- navbar-collapse.// -->
+            </div>
+        </nav>
+
+    </div>
+
+    <div id="modal_aside_right" class="modal fixed-left fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-aside" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="widget__form-search-bar  ">
+                        <div class="row no-gutters">
+                            <div class="col">
+                                <input class="form-control border-secondary border-right-0 rounded-0" value=""
+                                       placeholder="Search">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <nav class="list-group list-group-flush">
+                        <ul class="navbar-nav ">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link active dropdown-toggle text-dark" href="#"
+                                   data-toggle="dropdown"> Home
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-left">
+                                    <li><a class="dropdown-item text-dark" href="/homepage-v1.html"> Home version
+                                            one </a>
+                                    </li>
+                                    <li><a class="dropdown-item text-dark" href="homepage-v2.html"> Home version two
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item text-dark" href="/homepage-v3.html"> Home version
+                                            three </a>
+                                    </li>
+                                    <li><a class="dropdown-item text-dark" href="/homepage-v4.html"> Home version
+                                            four </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle  text-dark" href="#" data-toggle="dropdown">
+                                    Pages </a>
+                                <ul class="dropdown-menu animate fade-up">
+
+                                    <li><a class="dropdown-item icon-arrow  text-dark" href="#"> Blog </a>
+                                        <ul class="submenu dropdown-menu  animate fade-up">
+                                            <li><a class="dropdown-item" href="/category-style-v1.html">Style 1</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="/category-style-v2.html">Style 2</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="/category-style-v3.html">Style 3</a>
+                                            </li>
+
+                                            <li><a class="dropdown-item icon-arrow  text-dark" href="">Submenu item
+                                                    3 </a>
+                                                <ul class="submenu dropdown-menu  animate fade-up">
+                                                    <li><a class="dropdown-item" href="">Multi level 1</a></li>
+                                                    <li><a class="dropdown-item" href="">Multi level 2</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a class="dropdown-item  text-dark" href="">Submenu item 4</a></li>
+                                            <li><a class="dropdown-item" href="">Submenu item 5</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="dropdown-item icon-arrow  text-dark" href="#"> Blog single detail
+                                        </a>
+                                        <ul class="submenu dropdown-menu  animate fade-up">
+                                            <li><a class="dropdown-item" href="/article-detail-v1.html">Style 1</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="/article-detail-v2.html">Style 2</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="/article-detail-v3.html">Style 3</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li><a class="dropdown-item icon-arrow  text-dark" href="#"> Search Result </a>
+                                        <ul class="submenu dropdown-menu  animate fade-up">
+                                            <li><a class="dropdown-item" href="/search-result.html">Style 1</a></li>
+                                            <li><a class="dropdown-item" href="/search-result-v1.html">Style 2</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="dropdown-item  text-dark" href="/login.html">Login </a>
+                                    <li><a class="dropdown-item  text-dark" href="/register.html"> Register </a>
+                                    <li><a class="dropdown-item  text-dark" href="/contact.html"> Contact </a>
+                                    <li><a class="dropdown-item  text-dark" href="/404.html"> 404 Error </a>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link active dropdown-toggle  text-dark" href="#"
+                                   data-toggle="dropdown"> About
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-left">
+                                    <li><a class="dropdown-item" href="/about-us.html"> Style 1 </a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/about-us-v1.html"> Style 2 </a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item"><a class="nav-link  text-dark" href="#"> Category </a></li>
+                            <li class="nav-item"><a class="nav-link  text-dark" href="/contact.html"> contact </a>
+                            </li>
+                        </ul>
+
+                    </nav>
+                </div>
+                <div class="modal-footer">
+
+
+                    <p>© 2020 <a href="http://retenvi.com"
+                                 title="Premium WordPress news &amp; magazine theme">Magzrenvi</a>
+                        -
+                        Premium template news, blog & magazine &amp;
+                        magazine theme by <a href="http://retenvi.com" title="retenvi">RETENVI.COM</a>.</p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End Navbar  -->
+
+    <!-- Tranding News -->
+    {{--        @if(\Illuminate\Support\Facades\Request::segments (1) == 'index' or \Illuminate\Support\Facades\Request::segments (1) == '')--}}
+    <x-web-trending/>
+    {{--        @endif--}}
+    <!-- End Tranding News -->
 </header>

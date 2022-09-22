@@ -77,36 +77,59 @@ class LogoController extends Controller
     public function update(Request $request)
     {
         try{
-            $validator = Validator::make($request->all(), [
-                'logo_image' => 'required',
-            ]);
-            if ($validator->fails()) {
-                return sendError($validator->messages()->first(), null);
+            $data = [];
+            if (isset($request->logo_image_header) && $request->logo_image_header != ''){
+                $validator = Validator::make($request->all(), [
+                    'logo_image_header' => 'required',
+                ]);
+                if ($validator->fails()) {
+                    return sendError($validator->messages()->first(), null);
+                }
+                $logo_image_header = addFile ($request->logo_image_header, 'upload/logo-images/');
+                if ($logo_image_header['file_path'] ) {
+                    $data['logo_image_header'] = $logo_image_header['file_path'];
+                }
+            }
+
+            if (isset($request->logo_image_header) && $request->logo_image_header != ''){
+                $validator = Validator::make($request->all(), [
+                    'logo_image_footer' => 'required',
+                ]);
+                if ($validator->fails()) {
+                    return sendError($validator->messages()->first(), null);
+                }
+                $logo_image_footer = addFile ($request->logo_image_footer, 'upload/logo-images/');
+                if ($logo_image_footer['file_path'] ) {
+                    $data['logo_image_footer'] = $logo_image_footer['file_path'];
+                }
             }
             $request->except(['_token']);
             $request->merge(["id"=>"1"]);
             $logo = Logo::find($request->id);
 
-            $data = [];
+//            dd ($logo);
 
-            $image_path = addFile ($request->logo_image, 'blog_image/');
-            if ($image_path['file_path']){
-                $data['logo_image'] = $image_path['file_path'];
+            if ($logo){
 
-                if (!$logo){
-                    if(Logo::create($data)){
-                        return sendSuccess('Logo inserted successfully...!!!', null);
-                    }
-                } else{
-                    if (File::exists(public_path($logo->logo_image))) {
-                        unlink(public_path($logo->logo_image));
-                    }
-                    if($logo->update($data)){
-                        return sendSuccess('Logo updated successfully...!!!', null);
-                    }
+//                if (isset($request->logo_image_header) && $request->logo_image_header != '') {
+//                    dd (File::exists(public_path($logo->logo_image_header)));
+//                    unlink(public_path($logo->logo_image_header));
+//                }
+//
+//                if (isset($request->logo_image_footer) && $request->logo_image_footer != '' && File::exists(public_path($logo->logo_image_footer))) {
+//                    unlink(public_path($logo->logo_image_footer));
+//                }
+
+                if($logo->update($data)){
+                    return sendSuccess('Logo updated successfully...!!!', null);
                 }
-                return sendError ('Something went wrong...!!!', null);
+
+            } else{
+                if(Logo::create($data)){
+                    return sendSuccess('Logo inserted successfully...!!!', null);
+                }
             }
+            return sendError ('Something went wrong...!!!', null);
         } catch(Exception $e){
             return $e;
         }

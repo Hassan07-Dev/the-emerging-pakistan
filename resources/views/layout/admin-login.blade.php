@@ -25,7 +25,7 @@
 <script>
     $(document).ready(function () {
         $('#login-btn').click(function () {
-            $(this).html('<div class="spinner-border text-white mr-2 align-self-center loader-sm"></div>Wait...');
+            $(this).html('<div class="spinner-border text-white mr-2 align-self-center loader-sm" style="width: 1rem;height: 1rem;"></div>Wait...');
             $(this).addClass('no-click');
         });
     })

@@ -26,8 +26,7 @@ class WebFooter extends Component
     public function render()
     {
         $logo = Logo::where('id', 1)->first();
-        $blog_list = Blog::where('status', 1)->get()->random(3);
-        return view('components.web-footer', compact ('logo','blog_list'));
+        return view('components.web-footer', compact ('logo'));
 
     }
 }
