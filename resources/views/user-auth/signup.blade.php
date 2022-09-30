@@ -190,7 +190,7 @@
                 var idCountry = this.value;
                 $("#city").html('');
                 $.ajax({
-                    url: "{{ route('user.fetch.cities')}}",
+                    url: "{{ route('user.fetch.citiess')}}",
                     type: "POST",
                     data: {
                         country_id: idCountry,
