@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->nullable();
+            $table->string('username')->unique()->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique()->nullable();
@@ -23,6 +23,9 @@ class CreateUsersTable extends Migration
             $table->enum('gender', ['Male', 'Female', 'Other'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->string('phone_no')->nullable();
+            $table->string('google_id')->nullable();
+            $table->string('fb_id')->nullable();
             $table->string('website')->nullable();
             $table->string('bio')->nullable();
             $table->string('country')->nullable();

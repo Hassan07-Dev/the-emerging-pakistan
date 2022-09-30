@@ -17,6 +17,8 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->bigInteger('blog_id')->unsigned()->nullable ();
             $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
+            $table->bigInteger('user_id')->unsigned()->nullable ();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string ('name')->nullable ();
             $table->string ('email')->nullable ();
             $table->string ('comment_text')->nullable ();

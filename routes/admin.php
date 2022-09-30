@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\TrendingNewsController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -75,11 +77,35 @@ Route::group(['middleware' => 'auth.admin'], function () {
             Route::controller (BlogController::class)->group (function (){
                 Route::get ('/list', 'index')->name ('list');
                 Route::get ('/blog/list', 'edit')->name ('blog.list');
+                Route::get ('/blog/users/list', 'editUsers')->name ('blog.list.users');
                 Route::post ('/blog/create', 'create')->name ('blog.create');
                 Route::post ('/blog/delete', 'destroy')->name ('blog.delete');
                 Route::post ('/blog/show', 'show')->name ('blog.show');
                 Route::post ('/blog/update', 'update')->name ('blog.update');
+
+                Route::get ('/users', 'userIndex')->name ('users.blogs');
+                Route::post ('/blog/user/change-status', 'statusChange')->name ('blog.users.status');
             });
         });
+
+        Route::controller (TrendingNewsController::class)->group (function (){
+            Route::get ('/news', 'index')->name ('news');
+            Route::get ('/news/list', 'edit')->name ('news.list');
+            Route::post ('/news/create', 'create')->name ('news.create');
+            Route::post ('/news/delete', 'destroy')->name ('news.delete');
+            Route::post ('/news/show', 'show')->name ('news.show');
+            Route::post ('/news/update', 'update')->name ('news.update');
+        });
+
+        Route::controller (UserController::class)->group (function (){
+            Route::get ('/users', 'index')->name ('users');
+            Route::get ('/users/list', 'edit')->name ('users.list');
+//            Route::post ('/users/create', 'create')->name ('users.create');
+            Route::post ('/users/delete', 'destroy')->name ('users.delete');
+            Route::post ('/usesr/block', 'block')->name ('users.block');
+            Route::post ('/users/show', 'show')->name ('users.show');
+//            Route::post ('/users/update', 'update')->name ('users.update');
+        });
+
     });
 });

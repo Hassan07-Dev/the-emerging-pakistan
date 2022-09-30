@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreBlogCategoryRequest;
-use App\Http\Requests\UpdateBlogCategoryRequest;
+use App\Http\Requests\StoreTrendingNewsRequest;
+use App\Http\Requests\UpdateTrendingNewsRequest;
 use App\Models\BlogCategory;
-use Illuminate\Support\Facades\Validator;
+use App\Models\TrendingNews;
 use Illuminate\Http\Request;
-use DataTables;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
+use DataTables;
 
-class BlogCategoryController extends Controller
+
+class TrendingNewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +22,7 @@ class BlogCategoryController extends Controller
      */
     public function index()
     {
-        return view ('admin.blog-module.category');
+        return view ('admin.trending-news');
     }
 
     /**
@@ -31,7 +33,7 @@ class BlogCategoryController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'category_name' => 'required|string',
+            'news_text' => 'required|string',
         ]);
         if ($validator->fails()) {
             return sendError($validator->messages()->first(), null);
@@ -39,25 +41,25 @@ class BlogCategoryController extends Controller
 
         $input = $request->except(['_token']);
 
-        if (isset($request->category_image) && $request->category_image != ''){
+        if (isset($request->news_image) && $request->news_image != ''){
             $validator = Validator::make($request->all(), [
-                'category_image'=>'required|image'
+                'news_image'=>'required|image'
             ]);
             if ($validator->fails()) {
                 return sendError($validator->messages()->first(), null);
             }
 
-            $image_path = addFile ($request->category_image, 'upload/category_image/');
+            $image_path = addFile ($request->news_image, 'upload/trending-news/');
 
             if($image_path['type'] == 'image'){
-                $input['category_image'] = $image_path['file_path'];
+                $input['news_image'] = $image_path['file_path'];
             }
         }
 
-        $input['category_name'] = $request->category_name;
+        $input['news_text'] = $request->news_text;
 
-        $tag = BlogCategory::create($input);
-        if ($tag){
+        $trending_news = TrendingNews::create($input);
+        if ($trending_news){
             return sendSuccess ('Created successfully...!!!', null);
         }
         return sendError ('Something went wrong...!!!', null);
@@ -66,18 +68,18 @@ class BlogCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreBlogCategoryRequest  $request
+     * @param  \App\Http\Requests\StoreTrendingNewsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTrendingNewsRequest $request)
     {
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\BlogCategory  $blogCategory
+     * @param  \App\Models\TrendingNews  $trendingNews
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
@@ -90,10 +92,10 @@ class BlogCategoryController extends Controller
             return sendError($validator->messages()->first(), null);
         }
 
-        $category = BlogCategory::find($request->id);
+        $trending_news = TrendingNews::find($request->id);
 
         $data = array(
-            'category' => $category,
+            'news' => $trending_news,
         );
 
         if(!$data){
@@ -105,13 +107,13 @@ class BlogCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BlogCategory  $blogCategory
+     * @param  \App\Models\TrendingNews  $trendingNews
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
     {
         if ($request->ajax()) {
-            $data = BlogCategory::latest()->get();
+            $data = TrendingNews::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action',function($row){
@@ -128,15 +130,15 @@ class BlogCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateBlogCategoryRequest  $request
-     * @param  \App\Models\BlogCategory  $blogCategory
+     * @param  \App\Http\Requests\UpdateTrendingNewsRequest  $request
+     * @param  \App\Models\TrendingNews  $trendingNews
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'id' => 'required',
-            'category_name' => 'required|string'
+            'news_text' => 'required|string'
         ]);
         if ($validator->fails()) {
             return sendError($validator->messages()->first(), null);
@@ -144,33 +146,33 @@ class BlogCategoryController extends Controller
 
 
         try{
-            $tag = BlogCategory::find($request->id);
+            $trending_news = TrendingNews::find($request->id);
 
-            if (isset($request->category_image)){
+            if (isset($request->news_image)){
                 $validator = Validator::make($request->all(), [
-                    'category_image'=>'required|image',
+                    'news_image'=>'required|image',
                 ]);
                 if ($validator->fails()) {
                     return sendError($validator->messages()->first(), null);
                 }
 
-                $image_path = addFile ($request->category_image, 'upload/category_image/');
+                $image_path = addFile ($request->news_image, 'upload/trending-news/');
                 if ($image_path['file_path']){
-                    if($tag->category_image != null){
-                        if (File::exists(public_path($tag->category_image))) {
-                            unlink(public_path($tag->category_image));
+                    if($trending_news->news_image != null){
+                        if (File::exists(public_path($trending_news->news_image))) {
+                            unlink(public_path($trending_news->news_image));
                         }
                     }
-                    $data['category_image'] = $image_path['file_path'];
+                    $data['news_image'] = $image_path['file_path'];
                 }
             }
 
 
-            $data['category_name'] = $request->category_name;
+            $data['news_text'] = $request->news_text;
             $data['status'] = $request->status;
 
-            if($tag->update($data)){
-                return sendSuccess('Category updated successfully...!!!', null);
+            if($trending_news->update($data)){
+                return sendSuccess('Trending News updated successfully...!!!', null);
             }
             return sendError ('Something went wrong...!!!', null);
         } catch(Exception $e){
@@ -181,7 +183,7 @@ class BlogCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BlogCategory  $blogCategory
+     * @param  \App\Models\TrendingNews  $trendingNews
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
@@ -194,14 +196,14 @@ class BlogCategoryController extends Controller
             return sendError($validator->messages()->first(), null);
         }
 
-        $catgeory = BlogCategory::find($request->id);
+        $catgeory = TrendingNews::find($request->id);
 
         if(!$catgeory){
             return sendError ('Unable to find user.', null);
         }
 
         if ($catgeory->delete()){
-            return sendSuccess ('Category deleted successfully...!!!', null);
+            return sendSuccess ('Trending News deleted successfully...!!!', null);
         }else {
             return sendError ('Something went wrong...!!!', null);
         }

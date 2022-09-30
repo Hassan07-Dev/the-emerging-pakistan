@@ -30,6 +30,13 @@ class BlogController extends Controller
         return view ('admin.blog-module.blog', compact ('categorys', 'tags'));
     }
 
+    public function userIndex()
+    {
+        $categorys =  BlogCategory::where('status', 1)->get();
+        $tags =  Tag::where('status', 1)->get();
+        return view ('admin.blog-module.users-blogs', compact ('categorys', 'tags'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +47,6 @@ class BlogController extends Controller
         $validator = Validator::make($request->all(), [
             'category_id' => 'required',
             'tag_id'=>'required',
-            'arthur'=>'required',
             'blog_image'=>'required|image',
             'title'=>'required',
             'excerpt'=>'required',
@@ -50,17 +56,27 @@ class BlogController extends Controller
             return sendError($validator->messages()->first(), null);
         }
 
+        if(!isset(Auth::guard ('web')->user ()->id)){
+            $validator = Validator::make($request->all(), [
+                'arthur'=>'required',
+            ]);
+            if ($validator->fails()) {
+                return sendError($validator->messages()->first(), null);
+            }
+        }
+
         $image_path = addFile ($request->blog_image, 'blog_image/');
         if($image_path['type'] == 'image'){
             $input = $request->except(['_token']);
             $blog = Blog::create([
                 'category_id' => $request->category_id,
                 'user_id' => isset(Auth::guard ('web')->user ()->id)?Auth::gaurd('web')->user ()->id:null,
-                'arthur' => $request->arthur,
+                'arthur' => isset(Auth::guard ('web')->user ()->id)?null:$request->arthur,
                 'blog_image' => $image_path['file_path'],
                 'title' => $request->title,
                 'description' => $request->description,
                 'excerpt' => $request->excerpt,
+                'status'=> isset(Auth::guard ('web')->user ()->id)?'0':'1'
             ]);
 
             if ($blog){
@@ -146,12 +162,32 @@ class BlogController extends Controller
     public function edit(Request $request)
     {
         if ($request->ajax()) {
-            $data = Blog::with ('category', 'getTags')->latest()->get();
+            $data = Blog::with ('category', 'getTags')->whereNull ('user_id')->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action',function($row){
                     $btn = '<a id="edit_data" class="btn btn-primary btn-sm editProduct" data-original-title="Edit" data-id="'.$row->id.'"><i class="fas fa-pen text-white"></i></a>';
                     $btn = $btn.'<a id="delete_data" class="btn btn-danger btn-sm deleteProduct" data-original-title="Delete" data-id="'.$row->id.'"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])->make(true);
+        }
+    }
+
+    public function editUsers(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Blog::with ('getUser','category', 'getTags')->whereNotNull ('user_id')->latest()->orderBy ('status', 'ASC')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action',function($row){
+                    if($row->status == 0){
+                        $btn = '<a class="btn btn-primary btn-sm editProduct change_status_data" data-original-title="Edit" data-val="1" data-id="'.$row->id.'">Approve</a>';
+                    } else{
+                        $btn = '<a class="btn btn-primary btn-sm editProduct change_status_data" data-original-title="Edit" data-val="0" data-id="'.$row->id.'">Disable</a>';
+                    }
+                    $btn = $btn.'<a id="delete_data" class="btn btn-danger btn-sm deleteProduct ml-1" data-original-title="Delete" data-id="'.$row->id.'"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>';
 
                     return $btn;
                 })
@@ -263,6 +299,31 @@ class BlogController extends Controller
 
         if ($blog->delete()){
             return sendSuccess ('Blog deleted successfully...!!!', null);
+        }else {
+            return sendError ('Something went wrong...!!!', null);
+        }
+    }
+
+    public function statusChange(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id'	=> 'required',
+            'val'	=> 'required|in:0,1'
+        ]);
+
+        if ($validator->fails()) {
+            return sendError($validator->messages()->first(), null);
+        }
+
+        $blog = Blog::find($request->id);
+
+        if(!$blog){
+            return sendError ('Unable to find blog.', null);
+        }
+
+        if ($blog->update(['status'=>$request->val])){
+            $text = $request->val == '1'? 'approve':'disable';
+            return sendSuccess ('Blog '.$text.' successfully...!!!', null);
         }else {
             return sendError ('Something went wrong...!!!', null);
         }

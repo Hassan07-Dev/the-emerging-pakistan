@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactUsController;
@@ -36,6 +37,20 @@ Route::get('/adminseeder', function(){
 Route::controller (HomeController::class)->group (function (){
     Route::get ('/', 'index')->name ('home.index');
 });
+
+Route::controller (AuthController::class)->group (function (){
+    Route::get('register', 'register')->name('user.signup');
+    Route::post('register', 'registerPost')->name('user.signup.post');
+    Route::get('login', 'index')->name('user.login');
+    Route::post('login', 'loginPost')->name('user.login.post');
+    Route::get('forgot/password', 'forgotPassword')->name('user.forgot.password')->middleware('guest');
+    Route::post('forgot/password', 'forgotPasswordPost')->name('user.forgot.password.post');
+    Route::get('/verify/forgot-password/{token}', 'resetPassword')->name('user.verify.forgot.password');
+    Route::post('/update/password', 'updatePassword')->name('user.update.password');
+    Route::get('logout', 'logout')->name('user.logout');
+
+});
+
 
 Route::get ('/write-for-us', function (){
     return view ('write-for-us');

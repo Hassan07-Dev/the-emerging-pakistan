@@ -20,4 +20,6 @@
     <link href="{{ asset('assets/css/styles.css?537a1bbd0e5129401d28') }}" rel="stylesheet">
 </head>
 
-<body class="body-box bg-news-image">
+<body class="body-box">
+
+

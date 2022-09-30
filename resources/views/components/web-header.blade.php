@@ -1,4 +1,5 @@
 <header>
+    @if(\Illuminate\Support\Facades\Request::segment (1) != 'login' && \Illuminate\Support\Facades\Request::segment (1) != 'register')
     <!-- Navbar  -->
     <div class="topbar d-none d-sm-block">
         <div class="container ">
@@ -14,7 +15,11 @@
                     <div class="list-unstyled topbar-right">
                         <ul class="topbar-link">
                             <li><a href="#" title="">Contact Us</a></li>
-                            <li><a href="#" title="">Login / Register</a></li>
+                            @if(\Illuminate\Support\Facades\Auth::check ())
+                                <li><a href="{{ route ('user.logout') }}" title="">Logout</a></li>
+                            @else
+                                <li><a href="{{ route ('user.login') }}" title="">Login</a>/<a href="{{ route ('user.signup') }}" title="">Register</a></li>
+                            @endif
                         </ul>
                         <ul class="topbar-sosmed">
                             <li>
@@ -57,7 +62,7 @@
         </div>
     </div>
     <!-- end logo -->
-
+    @endif
     <!-- navbar -->
     <div class="navigation-wrap navigation-shadow bg-white">
         <nav class="navbar navbar-hover navbar-expand-lg navbar-soft  ">
@@ -442,8 +447,8 @@
     <!-- End Navbar  -->
 
     <!-- Tranding News -->
-    {{--        @if(\Illuminate\Support\Facades\Request::segments (1) == 'index' or \Illuminate\Support\Facades\Request::segments (1) == '')--}}
-    <x-web-trending/>
-    {{--        @endif--}}
+    @if(\Illuminate\Support\Facades\Request::segment (1) == 'index' or \Illuminate\Support\Facades\Request::segment (1) == '')
+        <x-web-trending/>
+    @endif
     <!-- End Tranding News -->
 </header>

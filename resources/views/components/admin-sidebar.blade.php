@@ -50,6 +50,30 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item {{ (Request::segment(2) == 'news') ? 'menu-open' : '' }}">
+                    <a href="{{ route ('admin.news') }}" class="nav-link {{ (Request::segment(2) == 'news') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Trending News
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item {{ (Request::segment(2) == 'users') ? 'menu-open' : '' }}">
+                    <a href="{{ route ('admin.users') }}" class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Users Lists
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item {{ (Request::segment(3) == 'users') ? 'menu-open' : '' }}">
+                    <a href="{{ route ('admin.users.blogs') }}" class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Users Blogs
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item {{ (Request::segment(2) == 'blog') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ (Request::segment(2) == 'blog') ? 'active' : '' }}">
                         <i class="nav-icon fa-solid fa-blog"></i>
