@@ -48,7 +48,6 @@ Route::controller (AuthController::class)->group (function (){
     Route::get('/verify/forgot-password/{token}', 'resetPassword')->name('user.verify.forgot.password');
     Route::post('/update/password', 'updatePassword')->name('user.update.password');
     Route::get('logout', 'logout')->name('user.logout');
-
 });
 
 
