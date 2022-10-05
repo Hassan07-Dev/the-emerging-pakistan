@@ -1,5 +1,5 @@
 <header>
-    @if(\Illuminate\Support\Facades\Request::segment (1) != 'login' && \Illuminate\Support\Facades\Request::segment (1) != 'register')
+    @if(\Illuminate\Support\Facades\Request::segment (1) != 'login' && \Illuminate\Support\Facades\Request::segment (1) != 'register' && \Illuminate\Support\Facades\Request::segment (1) != 'forgot')
     <!-- Navbar  -->
     <div class="topbar d-none d-sm-block">
         <div class="container ">

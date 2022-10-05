@@ -39,8 +39,11 @@ Route::controller (HomeController::class)->group (function (){
 });
 
 Route::controller (AuthController::class)->group (function (){
+    Route::get('verify_email/{key}', 'verifyEmail')->name('user.verify');
+
     Route::get('register', 'register')->name('user.signup');
     Route::post('register', 'registerPost')->name('user.signup.post');
+    Route::post('fetch/cities', 'getCities')->name('user.fetch.citiess');
     Route::get('login', 'index')->name('user.login');
     Route::post('login', 'loginPost')->name('user.login.post');
     Route::get('forgot/password', 'forgotPassword')->name('user.forgot.password')->middleware('guest');

@@ -42,7 +42,7 @@
                                     @enderror
                                 </div> <!-- form-group// -->
                                 <div class="form-group">
-                                    <input id="password" type="password" placeholder="Enter Password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="off">
+                                    <input id="password" type="password" placeholder="Enter Password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" autocomplete="off">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -52,10 +52,15 @@
                                 </div> <!-- form-group// -->
 
                                 <div class="form-group">
-                                    <a href="#" class="float-right">Forgot password?</a>
-                                    <label class="float-left custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <a href="{{ route ('user.forgot.password') }}" class="float-right">Forgot password?</a>
+                                    <label class="float-left custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input @error('remember') is-invalid @enderror" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                         <span class="custom-control-label"> Remember </span>
                                     </label>
+                                    @error('remember')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div> <!-- form-group form-check .// -->
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-block"> Login</button>
@@ -64,7 +69,7 @@
                         </div> <!-- card-body.// -->
                     </div> <!-- card .// -->
 
-                    <p class="text-center mt-4">Don't have account? <a href="#">Sign up</a></p>
+                    <p class="text-center mt-4">Don't have account? <a href="{{ route ('user.signup') }}">Register</a></p>
                 </div>
             </div>
         </div>

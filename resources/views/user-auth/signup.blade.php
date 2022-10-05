@@ -11,13 +11,27 @@
 
                     <div class="card mx-auto" style="max-width:520px;">
                         <article class="card-body">
+                            @if( session()->has('error') )
+                                <div class="alert alert-danger alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Error!</strong> {{ session()->get('error') }}
+                                </div>
+                            @endif
+
+                            @if( session()->has('success') )
+                                <div class="alert alert-success alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Success!</strong> {{ session()->get('success') }}
+                                </div>
+                            @endif
                             <header class="mb-4">
                                 <h4 class="card-title">Sign up</h4>
                             </header>
                             <form method="POST" action="{{ route('user.signup.post') }}">
+                                @csrf
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input type="text" class="form-control @error('usernames') is-invalid @enderror" name="usernames" value="{{ old('usernames') }}" id="usernames"
+                                    <input type="text" class="form-control @error('usernames') is-invalid @enderror" name="username" value="{{ old('username') }}" id="usernames"
                                            placeholder="Enter username">
                                     <span id="usercheck" style="color: red;">
                                         <small>**Username is required</small>
@@ -86,7 +100,7 @@
                                             <option disabled="disabled" selected> -- Select Country --</option>
                                             @if(isset($countries) && $countries)
                                                 @foreach($countries as $country)
-                                                    <option {{ old ('country') == $country->id?'selected':'' }} value="{{ $country->id }}" data-id="{{ $country->name }}">{{ $country->name }}</option>
+                                                    <option value="{{ $country->id }}" data-id="{{ $country->name }}">{{ $country->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -101,7 +115,7 @@
                                         <select id="city" name="city" class="form-control  @error('city') is-invalid @enderror">
                                             <option disabled="disabled" selected> -- Select City --</option>
                                         </select>
-                                        @error('country')
+                                        @error('city')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -111,12 +125,15 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Create password</label>
-                                        <input class="form-control  @error('usernames') is-invalid @enderror" name="password" type="password" placeholder="Enter password">
+                                        <input class="form-control @error('usernames') is-invalid @enderror" id="password" name="password" type="password" placeholder="Enter password">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Repeat password</label>
-                                        <input class="form-control  @error('usernames') is-invalid @enderror" name="confirm_password" type="password" placeholder="Confirm password">
+                                        <input class="form-control @error('usernames') is-invalid @enderror" id="confirm_password" name="confirm_password" type="password" placeholder="Confirm password">
                                     </div>
+                                    <span id="passwordcheck" style="color: red;">
+                                        <small>**Password is required</small>
+                                    </span>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -124,21 +141,24 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label class="custom-control custom-checkbox"> <input type="checkbox" name="term_condition" class="custom-control-input @error('term_condition') is-invalid @enderror">
+                                        <span class="custom-control-label"> I am agree with <a href="#">terms and contitions</a> </span>
+                                    </label>
+                                    @error('term_condition')
+                                         <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <button type="submit" id="register_btn" class="btn btn-primary btn-block">
                                         Register
                                     </button>
                                 </div>
-                                <div class="form-group">
-                                    <label class="custom-control custom-checkbox"> <input type="checkbox"
-                                                                                          class="custom-control-input"
-                                                                                          checked="">
-                                        <span class="custom-control-label"> I am agree with <a href="#">terms and
-                                                    contitions</a> </span>
-                                    </label>
-                                </div>
                             </form>
                         </article><!-- card-body.// -->
                     </div>
+                    <p class="text-center mt-4">Already have account? <a href="{{ route ('user.login') }}">Log in</a></p>
                     <!-- end register -->
                 </div>
             </div>
@@ -150,9 +170,42 @@
     <script>
         $(document).ready(function () {
             $("#usercheck").hide();
-            let usernameError = true;
+            $("#passwordcheck").hide();
             $(document).on('keyup', '#usernames', function () {
                 validateUsername();
+            });
+
+            $(document).on('keyup', '#password', function () {
+                var passwordValue = $("#password").val();
+                if (passwordValue.length == "") {
+                    $("#passwordcheck").show();
+                    $('#register_btn').attr('disabled','disabled');
+                    return false;
+                } else if (passwordValue.length < 6 || passwordValue.length > 20) {
+                    $("#passwordcheck").show();
+                    $("#passwordcheck").html("<small>**length of password must be greater than 6</small>");
+                    $('#register_btn').attr('disabled','disabled');
+                    return false;
+                } else {
+                    $("#passwordcheck").hide();
+                    $('#register_btn').removeAttr('disabled','disabled');
+                }
+            });
+
+            $(document).on('keyup', '#confirm_password', function () {
+                var passwordValue = $("#confirm_password").val();
+                if (passwordValue.length == "") {
+                    $("#passwordcheck").show();
+                    $('#register_btn').attr('disabled','disabled');
+                    return false;
+                } else if (document.getElementById('password').value != passwordValue) {
+                    $("#passwordcheck").show();
+                    $("#passwordcheck").html("<small>**password and confirm password is not match.</small>");
+                    $('#register_btn').attr('disabled','disabled');
+                } else {
+                    $("#passwordcheck").hide();
+                    $('#register_btn').removeAttr('disabled','disabled');
+                }
             });
 
             function validateUsername() {
@@ -162,7 +215,7 @@
                     usernameError = false;
                     $('#register_btn').attr('disabled','disabled');
                     return false;
-                } else if (usernameValue.length < 3 || usernameValue.length > 10) {
+                } else if (usernameValue.length < 3 || usernameValue.length > 20) {
                     $("#usercheck").show();
                     $("#usercheck").html("<small>**length of username must be between 3 and 10</small>");
                     $('#register_btn').attr('disabled','disabled');
@@ -186,23 +239,55 @@
                 }
             }
 
+            function check_pass() {
+                let passwordValue = $("#usernames").val();
+                if (passwordValue.length == "") {
+                    $("#passwordcheck").show();
+                    $('#register_btn').attr('disabled','disabled');
+                    return false;
+                } else if (passwordValue.length < 6 || passwordValue.length > 20) {
+                    $("#passwordcheck").show();
+                    $("#passwordcheck").html("<small>**length of password must be greater than 6</small>");
+                    $('#register_btn').attr('disabled','disabled');
+                    return false;
+                }
+                if(passwordValue.length > 3) {
+                    if (document.getElementById('password').value == passwordValue) {
+                        $("#passwordcheck").show();
+                        $("#passwordcheck").html("<small>**password and confirm password is not match.</small>");
+                        $('#register_btn').attr('disabled','disabled');
+                    } else {
+                        document.getElementById('submit').disabled = true;
+                    }
+                }
+            }
+
             $(document).on('change', '#country', function () {
                 var idCountry = this.value;
                 $("#city").html('');
                 $.ajax({
-                    {{--url: "{{ route('user.fetch.citiess')}}",--}}
+                    url: "{{ route('user.fetch.citiess')}}",
                     type: "POST",
                     data: {
                         country_id: idCountry,
-                        _token: '{{csrf_token()}}'
+                        _token: '{{ csrf_token() }}'
                     },
                     dataType: 'json',
                     success: function (result) {
-                        $('#city').html('<option value=""> -- Select City -- </option>');
-                        $.each(result.states, function (key, value) {
-                            $("#city").append('<option value="' + value
-                                .id + '">' + value.name + '</option>');
-                        });
+
+                        if(result.status == true) {
+                            $('#city').html('<option value=""> -- Select City -- </option>');
+                            if(result.data.length > 0){
+                                $.each(result.data, function (key, value) {
+                                    $("#city").append('<option value="' + value
+                                        .id + '">' + value.name + '</option>');
+                                });
+                            } else {
+                                toastr.error('Not found any city!');
+                            }
+                        } else{
+                            toastr.error(result.message);
+                        }
                     }
                 });
             });
