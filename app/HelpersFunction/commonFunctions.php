@@ -1,6 +1,8 @@
 <?php
 
 
+use Carbon\Carbon;
+
 function sendSuccess($message, $data) {
     return array('status' => true, 'message' => $message, 'data' => $data);
 }
@@ -67,4 +69,12 @@ function addFile($file, $path) {
     } else {
         return FALSE;
     }
+}
+
+function getTimeDifferenceInMinute($t1, $t2)
+{
+    $startTime = Carbon::parse($t1);
+    $endTime = Carbon::parse($t2);
+    $totalDuration = $endTime->diffInMinutes($startTime);
+    return  $totalDuration;
 }

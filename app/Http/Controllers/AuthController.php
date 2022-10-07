@@ -163,8 +163,6 @@ class AuthController extends Controller
         $this->validate($request, [
             'username' => 'required',
         ]);
-
-        DB::beginTransaction();
         try {
             $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
@@ -179,23 +177,28 @@ class AuthController extends Controller
                     $status->save();
                     $data[ 'token' ] = $activate_code;
                     $data[ 'name' ]  = $status->first_name." ".$status->first_name;
-                    \Mail::to($request->email)->send(new \App\Mail\ResetPassword($data));
-                    DB::commit();
-                    return redirect()->back()->with('success' , "Password reset link has been sent to this email") ;
+                    \Mail::to($status->email)->send(new \App\Mail\ResetPassword($data));
+                    return redirect()->back()->with('success' , "Password reset link has been sent to your email") ;
                 }
 
             }else{
-                return redirect()->back()->with('error' , "Email doesn't exist.") ;
+                return redirect()->back()->with('error' , "User doesn't exist.") ;
             }
         } catch (\Exception $e) {
-            DB::rollback();
             return redirect()->back()->with('error', "something went wrong.") ;
         }
     }
 
-    public function resetPassword (Request $request)
+    public function resetPassword ($token)
     {
-
+        $user_record = User::where('remember_token', $token)->first();
+        if ($user_record) {
+            if(getTimeDifferenceInMinute ($user_record->updated_at, Carbon::now ()) < 5){
+                return view('user-auth.reset-password' , compact('token')) ;
+            }
+            return redirect()->route('user.login')->with('error' , 'Your link has been expired.') ;
+        }
+        return redirect()->route('user.login')->with('error' , 'Something went wrong.') ;
     }
 
     public function updatePassword (Request $request)
