@@ -10,4 +10,8 @@ class BlogTag extends Model
     use HasFactory;
 
     protected $table = "blog_tag";
+
+    public function getTags(){
+        return $this->belongsTo(Tag::class, 'tag_id', 'id');
+    }
 }

@@ -63,7 +63,7 @@ class AuthController extends Controller
             'city' => 'required|exists:cities,id',
             'password' => 'required|min:6',
             'confirm_password' => 'required|same:password',
-            'term_condition' => 'required',
+            'remember' => 'required',
         ]);
 
         DB::beginTransaction();

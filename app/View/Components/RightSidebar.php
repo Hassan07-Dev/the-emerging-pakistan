@@ -4,6 +4,8 @@ namespace App\View\Components;
 
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\BlogTag;
+use App\Models\Tag;
 use Illuminate\View\Component;
 
 class RightSidebar extends Component
@@ -26,7 +28,22 @@ class RightSidebar extends Component
     public function render()
     {
         $categories = BlogCategory::withCount('blog')->orderBy('blog_count', 'desc')->where('status', 1)->get();
-        $blog_latest = Blog::select('id', 'slug', 'blog_image', 'title')->where('status', 1)->latest()->first();
-        return view('components.right-sidebar', compact ('categories', 'blog_latest'));
+        $travels = BlogCategory::where('category_name', 'Travel')->with(['blog'=>function($q){
+                $q->where('status', 1);
+                $q->orderBy('created_at', 'DESC');
+                $q->limit(4);
+            }])
+            ->where('status', 1)->first();
+        $sports = BlogCategory::where('category_name', 'Sport')->with(['blog'=>function($q){
+                $q->where('status', 1);
+                $q->orderBy('created_at', 'DESC');
+                $q->limit(4);
+            }])
+            ->where('status', 1)->first();
+        $tags = BlogTag::with('getTags')->groupBy('tag_id')
+            ->selectRaw('count(*) as count, tag_id')
+            ->orderBy('count', 'DESC')
+            ->take(12)->get();
+        return view('components.right-sidebar', compact ('categories', 'travels', 'sports', 'tags'));
     }
 }

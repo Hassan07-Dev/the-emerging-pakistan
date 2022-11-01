@@ -40,7 +40,6 @@ Route::controller (HomeController::class)->group (function (){
 
 Route::controller (AuthController::class)->group (function (){
     Route::get('verify_email/{key}', 'verifyEmail')->name('user.verify');
-
     Route::get('register', 'register')->name('user.signup');
     Route::post('register', 'registerPost')->name('user.signup.post');
     Route::post('fetch/cities', 'getCities')->name('user.fetch.citiess');
@@ -53,26 +52,23 @@ Route::controller (AuthController::class)->group (function (){
     Route::get('logout', 'logout')->name('user.logout');
 });
 
-
-Route::get ('/write-for-us', function (){
-    return view ('write-for-us');
-});
-
-Route::prefix('services')->group(function () {
-    Route::controller (ServicesController::class)->group (function (){
-        Route::get ('/', 'index')->name ('services.index');
-        Route::get ('details/{slug}', 'details')->name ('services.details');
-    });
-});
-
 Route::prefix('blog')->group(function () {
     Route::controller (BlogController::class)->group (function (){
         Route::get ('/', 'index')->name ('blog.index');
         Route::get ('details/{slug}', 'blogDetails')->name ('blog.details');
-        Route::post ('/list', 'blogList')->name ('blog_list');
-
     });
 });
+
+Route::middleware(['auth','isBlocked'])->group(function () {
+    Route::prefix('blog')->group(function () {
+        Route::controller (BlogController::class)->group (function (){
+            Route::get ('/write-for-us', 'writeBlog')->name ('blog.writeBlog');
+            Route::post ('/blog/create', 'create')->name ('blog.create');
+        });
+    });
+});
+
+
 
 Route::prefix('faq')->group(function () {
     Route::controller (FaqController::class)->group (function (){

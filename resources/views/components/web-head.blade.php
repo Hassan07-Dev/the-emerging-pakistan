@@ -17,7 +17,14 @@
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.css') }}">
     <link href="{{ asset('assets/css/boxicons.min.css') }}" rel='stylesheet'>
     <link href="{{ asset('assets/css/styles.css?537a1bbd0e5129401d28') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+    <style>
+        .pagination {
+            display: flex;
+        }
+    </style>
+    <script src="{{ asset('plugins/axios.min.js') }}"></script>
 </head>
 
 <body class="body-box">

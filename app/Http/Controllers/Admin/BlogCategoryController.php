@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\HelpersFunction\Constants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBlogCategoryRequest;
 use App\Http\Requests\UpdateBlogCategoryRequest;
@@ -115,8 +116,13 @@ class BlogCategoryController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action',function($row){
-                    $btn = '<a id="edit_data" class="btn btn-primary btn-sm editProduct" data-original-title="Edit" data-id="'.$row->id.'"><i class="fas fa-pen text-white"></i></a>';
-                    $btn = $btn.'<a id="delete_data" class="btn btn-danger btn-sm deleteProduct" data-original-title="Delete" data-id="'.$row->id.'"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>';
+                    if(!in_array($row->category_name, Constants::categories_list)){
+                        $btn = '<a id="edit_data" class="btn btn-primary btn-sm editProduct" data-original-title="Edit" data-id="'.$row->id.'"><i class="fas fa-pen text-white"></i></a>';
+                        $btn = $btn.'<a id="delete_data" class="btn btn-danger btn-sm deleteProduct" data-original-title="Delete" data-id="'.$row->id.'"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>';
+                    } else {
+                        $btn = '<a class="btn btn-dark btn-sm disabled">Static Categories</a>';
+                    }
+
 
                     return $btn;
                 })

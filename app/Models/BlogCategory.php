@@ -9,9 +9,12 @@ class BlogCategory extends Model
 {
     use HasFactory;
 
+    protected $table = "blog_categories";
+
     protected $fillable = ['category_name', 'category_image', 'status'];
 
     public function blog(){
-        return $this->hasOne (Blog::class, 'category_id', 'id');
+        return $this->hasMany (Blog::class, 'category_id', 'id')->where('status', '1')
+            ->orderBy('created_at', 'DESC');
     }
 }

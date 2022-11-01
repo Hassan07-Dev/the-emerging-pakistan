@@ -10,23 +10,13 @@
                             <strong>trending news</strong>
                         </div>
                         <div class="trending-news-slider">
-                            <div class="item-single">
-                                <a href="javascript:void(0)">Lorem ipsum dolor sit amet, consectetur adipisicing
-                                    elit.
-                                    .</a>
-                            </div>
-                            <div class="item-single">
-                                <a href="javascript:void(0)">eugiat nisl pretium fusce id velit ut tortor
-                                </a>
-                            </div>
-                            <div class="item-single">
-                                <a href="javascript:void(0)">Morbi tincidunt augue interdum velit nunc
-                                    pulvinar sapien.</a>
-                            </div>
-                            <div class="item-single">
-                                <a href="javascript:void(0)">Tincidunt nunc pulvinar sapien et ligula
-                                    ullamcorper .</a>
-                            </div>
+                            @isset($trending_news)
+                                @foreach ($trending_news as $trending_new)
+                                    <div class="item-single">
+                                        <a href="javascript:void(0)">{{ $trending_new['news_text'] }}</a>
+                                    </div>
+                                @endforeach
+                            @endisset
                         </div>
                     </div>
                 </div>

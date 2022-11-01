@@ -291,7 +291,6 @@
                         getdata();
                         $('#blog_modal').modal('hide');
                         toastr.success(data.message);
-
                     }
                     buttonEnabled('submit_btn', 'Add Blog');
                 })

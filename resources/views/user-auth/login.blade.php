@@ -57,7 +57,7 @@
                                         <span class="custom-control-label"> Remember </span>
                                     </label>
                                     @error('remember')
-                                    <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror

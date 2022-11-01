@@ -13,4 +13,7 @@ class Constants
     /*************** User status ******************/
     const STATUS = 1;
     const UNBLOCKED_USER = 0;
+
+    /*************** Categories ******************/
+    const categories_list = ["Latest News", "Technology", "Bussiness", "Fashion", "Travel", "Sport"];
 }

@@ -110,7 +110,7 @@
                         name: 'category_image',
                         render: function (data, type, full, meta) {
                             path = "{{ env('APP_URL') }}/public/"
-                            return '<img src="'+path+data+'" width="150px" />';
+                            return '<img src="'+path+data+'" width="150px" alt="No-Images" />';
                         }
                     },
                     {

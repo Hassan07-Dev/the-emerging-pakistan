@@ -54,7 +54,7 @@
                 <div class="col-md-8 d-none d-sm-block ">
                     <figure class="mt-3 ">
                         <a href="#">
-                            <img src="images/placeholder/950x150.jpg" alt="" class="img-fluid">
+                            <img src="{{ asset('assets/images/placeholder/950x150.jpg') }}" alt="" class="img-fluid">
                         </a>
                     </figure>
                 </div>
@@ -88,7 +88,7 @@
                             <a class="nav-link active" href="{{ route ('home.index') }}"> Home </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="#"> Blogs </a>
+                            <a class="nav-link" href="{{ route ('blog.index') }}"> Blogs </a>
                         </li>
 
                         <li class="nav-item">
@@ -106,166 +106,41 @@
                                         <div class="popular__news-header-carousel">
 
                                             <div class="top__news__slider">
-                                                <div class="item">
-                                                    <!-- Post Article -->
-                                                    <div class="article__entry">
-                                                        <div class="article__image">
-                                                            <a href="#">
-                                                                <img src="images/placeholder/500x400.jpg" alt=""
-                                                                     class="img-fluid">
-                                                            </a>
-                                                        </div>
-                                                        <div class="article__content">
-                                                            <ul class="list-inline">
-                                                                <li class="list-inline-item">
-                                                                        <span class="text-primary">
-                                                                            by david hall
-                                                                        </span>,
-                                                                </li>
+                                                @isset($latest_news)
+                                                    @foreach($latest_news->blog as $latest_new)
+                                                        <div class="item">
+                                                            <!-- Post Article -->
+                                                            <div class="article__entry">
+                                                                <div class="article__image">
+                                                                    <a href="#">
+                                                                        <img src="{{ asset($latest_new['blog_image']) }}" alt=""
+                                                                             class="img-fluid">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="article__content">
+                                                                    <ul class="list-inline">
+                                                                        <li class="list-inline-item">
+                                                                                <span class="text-primary">
+                                                                                    by {{ $latest_new['arthur'] }}
+                                                                                </span>,
+                                                                        </li>
 
-                                                                <li class="list-inline-item">
-                                                                        <span>
-                                                                            descember 09, 2016
-                                                                        </span>
-                                                                </li>
-                                                            </ul>
-                                                            <h5>
-                                                                <a href="#">
-                                                                    Proin eu nisl et arcu iaculis placerat
-                                                                    sollicitudin ut est.
-                                                                </a>
-                                                            </h5>
+                                                                        <li class="list-inline-item">
+                                                                                <span>
+                                                                                    {{ Carbon\Carbon::parse($latest_new['created_at'])->format('M d, Y') }}
+                                                                                </span>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <h5>
+                                                                        <a href="#">
+                                                                            {{ $latest_new['title'] }}
+                                                                        </a>
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <!-- Post Article -->
-                                                    <div class="article__entry">
-                                                        <div class="article__image">
-                                                            <a href="#">
-                                                                <img src="images/placeholder/500x400.jpg" alt=""
-                                                                     class="img-fluid">
-                                                            </a>
-                                                        </div>
-                                                        <div class="article__content">
-                                                            <ul class="list-inline">
-                                                                <li class="list-inline-item">
-                                                                        <span class="text-primary">
-                                                                            by david hall
-                                                                        </span>,
-                                                                </li>
-
-                                                                <li class="list-inline-item">
-                                                                        <span>
-                                                                            descember 09, 2016
-                                                                        </span>
-                                                                </li>
-                                                            </ul>
-                                                            <h5>
-                                                                <a href="#">
-                                                                    Proin eu nisl et arcu iaculis placerat
-                                                                    sollicitudin ut est.
-                                                                </a>
-                                                            </h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <!-- Post Article -->
-                                                    <div class="article__entry">
-                                                        <div class="article__image">
-                                                            <a href="#">
-                                                                <img src="images/placeholder/500x400.jpg" alt=""
-                                                                     class="img-fluid">
-                                                            </a>
-                                                        </div>
-                                                        <div class="article__content">
-                                                            <ul class="list-inline">
-                                                                <li class="list-inline-item">
-                                                                        <span class="text-primary">
-                                                                            by david hall
-                                                                        </span>,
-                                                                </li>
-
-                                                                <li class="list-inline-item">
-                                                                        <span>
-                                                                            descember 09, 2016
-                                                                        </span>
-                                                                </li>
-                                                            </ul>
-                                                            <h5>
-                                                                <a href="#">
-                                                                    Proin eu nisl et arcu iaculis placerat
-                                                                    sollicitudin ut est.
-                                                                </a>
-                                                            </h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <!-- Post Article -->
-                                                    <div class="article__entry">
-                                                        <div class="article__image">
-                                                            <a href="#">
-                                                                <img src="images/placeholder/500x400.jpg" alt=""
-                                                                     class="img-fluid">
-                                                            </a>
-                                                        </div>
-                                                        <div class="article__content">
-                                                            <ul class="list-inline">
-                                                                <li class="list-inline-item">
-                                                                        <span class="text-primary">
-                                                                            by david hall
-                                                                        </span>,
-                                                                </li>
-
-                                                                <li class="list-inline-item">
-                                                                        <span>
-                                                                            descember 09, 2016
-                                                                        </span>
-                                                                </li>
-                                                            </ul>
-                                                            <h5>
-                                                                <a href="#">
-                                                                    Proin eu nisl et arcu iaculis placerat
-                                                                    sollicitudin ut est.
-                                                                </a>
-                                                            </h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <!-- Post Article -->
-                                                    <div class="article__entry">
-                                                        <div class="article__image">
-                                                            <a href="#">
-                                                                <img src="images/placeholder/500x400.jpg" alt=""
-                                                                     class="img-fluid">
-                                                            </a>
-                                                        </div>
-                                                        <div class="article__content">
-                                                            <ul class="list-inline">
-                                                                <li class="list-inline-item">
-                                                                        <span class="text-primary">
-                                                                            by david hall
-                                                                        </span>,
-                                                                </li>
-
-                                                                <li class="list-inline-item">
-                                                                        <span>
-                                                                            descember 09, 2016
-                                                                        </span>
-                                                                </li>
-                                                            </ul>
-                                                            <h5>
-                                                                <a href="#">
-                                                                    Proin eu nisl et arcu iaculis placerat
-                                                                    sollicitudin ut est.
-                                                                </a>
-                                                            </h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    @endforeach
+                                                @endisset
                                             </div>
 
                                         </div>
@@ -274,6 +149,7 @@
                             </div> <!-- dropdown-mega-menu.// -->
                         </li>
                         <li class="nav-item"><a class="nav-link" href="/contact.html"> Contact </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('blog.writeBlog') }}"> Write for us </a></li>
                     </ul>
 
 

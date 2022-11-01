@@ -14,8 +14,8 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <form id="blog_modal_form" onsubmit="return false;"
-                                      action="http://localhost/digital-agency-pakistan/admin/blog/blog/create"
+                                <form id="blog_modal_form"
+                                      action="{{ route('blog.create') }}"
                                       method="POST">
                                     <input name="id" type="hidden">
                                     <div class="form-group">
@@ -28,21 +28,10 @@
                                         <label for="exampleInputEmail1">Category <span
                                                 class="text-danger">*</span></label>
                                         <select class="form-control" name="category_id" id="category_id">
-                                            <option selected="" disabled="disabled"> -- Select Category -- </option>
-                                            <option value="4" data-name="Computer Science">Computer Science</option>
-                                            <option value="5" data-name="SEO">SEO</option>
-                                            <option value="6" data-name="Digital Marketing">Digital Marketing
-                                            </option>
-                                            <option value="7" data-name="Mobile Development">Mobile Development
-                                            </option>
-                                            <option value="8" data-name="Graphics Design">Graphics Design</option>
-                                            <option value="9" data-name="iOS Development">iOS Development</option>
-                                            <option value="10" data-name="Q/A Automations">Q/A Automations</option>
-                                            <option value="11" data-name="Wordpress Development">Wordpress
-                                                Development</option>
-                                            <option value="12" data-name="Backend Developer">Backend Developer
-                                            </option>
-                                            <option value="13" data-name="SEO Services">SEO Services</option>
+                                            <option selected disabled="disabled"> -- Select Category -- </option>
+                                            @foreach($categorys as $category)
+                                                <option value="{{ $category->id }}" data-name="{{ $category->category_name }}">{{ $category->category_name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -60,21 +49,16 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Excerpt <span
                                                 class="text-danger">*</span></label>
-                                        <textarea name="description" class="form-control"
+                                        <textarea name="excerpt" class="form-control"
                                                   id=""></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Tags <span class="text-danger">*</span></label>
                                         <select class="form-control" name="tag_id[]" id="tag_id" multiple=""
                                                 tabindex="-1" aria-hidden="true" data-select2-id="tag_id">
-                                            <option value="27" data-name="Graphics">Graphics</option>
-                                            <option value="28" data-name="Web">Web</option>
-                                            <option value="29" data-name="UI/UX">UI/UX</option>
-                                            <option value="30" data-name="Computer">Computer</option>
-                                            <option value="31" data-name="Development">Development</option>
-                                            <option value="32" data-name="Design">Design</option>
-                                            <option value="33" data-name="Business">Business</option>
-                                            <option value="34" data-name="Technology">Technology</option>
+                                            @foreach($tags as $tag)
+                                                <option value="{{ $tag->tag_name }}" data-name="{{ $tag->tag_name }}">{{ $tag->tag_name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -127,33 +111,65 @@
 
 @section('script')
     <script>
+        $('#description_summernote').summernote({
+            height: 400,
+            minHeight: null,
+            maxHeight: null,
+            focus: true,
+            fontSizeUnits: ['px', 'pt'],
+            dialogsInBody: false,
+            dialogsFade: false,
+            tooltip: false,
+            onInit : function(){
+                $('.note-editor [data-name="ul"]').tooltip('disable');
+            },
+            toolbar: [
+                ['para', ['ul']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript','fontname','fontsize','fontsizeunit','color','forecolor','backcolor','italic','underline','clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['Insert', ['picture','link','video','table','hr']],
+                ['Other', ['fullscreen', 'codeview']],
+            ],
+        });
+        $('#tag_id').select2({
+            tags: true
+        });
+
         $(document).ready(function () {
-            $('#description_summernote').summernote({
-                height: 400,
-                minHeight: null,
-                maxHeight: null,
-                focus: true,
-                fontSizeUnits: ['px', 'pt'],
-                dialogsInBody: false,
-                dialogsFade: false,
-                tooltip: false,
-                onInit : function(){
-                    $('.note-editor [data-name="ul"]').tooltip('disable');
-                },
-                toolbar: [
-                    ['para', ['ul']],
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript','fontname','fontsize','fontsizeunit','color','forecolor','backcolor','italic','underline','clear']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['height', ['height']],
-                    ['Insert', ['picture','link','video','table','hr']],
-                    ['Other', ['fullscreen', 'codeview']],
-                ],
+            $.ajaxSetup({
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
-            $('#tag_id').select2({
-                tags: true
+
+            $(document).on('submit', 'form#blog_modal_form', function (e) {
+                e.preventDefault();
+                var formdata = new FormData(this);
+                axios.post($(this).attr('action'),
+                    formdata,
+                    buttonDisable('submit_btn')
+                )
+                .then(function (response) {
+                    data = response.data;
+                    if(data.status == false){
+                        toastr.error(data.message);
+                    } else if(data.status == true){
+                        toastr.success(data.message);
+                        $('form#blog_modal_form').trigger('reset');
+                        window.location = "{{ route('home.index') }}";
+                    }
+                    buttonEnabled('submit_btn', 'Add Post');
+                })
+                .catch(function (error) {
+                    if (error.response.data.status == false) {
+                        buttonEnabled('submit_btn', 'Add Blog');
+                        toastr.error(error.response.data.message);
+                    }
+                });
             });
         });
     </script>

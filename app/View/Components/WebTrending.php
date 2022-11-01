@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\TrendingNews;
 use Illuminate\View\Component;
 
 class WebTrending extends Component
@@ -23,6 +24,7 @@ class WebTrending extends Component
      */
     public function render()
     {
-        return view('components.web-trending');
+        $trending_news = TrendingNews::select('news_text')->where('status', '1')->get()->toArray();
+        return view('components.web-trending', compact('trending_news'));
     }
 }

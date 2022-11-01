@@ -2,73 +2,88 @@
 
 
 @section('content')
-    <main>
-        <!-- page title area  -->
-        <section class="page-title-area breadcrumb-spacing" data-background="assets/img/bg/breadcrumb-bg.jpg" style="background-image: url(&quot;assets/img/bg/breadcrumb-bg.jpg&quot;);">
+        <section class="bg-content">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xxl-9">
-                        <div class="page-title-wrapper text-center">
-                            <h3 class="page-title mb-25">Blog</h3>
-                            <div class="breadcrumb-menu">
-                                <nav aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs">
-                                    <ul class="trail-items">
-                                        <li class="trail-item trail-begin"><a href="{{ route ('home.index') }}"><span>Home</span></a></li>
-                                        <li class="trail-item trail-end"><span>Blog</span></li>
-                                    </ul>
-                                </nav>
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- Category news -->
+                        <div class="wrapper__list__article">
+                            <h4 class="border_section">Latest Blog</h4>
+                            <div class="wrapp__list__article-responsive">
+                                @isset($latest_blogs)
+                                    @foreach($latest_blogs as $latest_blog)
+                                        <!-- Post Article List -->
+                                        <div class="card__post card__post-list card__post__transition mt-30">
+                                            <div class="row ">
+                                                <div class="col-md-5">
+                                                    <div class="card__post__transition">
+                                                        <a href="{{ route ('blog.details', [$latest_blog['slug']]) }}">
+                                                            <img src="{{ asset($latest_blog['blog_image']) }}" class="img-fluid w-100"
+                                                                 alt="Latest Blog Image">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7 my-auto pl-0">
+                                                    <div class="card__post__body ">
+                                                        <div class="card__post__content  ">
+                                                            <div class="card__post__category ">
+                                                                {{ $latest_blog['category']->category_name }}
+                                                            </div>
+                                                            <div class="card__post__author-info mb-2">
+                                                                <ul class="list-inline">
+                                                                    <li class="list-inline-item">
+                                                                    <span class="text-primary">
+                                                                        by {{ $latest_blog['arthur'] }}
+                                                                    </span>
+                                                                    </li>
+                                                                    <li class="list-inline-item">
+                                                                    <span class="text-dark text-capitalize">
+                                                                        {{ Carbon\Carbon::parse($latest_blog['created_at'])->format('M d, Y') }}
+                                                                    </span>
+                                                                    </li>
+
+                                                                </ul>
+                                                            </div>
+                                                            <div class="card__post__title">
+                                                                <h5>
+                                                                    <a href="{{ route ('blog.details', [$latest_blog['slug']]) }}">
+                                                                        {{ $latest_blog['title'] }}
+                                                                    </a>
+                                                                </h5>
+                                                                <p class="d-none d-lg-block d-xl-block mb-0">
+                                                                    {{ \Illuminate\Support\Str::of($latest_blog['excerpt'])->words(25) }}
+                                                                </p>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endisset
+
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-        <!-- page title area end -->
+                    <!-- End Category news -->
 
-        <!-- blog area start  -->
-        <section class="blog-2 pt-120 pb-115">
-            <div class="container">
-                <div class="row">
-                    @foreach($blogs as $blog)
-                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 mb-30">
-                            <div class="kblog">
-                                <div class="kblog-img">
-                                    <a href="{{ route ('blog.details', [$blog->slug]) }}"><img style="max-height: 300px;" src="{{ asset ($blog->blog_image) }}" class="img-fluid" alt="blog-img"></a>
-                                    <span>{{ Carbon\Carbon::parse ($blog->created_at)->format('d M') }}</span>
-                                </div>
-                                <div class="kblog-text">
-                                    <div class="kblog-meta">
-                                        <a href="{{ route ('blog.details', [$blog->slug]) }}"><i class="fal fa-user-circle"></i> {{ $blog->arthur }}</a>
-                                        <a href="{{ route ('blog.details', [$blog->slug]) }}"><i class="fal fa-comments"></i> 2 Comments</a>
-                                    </div>
-                                    <h3 class="kblog-text-title mb-20" style="height: 100px;"><a href="{{ route ('blog.details', [$blog->slug]) }}">{{ $blog->title }}</a></h3>
-                                    <div class="kblog-text-link">
-                                        <a href="{{ route ('blog.details', [$blog->slug]) }}">Read more <i class="far fa-chevron-right"></i></a>
-                                    </div>
-                                </div>
+                    <!-- Call Here  -->
+                    <x-right-sidebar />
+
+                    <div class="mx-auto">
+                        <!-- Pagination -->
+                        <div class="pagination-area">
+                            <div class="pagination wow fadeIn animated" data-wow-duration="2s" data-wow-delay="0.5s"
+                                 style="visibility: visible; animation-duration: 2s; animation-delay: 0.5s; animation-name: fadeIn;">
+                                {{ $latest_blogs->links('vendor.pagination.bootstrap-4') }}
                             </div>
                         </div>
-                    @endforeach
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="basic-pagination mt-20 wow fadeInUp" data-wow-delay=".5s" style="visibility: hidden; animation-delay: 0.5s; animation-name: none;">
-                            {{ $blogs->links('pagination::test') }}
-{{--                            <ul>--}}
-{{--                                <li><span aria-current="page" class="page-numbers current">1</span></li>--}}
-{{--                                <li><a class="page-numbers" href="#">2</a></li>--}}
-{{--                                <li><a class="page-numbers" href="#">3</a></li>--}}
-{{--                                <li><a class="next page-numbers" href="#">--}}
-{{--                                        <i class="fal fa-long-arrow-right"></i>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-                        </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </section>
-        <!-- blog area end  -->
-    </main>
 @endsection
