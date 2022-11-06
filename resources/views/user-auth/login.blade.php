@@ -26,12 +26,12 @@
 
                             <h4 class="card-title mb-4">Sign in</h4>
                             <form method="POST" action="{{ route('user.login.post') }}">
-                                <a href="#" class="btn btn-facebook btn-block mb-2 text-white"> <i class="fa fa-facebook"></i> &nbsp;
-                                    Sign in with Facebook
-                                </a>
-                                <a href="#" class="btn btn-primary btn-block mb-4"> <i class="fa fa-google"></i> &nbsp;
-                                    Sign in with Google
-                                </a>
+{{--                                <a href="#" class="btn btn-facebook btn-block mb-2 text-white"> <i class="fa fa-facebook"></i> &nbsp;--}}
+{{--                                    Sign in with Facebook--}}
+{{--                                </a>--}}
+{{--                                <a href="#" class="btn btn-primary btn-block mb-4"> <i class="fa fa-google"></i> &nbsp;--}}
+{{--                                    Sign in with Google--}}
+{{--                                </a>--}}
                                 <div class="form-group">
                                     <input id="username" placeholder="Enter Username/Email" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" autocomplete="off" autofocus>
 
