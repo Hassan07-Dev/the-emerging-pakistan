@@ -20,7 +20,7 @@ class HomeController extends Controller
         $categories = BlogCategory::with('blog')->withCount('blog')
             ->orderBy('blog_count', 'desc')
             ->where('status', 1)->get();
-        $latest_news = BlogCategory::where('category_name', 'Latest News')->with(['blog'=>function($q){
+        $digital_marketings = BlogCategory::where('category_name', 'Digital Marketing')->with(['blog'=>function($q){
                 $q->where('status', 1);
                 $q->orderBy('created_at', 'DESC');
                 $q->limit(6);
@@ -45,6 +45,6 @@ class HomeController extends Controller
             }])
             ->where('status', 1)->first();
         $latest_blogs = Blog::with('category')->where('status', 1)->latest()->paginate(10);
-        return view ('index', compact ('categories', 'latest_news', 'technologys', 'bussiness', 'fashions', 'latest_blogs' ));
+        return view ('index', compact ('categories', 'digital_marketings', 'technologys', 'bussiness', 'fashions', 'latest_blogs' ));
     }
 }

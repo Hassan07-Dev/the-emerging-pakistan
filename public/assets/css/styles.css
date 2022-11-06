@@ -17433,7 +17433,7 @@ body.offcanvas-active {
 }
 .button-align{
     display: flex;
-    justify-content: end;
+    justify-content: center;
 }
 .button-align-2{
     display: flex;
@@ -17441,11 +17441,45 @@ body.offcanvas-active {
 }
 
 .delete-edit-links{
+    color: red;
     display: flex;
     justify-content: end;
-    font-size: 20px;
+    margin-top: 15px;
 }
 
-.delete-edit-links>span{
+.delete-edit-links svg{
+    font-size: 20px;
     margin: 5px;
+}
+
+.pagination {
+    display: flex !important;
+}
+.scss-empty{
+    margin-right: unset !important;
+    margin-left: unset !important;
+}
+.scss-empty>[class*="col-"]{
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+}
+.heading-title-content{
+    display: flex;
+    flex-direction: column;
+    color: red;
+    padding: 20px 0 20px;
+    text-align: center;
+}
+.heading-title-content>label{
+    font-size: 30px;
+}
+.heading-title-content>span{
+    color: black;
+}
+
+.content_styling{
+    display: flex;
+    text-align: justify;
+    line-height: 30px;
+    font-size: 20px;
 }

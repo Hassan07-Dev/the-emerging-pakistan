@@ -217,12 +217,17 @@
                     @isset($categories)
                         @foreach($categories as $category)
                             <li>
-                                <a href="#">
+                                <a href="{{ route('blog.index', [strtolower(str_replace(' ', '-', $category->category_name))]) }}">
                                     {{ $category->category_name }}
                                     <span class="badge">{{ $category->blog_count }}</span>
                                 </a>
                             </li>
                         @endforeach
+                        <li>
+                            <a href="{{ route('blog.categoryList') }}">
+                                All Categories
+                            </a>
+                        </li>
                     @endisset
                 </ul>
             </div>

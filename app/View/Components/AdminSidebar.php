@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Comment;
 use Illuminate\View\Component;
 
 class AdminSidebar extends Component
@@ -23,6 +24,7 @@ class AdminSidebar extends Component
      */
     public function render()
     {
-        return view('components.admin-sidebar');
+        $commentCount = Comment::where('approval', '0')->count();
+        return view('components.admin-sidebar', compact('commentCount'));
     }
 }

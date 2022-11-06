@@ -24,8 +24,8 @@ class BlogFactory extends Factory
             'arthur'=> $this->faker->name,
             'blog_image'=> $this->faker->image,
             'title'=>$this->faker->sentence(10),
-            'description'=>$this->faker->paragraph(1000),
-            'excerpt'=>$this->faker->paragraph(140),
+            'description'=>$this->faker->paragraph(350),
+            'excerpt'=>$this->faker->paragraph(20),
             'status'=> Constants::STATUS,
         ];
     }

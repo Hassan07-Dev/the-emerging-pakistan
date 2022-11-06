@@ -13,7 +13,7 @@
                                 <i class="fa fa-home"></i> Home</a>
                         </li>
                         <li class="breadcrumbs__item">
-                            <a href="index.html" class="breadcrumbs__url">{{ $blog_details->category->category_name }}</a>
+                            <a href="{{ route('blog.index', [strtolower(str_replace(' ', '-', $blog_details->category->category_name))]) }}" class="breadcrumbs__url">{{ $blog_details->category->category_name }}</a>
                         </li>
                         <li class="breadcrumbs__item breadcrumbs__item--current">
                             {{ $blog_details->title }}
@@ -46,7 +46,7 @@
                                 <img src="{{ asset($blog_details->blog_image) }}" alt="" class="img-fluid">
                             </figure>
                         </div>
-                        <div class="wrap__article-detail-title">
+                        <div class="wrap__article-detail-title" id="post-title" data-id="{{ $blog_details->id }}">
                             <h1>
                                 {{ $blog_details->title }}
                             </h1>
@@ -60,44 +60,37 @@
                                     </figure>
                                 </li>
                                 <li class="list-inline-item">
-                        <span>
-                        by
-                        </span>
+                                    <span>
+                                    by
+                                    </span>
                                     <a href="#">
                                         {{ $blog_details->arthur }},
                                     </a>
                                 </li>
                                 <li class="list-inline-item">
-                        <span class="text-dark text-capitalize ml-1">
-                            {{ Carbon\Carbon::parse($blog_details->created_at)->format('M d, Y') }}
-                        </span>
+                                    <span class="text-dark text-capitalize ml-1">
+                                        {{ Carbon\Carbon::parse($blog_details->created_at)->format('M d, Y') }}
+                                    </span>
                                 </li>
                                 <li class="list-inline-item">
-                        <span class="text-dark text-capitalize">
-                        in
-                        </span>
+                                    <span class="text-dark text-capitalize">
+                                    in
+                                    </span>
                                     <a href="#">
                                         {{ $blog_details->category->category_name }},
                                     </a>
                                     ,
                                 </li>
-                                <li class="list-inline-item ">
-                        <span class="mr-1 ml-1">
-{{--                        <i class="fa fa-eye"></i>--}}
-{{--                            220--}}
-                        </span>
-                                </li>
-                                <!-- <li class="list-inline-item d-none d-md-block d-lg-none">
+                                <li class="list-inline-item">
                                    <a href="#comments" class="text-dark">
                                        <i class="fa fa-comment"></i>
-                                       3 comments
+                                       <span id="comment_count"></span>
                                    </a>
-
-                                   </li> -->
+                                </li>
                             </ul>
                         </div>
                         <hr>
-                        <div class="wrap__article-detail-content">
+                        <div class="wrap__article-detail-content content_styling">
                             {!! html_entity_decode ($blog_details->description) !!}
                         </div>
                     </div>
@@ -111,7 +104,7 @@
                             @isset($blog_details->getTags)
                                 @foreach($blog_details->getTags as $tag)
                                     <li class="list-inline-item">
-                                        <a href="#">
+                                        <a href="javascript:void(0)">
                                             #{{ $tag->tag_name }}
                                         </a>
                                     </li>
@@ -119,344 +112,70 @@
                             @endisset
                         </ul>
                     </div>
-                    <!-- Profile author -->
-                    <div class="wrap__profile">
-                        <div class="wrap__profile-author">
-                            <figure>
-                                <img src="images/placeholder/80x80.jpg" alt="" class="img-fluid rounded-circle">
-                            </figure>
-                            <div class="wrap__profile-author-detail">
-                                <div class="wrap__profile-author-detail-name">author</div>
-                                <h4>jhon doe</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis laboriosam ad
-                                    beatae itaque ea non
-                                    placeat officia ipsum praesentium! Ullam?
-                                </p>
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <a href="#" class="btn btn-social btn-social-o facebook ">
-                                            <i class="fa fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="btn btn-social btn-social-o twitter ">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="btn btn-social btn-social-o instagram ">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="btn btn-social btn-social-o telegram ">
-                                            <i class="fa fa-telegram"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="btn btn-social btn-social-o linkedin ">
-                                            <i class="fa fa-linkedin"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+                    @isset($blog_details->getUser)
+                        <div class="wrap__profile">
+                            <div class="wrap__profile-author">
+                                <figure>
+                                    <img src="{{ !$blog_details->getUser->profile_pic ? asset ('images/single_comment.png') : asset($blog_details->getUser->profile_pic) }}" alt="Profile-Image" class="img-fluid rounded-circle">
+                                </figure>
+                                <div class="wrap__profile-author-detail">
+                                    <div class="wrap__profile-author-detail-name">author</div>
+                                    <h4>{{ $blog_details->getUser->first_name.' '.$blog_details->getUser->last_name }}</h4>
+                                    <p style="height: 80px;">
+                                        {!! html_entity_decode ($blog_details->getUser->bio) !!}
+                                    </p>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="{{ $blog_details->getUser->facebook_url }}" class="btn btn-social btn-social-o facebook ">
+                                                <i class="fa fa-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="{{ $blog_details->getUser->twitter_url }}" class="btn btn-social btn-social-o twitter ">
+                                                <i class="fa fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="{{ $blog_details->getUser->instagram_url }}" class="btn btn-social btn-social-o instagram ">
+                                                <i class="fa fa-instagram"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="{{ $blog_details->getUser->linkedin_url }}" class="btn btn-social btn-social-o linkedin ">
+                                                <i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endisset
                     <!-- Comment  -->
                     <div id="comments" class="comments-area">
-                        <h3 class="comments-title">2 Comments:</h3>
+                        <h3 class="comments-title" id="comment_count"></h3>
                         <ol class="comment-list">
-                            <li class="comment">
-                                <aside class="comment-body">
-                                    <div class="comment-meta">
-                                        <div class="comment-author vcard">
-                                            <img src="images/placeholder/80x80.jpg" class="avatar" alt="image">
-                                            <b class="fn">Sinmun</b>
-                                            <span class="says">says:</span>
-                                        </div>
-                                        <div class="comment-metadata">
-                                            <a href="#">
-                                                <span>April 24, 2019 at 10:59 am</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="comment-content">
-                                        <p>Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s,
-                                            when an unknown
-                                            printer took a galley of type and scrambled it to make a type specimen
-                                            book.
-                                        </p>
-                                    </div>
-                                    <div class="reply">
-                                        <a href="#" class="comment-reply-link">Reply</a>
-                                    </div>
-                                </aside>
-                                <ol class="children">
-                                    <li class="comment">
-                                        <aside class="comment-body">
-                                            <div class="comment-meta">
-                                                <div class="comment-author vcard">
-                                                    <img src="images/placeholder/80x80.jpg" class="avatar" alt="image">
-                                                    <b class="fn">Sinmun</b>
-                                                    <span class="says">says:</span>
-                                                </div>
-                                                <div class="comment-metadata">
-                                                    <a href="#">
-                                                        <span>April 24, 2019 at 10:59 am</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="comment-content">
-                                                <p>Lorem Ipsum has been the industry’s standard dummy text ever since
-                                                    the 1500s, when an
-                                                    unknown printer took a galley of type and scrambled it to make a
-                                                    type specimen book.
-                                                </p>
-                                            </div>
-                                            <div class="reply">
-                                                <a href="#" class="comment-reply-link">Reply</a>
-                                            </div>
-                                        </aside>
-                                    </li>
-                                </ol>
-                            </li>
-                            <li class="comment">
-                                <aside class="comment-body">
-                                    <div class="comment-meta">
-                                        <div class="comment-author vcard">
-                                            <img src="images/placeholder/80x80.jpg" class="avatar" alt="image">
-                                            <b class="fn">Sinmun</b>
-                                            <span class="says">says:</span>
-                                        </div>
-                                        <div class="comment-metadata">
-                                            <a href="#">
-                                                <span>April 24, 2019 at 10:59 am</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="comment-content">
-                                        <p>Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s,
-                                            when an unknown
-                                            printer took a galley of type and scrambled it to make a type specimen
-                                            book.
-                                        </p>
-                                    </div>
-                                    <div class="reply">
-                                        <a href="#" class="comment-reply-link">Reply</a>
-                                    </div>
-                                </aside>
-                            </li>
                         </ol>
-                        <div class="comment-respond">
+                        @if(auth()->user())
+                            <div class="comment-respond" id="respond">
                             <h3 class="comment-reply-title">Leave a Reply</h3>
-                            <form class="comment-form">
-                                <p class="comment-notes">
-                                    <span id="email-notes">Your email address will not be published.</span>
-                                    Required fields are marked
-                                    <span class="required">*</span>
-                                </p>
+                            <form class="comment-form" id="commentform" method="POST">
+                                <input type="hidden" name="blog_id" id="put_id" value="{{ $blog_details->id }}">
+                                <input type="hidden" name="comment_id" id="put_comment_id" value="">
                                 <p class="comment-form-comment">
                                     <label for="comment">Comment</label>
-                                    <textarea name="comment" id="comment" cols="45" rows="5" maxlength="65525"
-                                              required="required"></textarea>
-                                </p>
-                                <p class="comment-form-author">
-                                    <label>Name <span class="required">*</span></label>
-                                    <input type="text" id="author" name="name" required="required">
-                                </p>
-                                <p class="comment-form-email">
-                                    <label for="email">Email <span class="required">*</span></label>
-                                    <input type="email" id="email" name="email" required="required">
-                                </p>
-                                <p class="comment-form-url">
-                                    <label for="url">Website</label>
-                                    <input type="url" id="url" name="url">
-                                </p>
-                                <p class="comment-form-cookies-consent">
-                                    <input type="checkbox" value="yes" name="wp-comment-cookies-consent"
-                                           id="wp-comment-cookies-consent">
-                                    <label for="wp-comment-cookies-consent">Save my name, email, and website in this
-                                        browser for the next
-                                        span I comment.</label>
+                                    <textarea name="comment" id="comment" cols="45" rows="8" maxlength="65525"
+                                              required="required" placeholder="Add a Comment"></textarea>
                                 </p>
                                 <p class="form-submit">
                                     <input type="submit" name="submit" id="submit" class="submit" value="Post Comment">
                                 </p>
                             </form>
                         </div>
-                    </div>
-                    <!-- Comment -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="single_navigation-prev">
-                                <a href="#">
-                                    <span>previous post</span>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem, similique.
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="single_navigation-next text-left text-md-right">
-                                <a href="#">
-                                    <span>next post</span>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, nesciunt.
-                                </a>
-                            </div>
-                        </div>
+                        @else
+                            <div class="comment-respond text-danger">* Please login to comment on the post!</div>
+                        @endif
                     </div>
                     <div class="clearfix"></div>
-                    <div class="related-article">
-                        <h4>
-                            you may also like
-                        </h4>
-                        <div class="article__entry-carousel-three">
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/placeholder/500x400.jpg" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                 <span class="text-primary">
-                                 by david hall
-                                 </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                 <span>
-                                 descember 09, 2016
-                                 </span>
-                                            </li>
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/placeholder/500x400.jpg" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                 <span class="text-primary">
-                                 by david hall
-                                 </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                 <span>
-                                 descember 09, 2016
-                                 </span>
-                                            </li>
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/placeholder/500x400.jpg" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                 <span class="text-primary">
-                                 by david hall
-                                 </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                 <span>
-                                 descember 09, 2016
-                                 </span>
-                                            </li>
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/placeholder/500x400.jpg" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                 <span class="text-primary">
-                                 by david hall
-                                 </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                 <span>
-                                 descember 09, 2016
-                                 </span>
-                                            </li>
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/placeholder/500x400.jpg" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                 <span class="text-primary">
-                                 by david hall
-                                 </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                 <span>
-                                 descember 09, 2016
-                                 </span>
-                                            </li>
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <x-right-sidebar />
                 <div class="clearfix"></div>
@@ -571,67 +290,103 @@
 
 @section('script')
     <script>
-        {{--var imageUrl = "@php env ('IMAGE_URL') @endphp"--}}
-        {{--var SITEURL = "{{ route('comments.list') }}";--}}
+        var imageUrl = "@php env ('IMAGE_URL') @endphp"
+        var SITEURL = "{{ route('comments.list') }}";
         {{--var page = 1; //track user scroll as page number, right now page number is 1--}}
-        {{--loadComments();--}}
+        loadComments();
 
-        {{--function loadComments(){--}}
-        {{--    var blog_id = $('#post-title').data('id');--}}
-        {{--    axios.post(SITEURL, {--}}
-        {{--        blog_id:blog_id,--}}
-        {{--    })--}}
-        {{--    .then(function (response) {--}}
-        {{--        console.log(response.data);--}}
-        {{--        data = response.data;--}}
-        {{--        if(data.status == false){--}}
-        {{--            toastr.error(data.message);--}}
-        {{--        } else if(data.status == true){--}}
-        {{--            var arr = data.data;--}}
-        {{--            $("#comment_count").html(arr.length +" Comments");--}}
-        {{--            var value = dataRender(arr);--}}
-        {{--            $('.comment-list').html(value);--}}
-        {{--        }--}}
-        {{--    })--}}
-        {{--    .catch(function (error) {--}}
-        {{--        console.log(error);--}}
-        {{--        if (error.response.data.status == false) {--}}
-        {{--            toastr.error(error.response.data.message);--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--}--}}
+        function loadComments(){
+            var blog_id = $('#post-title').data('id');
+            axios.post(SITEURL, {
+                blog_id:blog_id,
+            })
+            .then(function (response) {
+                console.log(response.data);
+                data = response.data;
+                if(data.status == false){
+                    toastr.error(data.message);
+                } else if(data.status == true){
+                    var arr = data.data;
+                    $("#comment_count").html(arr.length +" Comments:");
+                    var value = dataRender(arr);
+                    $('.comment-list').html(value);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                if (error.response.data.status == false) {
+                    toastr.error(error.response.data.message);
+                }
+            });
+        }
 
-        {{--function dataRender(res) {--}}
-        {{--    var output = '';--}}
-        {{--    var replies = '';--}}
-        {{--    if(res.length>0) {--}}
-        {{--        res.forEach(function (element) {--}}
-        {{--            output += '<li class="comment">'--}}
-        {{--                + '<div class="comment-body">'--}}
-        {{--                + '<div class="comment-author vcard"> <img class="avatar photo" src="{{ asset ('images/single_comment.png') }}" alt=""> <cite class="fn">' + element.name + '</cite> <span class="says">says:</span> </div>'--}}
-        {{--                + '<div class="comment-meta"> <a href="javascript:void(0);">'+moment(element.created_at).format('MMMM Do YYYY')+' at '+moment(element.created_at).format('h:mm a')+'</a> </div>'--}}
-        {{--                + '<p>' + element.comment_text + '</p>'--}}
-        {{--                + '<div class="reply"> <a href="javascript:void(0);" class="comment-reply-link reply_click" data-id="' + element.id + '">Reply</a> </div>'--}}
-        {{--                + '</div>'--}}
-        {{--                + '<ol class="children">';--}}
-        {{--            replies = element.comment_replies;--}}
-        {{--            if (replies.length > 0) {--}}
-        {{--                replies.forEach(function (reply) {--}}
-        {{--                    output += '<li class="comment odd parent">'--}}
-        {{--                        + '<div class="comment-body">'--}}
-        {{--                        + '<div class="comment-author vcard"> <img class="avatar photo" src="{{ asset ('images/reply_comment.png') }}" alt=""> <cite class="fn">' + reply.name + '</cite> <span class="says">says:</span> </div>'--}}
-        {{--                        + '<div class="comment-meta"> <a href="javascript:void(0);">October 6, 2020 at 7:15 am</a> </div>'--}}
-        {{--                        + '<p>'+reply.comment_text+'</p>'--}}
-        {{--                        + '</div>'--}}
-        {{--                        + '</li>';--}}
-        {{--                });--}}
-        {{--            }--}}
-        {{--            output += '</ol>'--}}
-        {{--                + '</li>';--}}
-        {{--        });--}}
-        {{--    }--}}
-        {{--    return output;--}}
-        {{--}--}}
+        function dataRender(res) {
+            var output = '';
+            var replies = '';
+            if(res.length>0) {
+                res.forEach(function (element) {
+
+                    output += '<li class="comment">'
+                        + '<aside class="comment-body">'
+                        + '<div class="comment-meta">'
+                        + '<div class="comment-author vcard">';
+                    if (element.get_user.profile_pic == null || element.get_user.profile_pic == ''){
+                        output += '<img src="{{ asset ('images/single_comment.png') }}" class="avatar" alt="comment_dummy_image">';
+                    } else {
+                        output += '<img src="'+imageUrl+element.get_user.profile_pic+'" class="avatar" alt="Profile_image">';
+                    }
+                    output += '<b class="fn">' + element.get_user.username + '</b>'
+                                        + '<span class="says">says:</span>'
+                                + '</div>'
+                                + '<div class="comment-metadata">'
+                                    + '<a href="javascript:void(0)">'
+                                        + '<span>'+moment(element.created_at).format('MMMM Do YYYY')+' at '+moment(element.created_at).format('h:mm a')+'</span>'
+                                    + '</a>'
+                                + '</div>'
+                            + '</div>'
+                            + '<div class="comment-content">'
+                                + '<p>' + element.comment_text + '</p>'
+                            + '</div>'
+                            + '<div class="reply">'
+                                + '<a href="javascript:void(0);" class="comment-reply-link reply_click" data-id="' + element.id + '">Reply</a>'
+                            + '</div>'
+                        + '</aside>'
+                    replies = element.comment_replies;
+                    if (replies.length > 0) {
+                        output += '<ol class="children">'
+                        replies.forEach(function (reply) {
+
+                            output += '<li class="comment">'
+                                        + '<aside class="comment-body">'
+                                            + '<div class="comment-meta">'
+                                                + '<div class="comment-author vcard">';
+                            if (reply.get_user.profile_pic == null || reply.get_user.profile_pic == ''){
+                                output += '<img src="{{ asset ('images/reply_comment.png') }}" class="avatar" alt="reply_dummy_image">';
+                            } else {
+                                output += '<img src="'+imageUrl+reply.get_user.profile_pic+'" class="avatar" alt="Profile_image">';
+                            }
+                            output += '<b class="fn">' + element.get_user.username + '</b>'
+                                                + '<span class="says">says:</span>'
+                                            + '</div>'
+                                            + '<div class="comment-metadata">'
+                                                + '<a href="javascript:void(0)">'
+                                                    + '<span>'+moment(reply.created_at).format('MMMM Do YYYY')+' at '+moment(reply.created_at).format('h:mm a')+'</span>'
+                                                + '</a>'
+                                            + '</div>'
+                                        + '</div>'
+                                        + '<div class="comment-content">'
+                                            + '<p>'+reply.comment_text+'</p>'
+                                        + '</div>'
+                                    + '</aside>'
+                                + '</li>'
+                        });
+                    }
+                    output += '</ol>'
+                        + '</li>';
+                });
+            }
+            return output;
+        }
 
         $(document).ready(function () {
             $(document).on('submit', '#commentform', function (e) {

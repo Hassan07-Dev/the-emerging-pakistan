@@ -15,5 +15,5 @@ class Constants
     const UNBLOCKED_USER = 0;
 
     /*************** Categories ******************/
-    const categories_list = ["Latest News", "Technology", "Bussiness", "Fashion", "Travel", "Sport"];
+    const categories_list = ["Latest News", "Technology", "Bussiness", "Fashion", "Travel", "Sport", "Digital Marketing"];
 }

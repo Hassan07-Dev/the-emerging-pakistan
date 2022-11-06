@@ -8,14 +8,14 @@
                 <div class="col-md-8">
                     <!-- Popular news carousel -->
                     <div class="card__post-carousel">
-                        @isset($latest_news)
-                            @foreach($latest_news->blog as $latest_new)
+                        @isset($latest_blogs)
+                            @foreach($latest_blogs as $latest_blog)
                                     <div class="item">
                                         <!-- Post Article -->
                                         <div class="card__post">
                                             <div class="card__post__body">
-                                                <a href="{{ route ('blog.details', [$latest_new['slug']]) }}">
-                                                    <img src="{{ asset($latest_new['blog_image']) }}" class="img-fluid" alt="Latest New Image">
+                                                <a href="{{ route ('blog.details', [$latest_blog['slug']]) }}">
+                                                    <img src="{{ asset($latest_blog['blog_image']) }}" class="img-fluid" alt="Latest New Image">
                                                 </a>
                                                 <div class="card__post__content bg__post-cover">
                                                     <div class="card__post__category">
@@ -23,21 +23,21 @@
                                                     </div>
                                                     <div class="card__post__title">
                                                         <h2>
-                                                            <a href="{{ route ('blog.details', [$latest_new['slug']]) }}">
-                                                                {{ $latest_new['title'] }}
+                                                            <a href="{{ route ('blog.details', [$latest_blog['slug']]) }}">
+                                                                {{ $latest_blog['title'] }}
                                                             </a>
                                                         </h2>
                                                     </div>
                                                     <div class="card__post__author-info">
                                                         <ul class="list-inline">
                                                             <li class="list-inline-item">
-                                                                <a href="{{ route ('blog.details', [$latest_new['slug']]) }}">
-                                                                    by {{ $latest_new['arthur'] }}
+                                                                <a href="{{ route ('blog.details', [$latest_blog['slug']]) }}">
+                                                                    by {{ $latest_blog['arthur'] }}
                                                                 </a>
                                                             </li>
                                                             <li class="list-inline-item">
                                                                 <span>
-                                                                    {{ Carbon\Carbon::parse($latest_new['created_at'])->format('M d, Y') }}
+                                                                    {{ Carbon\Carbon::parse($latest_blog['created_at'])->format('M d, Y') }}
                                                                 </span>
                                                             </li>
                                                         </ul>
@@ -60,44 +60,44 @@
 
                     <!-- Popular news Category -->
                     <div class="wrapper__list__article">
-                        <h4 class="border_section">technology</h4>
+                        <h4 class="border_section">Digital Marketing</h4>
                         <div class="row ">
-                            @isset($technologys)
-                                @foreach($technologys->blog as $technology)
+                            @isset($digital_marketings)
+                                @foreach($digital_marketings->blog as $digital_marketing)
                                     @if($loop->iteration == 1 or $loop->iteration == 4)
                                         <div class="col-lg-6 pd-0">
                                             <div class="article__entry">
                                                 <div class="article__image">
-                                                    <a href="{{ route ('blog.details', [$technology['slug']]) }}">
-                                                        <img src="{{ asset($technology['blog_image']) }}" alt="Techonology Image" class="img-fluid">
+                                                    <a href="{{ route ('blog.details', [$digital_marketing['slug']]) }}">
+                                                        <img src="{{ asset($digital_marketing['blog_image']) }}" alt="Digital Marketing Image" class="img-fluid">
                                                     </a>
                                                 </div>
                                                 <div class="article__content">
                                                     <div class="article__category">
-                                                        {{ $technology['category']->category_name }}
+                                                        {{ $digital_marketing['category']->category_name }}
                                                     </div>
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item">
                                                         <span class="text-primary">
-                                                            by {{ $technology['arthur'] }}
+                                                            by {{ $digital_marketing['arthur'] }}
                                                         </span>
                                                         </li>
                                                         <li class="list-inline-item">
                                                         <span class="text-dark text-capitalize">
-                                                            {{ Carbon\Carbon::parse($technology['created_at'])->format('M d, Y') }}
+                                                            {{ Carbon\Carbon::parse($digital_marketing['created_at'])->format('M d, Y') }}
                                                         </span>
                                                         </li>
 
                                                     </ul>
                                                     <h5 style="height: 65px;">
-                                                        <a href="{{ route ('blog.details', [$latest_new['slug']]) }}">
-                                                            {{ $technology['title'] }}
+                                                        <a href="{{ route ('blog.details', [$digital_marketing['slug']]) }}">
+                                                            {{ $digital_marketing['title'] }}
                                                         </a>
                                                     </h5>
                                                     <p>
-                                                        {{ \Illuminate\Support\Str::of($technology['excerpt'])->words(25) }}
+                                                        {{ \Illuminate\Support\Str::of($digital_marketing['excerpt'])->words(25) }}
                                                     </p>
-                                                    <a href="{{ route ('blog.details', [$technology['slug']]) }}" class="btn btn-outline-primary mb-4 text-capitalize"> read more</a>
+                                                    <a href="{{ route ('blog.details', [$digital_marketing['slug']]) }}" class="btn btn-outline-primary mb-4 text-capitalize"> read more</a>
                                                 </div>
                                             </div>
                                     @else
@@ -105,8 +105,8 @@
                                             <!-- Post Article -->
                                             <div class="card__post card__post-list">
                                                 <div class="image-sm">
-                                                    <a href="{{ route ('blog.details', [$technology['slug']]) }}">
-                                                        <img src="{{ asset($technology['blog_image']) }}" alt="Techonology Image" class="img-fluid">
+                                                    <a href="{{ route ('blog.details', [$digital_marketing['slug']]) }}">
+                                                        <img src="{{ asset($digital_marketing['blog_image']) }}" alt="Techonology Image" class="img-fluid">
                                                     </a>
                                                 </div>
                                                 <div class="card__post__body ">
@@ -116,12 +116,12 @@
                                                             <ul class="list-inline">
                                                                 <li class="list-inline-item">
                                                                     <span class="text-primary">
-                                                                        by {{ $technology['arthur'] }}
+                                                                        by {{ $digital_marketing['arthur'] }}
                                                                     </span>
                                                                 </li>
                                                                 <li class="list-inline-item">
                                                                     <span class="text-dark text-capitalize">
-                                                                        {{ Carbon\Carbon::parse($technology['created_at'])->format('M d, Y') }}
+                                                                        {{ Carbon\Carbon::parse($digital_marketing['created_at'])->format('M d, Y') }}
                                                                     </span>
                                                                 </li>
 
@@ -129,8 +129,8 @@
                                                         </div>
                                                         <div class="card__post__title">
                                                             <h6>
-                                                                <a href="{{ route ('blog.details', [$technology['slug']]) }}">
-                                                                    {{ $technology['title'] }}
+                                                                <a href="{{ route ('blog.details', [$digital_marketing['slug']]) }}">
+                                                                    {{ $digital_marketing['title'] }}
                                                                 </a>
                                                             </h6>
                                                         </div>
@@ -150,37 +150,37 @@
 
                     <!-- Popular 3 news carousel -->
                     <div class="wrapper__list__article">
-                        <h4 class="border_section">Bussiness</h4>
-                        <div class="row ">
+                        <h4 class="border_section">technology</h4>
+                        <div class="row">
                             <div class="col-lg-12 pd-0">
                                 <div class="article__entry-carousel-three">
-                                    @isset($bussiness)
-                                        @foreach($bussiness->blog as $bussines)
+                                    @isset($technologys)
+                                        @foreach($technologys->blog as $technology)
                                             <div class="item">
                                                 <!-- Post Article -->
                                                 <div class="article__entry">
                                                     <div class="article__image">
-                                                        <a href="{{ route ('blog.details', [$bussines['slug']]) }}">
-                                                            <img src="{{ asset($bussines['blog_image']) }}" alt="Bussiness Image" class="img-fluid">
+                                                        <a href="{{ route ('blog.details', [$technology['slug']]) }}">
+                                                            <img src="{{ asset($technology['blog_image']) }}" alt="Technology Image" class="img-fluid">
                                                         </a>
                                                     </div>
                                                     <div class="article__content">
                                                         <ul class="list-inline">
                                                             <li class="list-inline-item">
                                                                 <span class="text-primary">
-                                                                    by {{ $bussines['arthur'] }}
+                                                                    by {{ $technology['arthur'] }}
                                                                 </span>
                                                             </li>
                                                             <li class="list-inline-item">
                                                                 <span>
-                                                                    {{ Carbon\Carbon::parse($bussines['created_at'])->format('M d, Y') }}
+                                                                    {{ Carbon\Carbon::parse($technology['created_at'])->format('M d, Y') }}
                                                                 </span>
                                                             </li>
 
                                                         </ul>
                                                         <h5>
-                                                            <a href="{{ route ('blog.details', [$bussines['slug']]) }}">
-                                                                {{ $bussines['title'] }}
+                                                            <a href="{{ route ('blog.details', [$technology['slug']]) }}">
+                                                                {{ $technology['title'] }}
                                                             </a>
                                                         </h5>
 

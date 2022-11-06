@@ -54,16 +54,25 @@ Route::controller (AuthController::class)->group (function (){
 
 Route::prefix('blog')->group(function () {
     Route::controller (BlogController::class)->group (function (){
-        Route::get ('/', 'index')->name ('blog.index');
+        Route::get ('/{category?}', 'index')->name ('blog.index');
         Route::get ('details/{slug}', 'blogDetails')->name ('blog.details');
+        Route::get ('/category/list', 'categoryList')->name ('blog.categoryList');
     });
 });
 
 Route::middleware(['auth','isBlocked'])->group(function () {
-    Route::prefix('blog')->group(function () {
+    Route::prefix('user/blog')->group(function () {
         Route::controller (BlogController::class)->group (function (){
-            Route::get ('/write-for-us', 'writeBlog')->name ('blog.writeBlog');
-            Route::post ('/blog/create', 'create')->name ('blog.create');
+            Route::get ('/write-for-us/{id?}', 'writeBlog')->name ('blog.writeBlog');
+            Route::post ('/create', 'create')->name ('blog.create');
+            Route::get ('/delete/{id}', 'blogDelete')->name ('blog.delete');
+            Route::post ('/edit', 'blogEdit')->name ('blog.edit');
+
+        });
+    });
+    Route::prefix('user')->group(function () {
+        Route::controller (AuthController::class)->group (function (){
+            Route::get ('/profile-setting', 'userProfile')->name ('profile.setting');
         });
     });
 });

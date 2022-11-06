@@ -94,62 +94,24 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="#"> About </a>
                         </li>
-
-                        <li class="nav-item dropdown has-megamenu">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> News </a>
-                            <div class="dropdown-menu animate fade-down megamenu mx-auto" role="menu">
-                                <div class="container wrap__mobile-megamenu">
-                                    <div class="col-megamenu">
-                                        <h5 class="title">Recent news</h5>
-                                        <hr>
-                                        <!-- Popular news carousel -->
-                                        <div class="popular__news-header-carousel">
-
-                                            <div class="top__news__slider">
-                                                @isset($latest_news)
-                                                    @foreach($latest_news->blog as $latest_new)
-                                                        <div class="item">
-                                                            <!-- Post Article -->
-                                                            <div class="article__entry">
-                                                                <div class="article__image">
-                                                                    <a href="#">
-                                                                        <img src="{{ asset($latest_new['blog_image']) }}" alt=""
-                                                                             class="img-fluid">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="article__content">
-                                                                    <ul class="list-inline">
-                                                                        <li class="list-inline-item">
-                                                                                <span class="text-primary">
-                                                                                    by {{ $latest_new['arthur'] }}
-                                                                                </span>,
-                                                                        </li>
-
-                                                                        <li class="list-inline-item">
-                                                                                <span>
-                                                                                    {{ Carbon\Carbon::parse($latest_new['created_at'])->format('M d, Y') }}
-                                                                                </span>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <h5>
-                                                                        <a href="#">
-                                                                            {{ $latest_new['title'] }}
-                                                                        </a>
-                                                                    </h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                @endisset
-                                            </div>
-
-                                        </div>
-                                    </div> <!-- col-megamenu.// -->
-                                </div>
-                            </div> <!-- dropdown-mega-menu.// -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Categories </a>
+                            <ul class="dropdown-menu animate fade-up">
+                                @isset($categorys)
+                                    @foreach($categorys as $category)
+                                        <a class="dropdown-item" href="{{ route('blog.index', [strtolower(str_replace(' ', '-', $category->category_name))]) }}"> {{ $category->category_name }} </a>
+                                    @endforeach
+                                @endisset
+                                <a class="dropdown-item" href="{{ route('blog.categoryList') }}">
+                                    All Categories
+                                </a>
+                            </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="/contact.html"> Contact </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('blog.writeBlog') }}"> Write for us </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('blog.writeBlog') }}"> Submit Guest Post </a></li>
+                        @isset(Auth::user()->id)
+                            <li class="nav-item"><a class="nav-link" href="{{ route('profile.setting') }}"> My Profile </a></li>
+                        @endif
                     </ul>
 
 

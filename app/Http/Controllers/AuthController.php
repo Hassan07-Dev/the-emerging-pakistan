@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Constants;
 use App\Mail\RegisterConfirmation;
+use App\Models\Blog;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Treatment;
@@ -141,6 +142,8 @@ class AuthController extends Controller
         }else{
             if($status->email_verified_at == Null) {
                 return redirect()->back()->with('error', "Please verify your email address.") ;
+            } elseif ($status->status == '0'){
+                return redirect()->back()->with('error', "You are block by the admin.") ;
             }else{
 
                 if (Auth::attempt([$fieldType => $request->input('username'), 'password' => $request->input('password') ]) ) {
@@ -203,12 +206,33 @@ class AuthController extends Controller
 
     public function updatePassword (Request $request)
     {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => 'required|min:6',
+        ]);
 
+        if(!Hash::check($request->old_password, auth()->user()->password)){
+            return redirect()->back()->with("error", "Old Password Doesn't match!");
+        }
+        $user = User::where('id', auth()->user()->id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        if($user){
+            return redirect()->back()->with("success", "Password changed successfully!");
+        }
+        return redirect()->back()->with('error', 'Something went wrong...!!!') ;
     }
 
     public function logout (Request $request)
     {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function userProfile(){
+        $countries = Country::select('id','name')->get();
+        $blogs = Blog::with('category')->where('user_id', Auth::user()->id)->paginate(10);
+        return view('profile-setting', compact ('countries', 'blogs'));
     }
 }

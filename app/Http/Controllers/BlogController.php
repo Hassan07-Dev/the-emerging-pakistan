@@ -9,18 +9,32 @@ use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
-    public function index(){
-        $latest_blogs = Blog::with('category')->where('status', 1)->latest()->paginate(12);
+    public function index($category = null){
+        $latest_blogs = Blog::with('category')
+            ->whereHas('category', function($q) use ($category){
+                $q->when($category, function ($q) use ($category){
+                    $q->where('category_name', ucwords(strtolower(str_replace('-', ' ', $category))));
+                });
+            })
+            ->where('status', 1)
+            ->latest()
+            ->paginate(12);
         return view ('blog', compact('latest_blogs'));
     }
 
+    public function categoryList(){
+        $categories = BlogCategory::withCount('blog')->orderBy('blog_count', 'desc')->where('status', 1)->get();
+        return view ('categories', compact('categories'));
+    }
+
     public function blogDetails($slug){
-        $blog_details = Blog::with ('category', 'getTags')->where('slug', $slug)->first();
+        $blog_details = Blog::with ('getUser', 'category', 'getTags')->where('slug', $slug)->first();
         return view ('blog-details', compact ('blog_details'));
     }
 
@@ -49,11 +63,15 @@ class BlogController extends Controller
         }
     }
 
-    public function writeBlog(Request $request)
+    public function writeBlog($id = null)
     {
+        $blog = '';
+        if($id != null){
+            $blog = Blog::with('getTags', 'category')->where("id", $id)->first();
+        }
         $categorys =  BlogCategory::where('status', 1)->get();
         $tags =  Tag::where('status', 1)->get();
-        return view ('write-for-us', compact ('categorys', 'tags'));
+        return view ('write-for-us', compact ('categorys', 'tags', 'blog'));
     }
 
     public function create(Request $request)
@@ -126,6 +144,95 @@ class BlogController extends Controller
             return sendError ('Something went wrong...!!!', null);
         }
         return sendError ('Something went wrong...!!!', null);
+    }
+
+    public function blogDelete(Request $request, $id)
+    {
+        if(!$id){
+            return redirect()->back()->with('error', 'Id is required...!!!') ;
+        }
+
+        $blog = Blog::whereNotNull('user_id')->where('user_id', Auth::user()->id)->where('id', $id)->first();
+
+        if(!$blog){
+            return redirect()->back()->with('error', 'Unable to find blog...!!!') ;
+        }
+
+        if ($blog->delete()){
+            return redirect()->back()->with('success' , 'Blog deleted successfully...!!!') ;
+        }else {
+            return redirect()->back()->with('error', 'Something went wrong...!!!') ;
+        }
+    }
+
+    public function blogEdit(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'id' => 'required',
+                'category_id' => 'required',
+                'tag_id'=>'required',
+                'title'=>'required',
+                'description'=>'required',
+                'excerpt'=>'required',
+            ]);
+            if ($validator->fails()) {
+                return sendError($validator->messages()->first(), null);
+            }
+            $blog = Blog::find($request->id);
+
+            if (!$blog){
+                return sendError ('No such blog found...!!!', null);
+            }
+
+            $data = [];
+
+            if (isset($request->blog_image)){
+                $validator = Validator::make($request->all(), [
+                    'blog_image'=>'required|image',
+                ]);
+                if ($validator->fails()) {
+                    return sendError($validator->messages()->first(), null);
+                }
+
+                $image_path = addFile ($request->blog_image, 'blog_image/');
+                if ($image_path['file_path']){
+                    if($blog->blog_image != null){
+                        if (File::exists(public_path($blog->blog_image))) {
+                            unlink(public_path($blog->blog_image));
+                        }
+                    }
+                    $data['blog_image'] = $image_path['file_path'];
+                }
+            }
+
+            $data['category_id'] = $request->category_id;
+            $data['arthur'] = Auth::user ()->first_name.' '.Auth::user ()->last_name;
+            $data['title'] = $request->title;
+            $data['description'] = $request->description;
+            $data['excerpt'] = $request->excerpt;
+
+            if($blog->update($data)){
+                $insert_data = array ();
+                $tags_data =$request->tag_id;
+                foreach ($tags_data as $hashtag) {
+                    $hashtag_exists = Tag::where ('tag_name', $hashtag)->first ();
+                    if ($hashtag_exists) {
+                        array_push ($insert_data, $hashtag_exists->id);
+                    } else {
+                        $new_tag = new Tag();
+                        $new_tag->tag_name = $hashtag;
+                        $new_tag->save ();
+                        array_push ($insert_data, $new_tag->id);
+                    }
+                }
+                $blog->getTags()->sync($insert_data);
+                return sendSuccess('Blog updated successfully...!!!', null);
+            }
+            return sendError ('Something went wrong...!!!', null);
+        } catch(Exception $e){
+            return $e;
+        }
     }
 
 }

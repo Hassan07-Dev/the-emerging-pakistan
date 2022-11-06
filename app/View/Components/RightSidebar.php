@@ -27,7 +27,7 @@ class RightSidebar extends Component
      */
     public function render()
     {
-        $categories = BlogCategory::withCount('blog')->orderBy('blog_count', 'desc')->where('status', 1)->get();
+        $categories = BlogCategory::withCount('blog')->orderBy('blog_count', 'desc')->where('status', 1)->take(10)->get();
         $travels = BlogCategory::where('category_name', 'Travel')->with(['blog'=>function($q){
                 $q->where('status', 1);
                 $q->orderBy('created_at', 'DESC');

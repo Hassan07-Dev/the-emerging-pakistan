@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
@@ -17,8 +18,6 @@ class CommentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'blog_id' => 'required|exists:blogs,id',
-            'name'=>'required',
-            'email'=>'required|email',
             'comment'=>'required',
         ]);
         if ($validator->fails()) {
@@ -36,8 +35,7 @@ class CommentController extends Controller
 
         $comments =  new Comment();
         $comments->blog_id = $request->blog_id;
-        $comments->name = $request->name;
-        $comments->email = $request->email;
+        $comments->user_id = Auth::user()->id;
         $comments->comment_text = $request->comment;
         if(isset($request->comment_id) && !empty($request->comment_id)) {
             $comments->comment_id = $request->comment_id;
@@ -85,11 +83,11 @@ class CommentController extends Controller
             return sendError($validator->messages()->first(), null);
         }
 
-        $comments =  Comment::with ('commentReplies')
+        $comments =  Comment::with ('getUser', 'commentReplies.getUser')
                         ->whereNull ('comment_id')
                         ->where('blog_id', $request->blog_id)
                         ->where('status', 1)
-                        ->where('approval', 0)
+                        ->where('approval', 1)
                         ->get();
 
         if($comments){

@@ -1,4 +1,4 @@
-@extends('layout.web-app', ['title'=>"Home"])
+@extends('layout.web-app', ['title'=>"Submit Guest Post"])
 
 
 @section('content')
@@ -15,23 +15,25 @@
                             </div>
                             <div class="col-md-8">
                                 <form id="blog_modal_form"
-                                      action="{{ route('blog.create') }}"
+                                      action="{{ !empty(\Request::segment(4)) ? route('blog.edit') : route('blog.create') }}"
                                       method="POST">
-                                    <input name="id" type="hidden">
+                                    <input name="id" value="{{ isset($blog) && !empty($blog->id) ? $blog->id:'' }}" type="hidden">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Post Title <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="title" class="form-control" id="exampleInputEmail1"
-                                               placeholder="Enter title...">
+                                               placeholder="Enter title..." value="{{ isset($blog) && !empty($blog->title) ? $blog->title:'' }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Category <span
                                                 class="text-danger">*</span></label>
                                         <select class="form-control" name="category_id" id="category_id">
                                             <option selected disabled="disabled"> -- Select Category -- </option>
-                                            @foreach($categorys as $category)
-                                                <option value="{{ $category->id }}" data-name="{{ $category->category_name }}">{{ $category->category_name }}</option>
-                                            @endforeach
+                                               @isset($categorys)
+                                                    @foreach($categorys as $category)
+                                                        <option {{ isset($blog) && !empty($blog->blog_image) ? $blog->category_id == $category->id ? 'selected':'' : '' }} value="{{ $category->id }}" data-name="{{ $category->category_name }}">{{ $category->category_name }}</option>
+                                                    @endforeach
+                                               @endisset
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -39,25 +41,34 @@
                                                 class="text-danger">*</span></label>
                                         <input type="file" name="blog_image" class="form-control"
                                                id="exampleInputEmail1">
+                                        @if(isset($blog) && !empty($blog->blog_image))
+                                            <img class="m-2" src="{{ asset( $blog->blog_image) }}" width="200px">
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Post Content <span
                                                 class="text-danger">*</span></label>
                                         <textarea name="description" class="form-control"
-                                                  id="description_summernote"></textarea>
+                                                  id="description_summernote">{{ isset($blog) && !empty($blog->description) ? $blog->description : '' }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Excerpt <span
                                                 class="text-danger">*</span></label>
                                         <textarea name="excerpt" class="form-control"
-                                                  id=""></textarea>
+                                                  id="">{{ isset($blog) && !empty($blog->excerpt) ? $blog->excerpt : '' }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Tags <span class="text-danger">*</span></label>
                                         <select class="form-control" name="tag_id[]" id="tag_id" multiple=""
                                                 tabindex="-1" aria-hidden="true" data-select2-id="tag_id">
                                             @foreach($tags as $tag)
-                                                <option value="{{ $tag->tag_name }}" data-name="{{ $tag->tag_name }}">{{ $tag->tag_name }}</option>
+                                                @if(isset($blog) && !empty($blog->getTags))
+                                                    @foreach($blog->getTags as $tagCheck)
+                                                        <option {{ isset($blog) && !empty($blog->blog_image) ? $tagCheck->tag_name == $tag->tag_name ? 'selected':'' : '' }} value="{{ $tag->tag_name }}" data-name="{{ $tag->tag_name }}">{{ $tag->tag_name }}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="{{ $tag->tag_name }}" data-name="{{ $tag->tag_name }}">{{ $tag->tag_name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>

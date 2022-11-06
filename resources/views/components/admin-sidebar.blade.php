@@ -66,11 +66,19 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item {{ (Request::segment(3) == 'users') ? 'menu-open' : '' }}">
+                <li class="nav-item {{ (Request::segment(3) == 'blogs') ? 'menu-open' : '' }}">
                     <a href="{{ route ('admin.users.blogs') }}" class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Users Blogs
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item {{ (Request::segment(3) == 'comments') ? 'menu-open' : '' }}">
+                    <a href="{{ route ('admin.users.comments.index') }}" class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Users Comments <span style="margin-left: 30px;color: red;font-weight: bolder;">{{ isset($commentCount) ? $commentCount:'0' }}</span>
                         </p>
                     </a>
                 </li>

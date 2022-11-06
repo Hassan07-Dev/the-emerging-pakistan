@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ClientTestimonialsController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\LogoController;
@@ -82,10 +83,21 @@ Route::group(['middleware' => 'auth.admin'], function () {
                 Route::post ('/blog/delete', 'destroy')->name ('blog.delete');
                 Route::post ('/blog/show', 'show')->name ('blog.show');
                 Route::post ('/blog/update', 'update')->name ('blog.update');
+            });
+        });
 
-                Route::get ('/users', 'userIndex')->name ('users.blogs');
+        Route::prefix('user')->group(function () {
+            Route::controller (BlogController::class)->group (function (){
+                Route::get ('/blogs', 'userIndex')->name ('users.blogs');
                 Route::post ('/blog/user/change-status', 'statusChange')->name ('blog.users.status');
             });
+            Route::controller (CommentController::class)->group (function (){
+                Route::get ('/comments', 'index')->name ('users.comments.index');
+                Route::get ('/comments/lists', 'commentsList')->name ('users.comments.list');
+                Route::post ('/comments/change-status', 'statusChange')->name ('users.comments.status');
+                Route::post ('/comments/delete', 'destroy')->name ('users.comments.delete');
+            });
+
         });
 
         Route::controller (TrendingNewsController::class)->group (function (){
