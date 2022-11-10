@@ -2,44 +2,156 @@
 
 
 @section('content')
-    <div class="page-content bg-white">
-        <!-- inner page banner -->
-        <div class="dlab-bnr-inr dlab-bnr-inr-md overlay-black-middle bg-pt" style="background-image:url(images/banner/bnr1.jpg);">
-            <div class="container">
-                <div class="dlab-bnr-inr-entry">
-                    <h1 class="text-white">About Me</h1>
-                </div>
-            </div>
-        </div>
-        <!-- inner page banner END -->
-        <div class="content-block">
-            <!-- About Us -->
-            <div class="section-full bg-white content-inner-2 about-us">
-                <div class="min-container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu mauris eget velit blandit pulvinar. Etiam tempus aliquet lectus tortor.</h4>
-                            <div class="dlab-divider divider-2px bg-gray-dark"><i class="icon-dot c-square"></i><div></div></div>
-                            <p class="first-content">A usce sed ligula velit. Aliquam viver ultricies  molestie ultricies. Donec etn turpis consectet aliquam non nisiassa lobortis quis sagittis porttitor. Vivamus tempus vulputate miquis hendrerit. Nunc fringilla scelerisque commodo. Donec quis erat diam. Proin magna sapien, lobortis quis pulvinar vitae, iaculis at diam. Etiam id orci quis mi fermentum feugiat. at diam. Etiam id orci quis mi fermentum feugiat. Viverra ultricies diam molestie ultricies.</p>
-                            <div class="partnership">
-                                <h5>Partnership</h5>
-                                <a href="javascript:void(0);">info@example.com</a>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- breadcrumb -->
+                    <!-- Breadcrumb -->
+                    <ul class="breadcrumbs bg-light mb-4">
+                        <li class="breadcrumbs__item">
+                            <a href="{{ route('home.index') }}" class="breadcrumbs__url">
+                                <i class="fa fa-home"></i> Home</a>
+                        </li>
+                        <li class="breadcrumbs__item breadcrumbs__item--current">
+                            about-us
+                        </li>
+                    </ul>
+                    <!-- End breadcrumb -->
+
+                    <div class="wrap__about-us">
+                        <h2>Our Mission</h2>
+                        <h4>It is a long established fact that a reader will be distracted</h4>
+                        <p>
+
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been
+                            the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley
+                            of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries,
+                            but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                            popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages,
+                            and more recently with desktop publishing software like Aldus PageMaker including versions
+                            of
+                            Lorem Ipsum.
+                        </p>
+
+                        <figure class="float-left mr-3">
+                            <img src="{{ asset('images/placeholder/500x400.jpg') }}" alt="" class="img-fluid">
+                        </figure>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since when an unknown printer took a galley of
+                            type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                            but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                            popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </p>
+
+
+
+
+                        <p>
+
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been
+                            the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley
+                            of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries,
+                            but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                            popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages,
+                            and more recently with desktop publishing software like Aldus PageMaker including versions
+                            of
+                            Lorem Ipsum.
+                        </p>
+                        <div class="clearfix"></div>
+                        <h2>Our Valuable Team Members</h2>
+                        <!-- team member -->
+                        <div class="team-member row">
+                            <div class="col-md-3">
+                                <figure class="member"> <img src="{{ asset('images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
+                                    <figcaption>
+                                        <h4>Debora Hilton</h4>
+                                        <small>Editor</small>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                                            </li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
                             </div>
-                            <p>Aliquam viver ultricies  molestie ultricies. Donec etn turpis consectet aliquam non nisiassa lobortis quis sagittis porttitor. Vivamus tempus vulputate miquis hendrerit. Nunc fringilla scelerisque commodo. Donec quis erat diam. Proin magna sapien, lobortis quis pulvinar vitae, iaculis at diam. Etiam id orci quis mi fermentum feugiat. at diam. Etiam id orci quis mi fermentum feugiat. Viverra ultricies diam molestie ultricies.</p>
-                            <div class="text-center">
-                                <ul class="list-inline m-b0">
-                                    <li><a href="javascript:void(0);" class="btn-link black"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="javascript:void(0);" class="btn-link black"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="javascript:void(0);" class="btn-link black"><i class="fa fa-instagram"></i></a></li>
-                                    <li><a href="javascript:void(0);" class="btn-link black"><i class="fa fa-twitter"></i></a></li>
-                                </ul>
+                            <div class="col-md-3">
+                                <figure class="member"> <img src="{{ asset('images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
+                                    <figcaption>
+                                        <h4>Debora Hilton</h4>
+                                        <small>Editor</small>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                                            </li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-md-3">
+                                <figure class="member"> <img src="{{ asset('images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
+                                    <figcaption>
+                                        <h4>Debora Hilton</h4>
+                                        <small>Publisher</small>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                                            </li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-md-3">
+                                <figure class="member"> <img src="{{ asset('images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
+                                    <figcaption>
+                                        <h4>Debora Hilton</h4>
+                                        <small>Project Manager</small>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                                            </li>
+                                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
                             </div>
                         </div>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </p>
+
                     </div>
                 </div>
+
+
             </div>
-            <!-- About Us End -->
         </div>
-        <!-- contact area END -->
-    </div>
+    </section>
 @endsection

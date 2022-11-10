@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServicesController;
+use Database\Seeders\CategorySeeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,17 @@ Route::get('/rollback', function(){
 
 Route::get('/adminseeder', function(){
     Artisan::call('db:seed');
+});
+Route::get('/categories/seeder', function(){
+    Artisan::call('db:seed', ['--class' => 'CategorySeeder']);
+});
+
+Route::get('site/shutdown', function(){
+    return Artisan::call('down', ['--secret' => "1630542a-246b-4b66-afa1"]);
+});
+
+Route::get('site/live', function(){
+    return Artisan::call('up');
 });
 
 Route::controller (HomeController::class)->group (function (){

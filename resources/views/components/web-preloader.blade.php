@@ -2,9 +2,6 @@
     <div class="h-100 d-flex align-items-center justify-content-center">
         <ul class="list-unstyled">
             <li>
-                <img src="{{ asset('images/placeholder/loading.png') }}" alt="Alternate Text" height="100"/>
-            </li>
-            <li>
                 <div class="spinner">
                     <div class="rect1"></div>
                     <div class="rect2"></div>
