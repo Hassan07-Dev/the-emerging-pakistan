@@ -55,50 +55,11 @@
                                 <h4 class="footer-title">category</h4>
                                 <div class="link__category">
                                     <ul class="list-unstyled ">
-                                        <li class="list-inline-item">
-                                            <a href="#">apps</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">business</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">entertainment</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">fashion</a>
-                                        </li>
-
-                                        <li class="list-inline-item">
-                                            <a href="#">Food</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">Gadget</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">Gaming</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">Health</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">Lifestyle</a>
-                                        </li>
-
-                                        <li class="list-inline-item">
-                                            <a href="#">Science</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">Travel</a>
-                                        </li>
-
-                                        <li class="list-inline-item">
-                                            <a href="#">Startup</a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">Sports</a>
-                                        </li>
-
-
+                                        @isset($categorys)
+                                            @foreach($categorys as $category)
+                                                <li class="list-inline-item"><a href="{{ route('blog.index', [strtolower(str_replace(' ', '-', $category->category_name))]) }}"> {{ $category->category_name }} </a></li>
+                                            @endforeach
+                                        @endisset
                                     </ul>
                                 </div>
                             </div>
@@ -140,32 +101,32 @@
                     <div class="row flex-column-reverse flex-md-row">
                         <div class="col-md-6">
                                 <span>
-                                    © 2020 Magzrenvi - Premium laravel news & magazine theme by
-                                    <a href="#">retenvi.com</a>
+                                    © 2020
+                                    <a href="{{ route('home.index') }}">theemergingpakistan.com</a>
                                 </span>
                         </div>
                         <div class="col-md-6">
                             <ul class="list-inline ">
+{{--                                <li class="list-inline-item">--}}
+{{--                                    <a href="#">--}}
+{{--                                        privacy--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                                 <li class="list-inline-item">
-                                    <a href="#">
-                                        privacy
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="#">
+                                    <a href="{{ route ('contactUs.index') }}">
                                         contact
                                     </a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="#">
+                                    <a href="{{ route ('about.index') }}">
                                         about
                                     </a>
                                 </li>
-                                <li class="list-inline-item">
-                                    <a href="#">
-                                        faq
-                                    </a>
-                                </li>
+{{--                                <li class="list-inline-item">--}}
+{{--                                    <a href="#">--}}
+{{--                                        faq--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                             </ul>
                         </div>
                     </div>

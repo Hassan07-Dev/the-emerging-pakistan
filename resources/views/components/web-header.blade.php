@@ -7,7 +7,7 @@
                 <div class="col-sm-12 col-md-5">
                     <div class="topbar-left">
                         <div class="topbar-text">
-                            Monday, March 22, 2020
+                            {{ \Carbon\Carbon::now()->format('D, M d, Y') }}
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link active" href="#"> About </a>
+                            <a class="nav-link active" href="{{ route ('about.index') }}"> About </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Categories </a>
@@ -107,7 +107,7 @@
                                 </a>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="/contact.html"> Contact </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route ('contactUs.index') }}"> Contact </a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('blog.writeBlog') }}"> Submit Guest Post </a></li>
                         @isset(Auth::user()->id)
                             <li class="nav-item"><a class="nav-link" href="{{ route('profile.setting') }}"> My Profile </a></li>
@@ -185,85 +185,39 @@
                                     <li><a class="dropdown-item text-dark" href="/homepage-v1.html"> Home version
                                             one </a>
                                     </li>
-                                    <li><a class="dropdown-item text-dark" href="homepage-v2.html"> Home version two
-                                        </a>
-                                    </li>
-                                    <li><a class="dropdown-item text-dark" href="/homepage-v3.html"> Home version
-                                            three </a>
-                                    </li>
-                                    <li><a class="dropdown-item text-dark" href="/homepage-v4.html"> Home version
-                                            four </a>
-                                    </li>
                                 </ul>
                             </li>
+                            <li class="nav-item"><a class="nav-link  text-dark" href="/contact.html"> contact </a> </li>
+                        </ul>
+                        <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle  text-dark" href="#" data-toggle="dropdown">
-                                    Pages </a>
+                                <a class="nav-link active text-dark" href="{{ route ('home.index') }}"> Home </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark" href="{{ route ('blog.index') }}"> Blogs </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark active" href="{{ route ('about.index') }}"> About </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" data-toggle="dropdown"> Categories </a>
                                 <ul class="dropdown-menu animate fade-up">
-
-                                    <li><a class="dropdown-item icon-arrow  text-dark" href="#"> Blog </a>
-                                        <ul class="submenu dropdown-menu  animate fade-up">
-                                            <li><a class="dropdown-item" href="/category-style-v1.html">Style 1</a>
-                                            </li>
-                                            <li><a class="dropdown-item" href="/category-style-v2.html">Style 2</a>
-                                            </li>
-                                            <li><a class="dropdown-item" href="/category-style-v3.html">Style 3</a>
-                                            </li>
-
-                                            <li><a class="dropdown-item icon-arrow  text-dark" href="">Submenu item
-                                                    3 </a>
-                                                <ul class="submenu dropdown-menu  animate fade-up">
-                                                    <li><a class="dropdown-item" href="">Multi level 1</a></li>
-                                                    <li><a class="dropdown-item" href="">Multi level 2</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="dropdown-item  text-dark" href="">Submenu item 4</a></li>
-                                            <li><a class="dropdown-item" href="">Submenu item 5</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="dropdown-item icon-arrow  text-dark" href="#"> Blog single detail
-                                        </a>
-                                        <ul class="submenu dropdown-menu  animate fade-up">
-                                            <li><a class="dropdown-item" href="/article-detail-v1.html">Style 1</a>
-                                            </li>
-                                            <li><a class="dropdown-item" href="/article-detail-v2.html">Style 2</a>
-                                            </li>
-                                            <li><a class="dropdown-item" href="/article-detail-v3.html">Style 3</a>
-                                            </li>
-
-                                        </ul>
-                                    </li>
-
-                                    <li><a class="dropdown-item icon-arrow  text-dark" href="#"> Search Result </a>
-                                        <ul class="submenu dropdown-menu  animate fade-up">
-                                            <li><a class="dropdown-item" href="/search-result.html">Style 1</a></li>
-                                            <li><a class="dropdown-item" href="/search-result-v1.html">Style 2</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="dropdown-item  text-dark" href="/login.html">Login </a>
-                                    <li><a class="dropdown-item  text-dark" href="/register.html"> Register </a>
-                                    <li><a class="dropdown-item  text-dark" href="/contact.html"> Contact </a>
-                                    <li><a class="dropdown-item  text-dark" href="/404.html"> 404 Error </a>
+                                    @isset($categorys)
+                                        @foreach($categorys as $category)
+                                            <a class="dropdown-item" href="{{ route('blog.index', [strtolower(str_replace(' ', '-', $category->category_name))]) }}"> {{ $category->category_name }} </a>
+                                        @endforeach
+                                    @endisset
+                                    <a class="dropdown-item" href="{{ route('blog.categoryList') }}">
+                                        All Categories
+                                    </a>
                                 </ul>
                             </li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle  text-dark" href="#"
-                                   data-toggle="dropdown"> About
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                    <li><a class="dropdown-item" href="/about-us.html"> Style 1 </a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="/about-us-v1.html"> Style 2 </a></li>
-
-                                </ul>
-                            </li>
-
-
-                            <li class="nav-item"><a class="nav-link  text-dark" href="#"> Category </a></li>
-                            <li class="nav-item"><a class="nav-link  text-dark" href="/contact.html"> contact </a>
-                            </li>
+                            <li class="nav-item"><a class="nav-link text-dark" href="{{ route ('contactUs.index') }}"> Contact </a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" href="{{ route('blog.writeBlog') }}"> Submit Guest Post </a></li>
+                            @isset(Auth::user()->id)
+                                <li class="nav-item"><a class="nav-link text-dark" href="{{ route('profile.setting') }}"> My Profile </a></li>
+                            @endif
                         </ul>
 
                     </nav>

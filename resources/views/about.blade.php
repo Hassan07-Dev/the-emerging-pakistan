@@ -39,7 +39,7 @@
                         </p>
 
                         <figure class="float-left mr-3">
-                            <img src="{{ asset('images/placeholder/500x400.jpg') }}" alt="" class="img-fluid">
+                            <img src="{{ asset('assets/images/placeholder/500x400.jpg') }}" alt="" class="img-fluid">
                         </figure>
                         <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
@@ -77,7 +77,7 @@
                         <!-- team member -->
                         <div class="team-member row">
                             <div class="col-md-3">
-                                <figure class="member"> <img src="{{ asset('images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
+                                <figure class="member"> <img src="{{ asset('assets/images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
                                     <figcaption>
                                         <h4>Debora Hilton</h4>
                                         <small>Editor</small>
@@ -92,7 +92,7 @@
                                 </figure>
                             </div>
                             <div class="col-md-3">
-                                <figure class="member"> <img src="{{ asset('images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
+                                <figure class="member"> <img src="{{ asset('assets/images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
                                     <figcaption>
                                         <h4>Debora Hilton</h4>
                                         <small>Editor</small>
@@ -107,7 +107,7 @@
                                 </figure>
                             </div>
                             <div class="col-md-3">
-                                <figure class="member"> <img src="{{ asset('images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
+                                <figure class="member"> <img src="{{ asset('assets/images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
                                     <figcaption>
                                         <h4>Debora Hilton</h4>
                                         <small>Publisher</small>
@@ -122,7 +122,7 @@
                                 </figure>
                             </div>
                             <div class="col-md-3">
-                                <figure class="member"> <img src="{{ asset('images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
+                                <figure class="member"> <img src="{{ asset('assets/images/placeholder/600x600.jpg') }}" class="img-fluid" alt="Image">
                                     <figcaption>
                                         <h4>Debora Hilton</h4>
                                         <small>Project Manager</small>
