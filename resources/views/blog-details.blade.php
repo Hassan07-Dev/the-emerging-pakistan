@@ -116,7 +116,7 @@
                         <div class="wrap__profile">
                             <div class="wrap__profile-author">
                                 <figure>
-                                    <img src="{{ !$blog_details->getUser->profile_pic ? asset ('images/single_comment.png') : asset($blog_details->getUser->profile_pic) }}" alt="Profile-Image" class="img-fluid rounded-circle">
+                                    <img src="{{ !$blog_details->getUser->profile_pic ? asset ('images/single_comment.png') : asset($blog_details->getUser->profile_pic) }}" alt="Profile-Image" class="img-fluid rounded-circle h-100">
                                 </figure>
                                 <div class="wrap__profile-author-detail">
                                     <div class="wrap__profile-author-detail-name">author</div>

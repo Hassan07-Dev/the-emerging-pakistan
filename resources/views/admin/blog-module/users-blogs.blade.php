@@ -2,6 +2,11 @@
 
 
 @section('content')
+    <style>
+        #description_data img{
+            width: 100%;
+        }
+    </style>
     <section class="content">
         <div class="card">
             <div class="card-header">

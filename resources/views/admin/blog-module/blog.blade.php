@@ -2,6 +2,11 @@
 
 
 @section('content')
+    <style>
+        #description_data img{
+            width: 100%;
+        }
+    </style>
     <section class="content">
         <div class="card">
             <div class="card-header">
@@ -166,30 +171,68 @@
 
 @section('script')
     <script>
-        $('#description_summernote').summernote({
-            height: 400,
-            minHeight: null,
-            maxHeight: null,
-            focus: true,
-            fontSizeUnits: ['px', 'pt'],
-            dialogsInBody: false,
-            dialogsFade: false,
-            tooltip: false,
-            onInit : function(){
-                $('.note-editor [data-name="ul"]').tooltip('disable');
-            },
-            toolbar: [
-                ['para', ['ul']],
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript','fontname','fontsize','fontsizeunit','color','forecolor','backcolor','italic','underline','clear']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']],
-                ['Insert', ['picture','link','video','table','hr']],
-                ['Other', ['fullscreen', 'codeview']],
-            ],
+        function addImage(){
+            tinymce.activeEditor.insertContent('<img alt="Smiley face" height="200" width="200" src="' + document.getElementById('upload_image') + '"/>');
+        }
+        tinymce.init({
+            selector: '#description_summernote',
+            plugins: 'image code',
+            toolbar: 'undo redo | link image | code | formatpainter casechange blocks | bold italic backcolor | ' +
+                'alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist checklist outdent indent | help',
+            // enable title field in the Image dialog
+            image_title: true, 
+            // enable automatic uploads of images represented by blob or data URIs
+            automatic_uploads: true,
+            // add custom filepicker only to Image dialog
+            file_picker_types: 'image',
+            file_picker_callback: function(cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                input.onchange = function() {
+                var file = this.files[0];
+                var reader = new FileReader();
+                
+                reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                reader.readAsDataURL(file);
+                };
+                
+                input.click();
+            }
         });
+        // $('#description_summernote').summernote({
+        //     height: 400,
+        //     minHeight: null,
+        //     maxHeight: null,
+        //     focus: true,
+        //     fontSizeUnits: ['px', 'pt'],
+        //     dialogsInBody: false,
+        //     dialogsFade: false,
+        //     tooltip: false,
+        //     onInit : function(){
+        //         $('.note-editor [data-name="ul"]').tooltip('disable');
+        //     },
+        //     toolbar: [
+        //         ['para', ['ul']],
+        //         ['style', ['bold', 'italic', 'underline', 'clear']],
+        //         ['font', ['strikethrough', 'superscript', 'subscript','fontname','fontsize','fontsizeunit','color','forecolor','backcolor','italic','underline','clear']],
+        //         ['fontsize', ['fontsize']],
+        //         ['color', ['color']],
+        //         ['para', ['ul', 'ol', 'paragraph']],
+        //         ['height', ['height']],
+        //         ['Insert', ['picture','link','video','table','hr']],
+        //         ['Other', ['fullscreen', 'codeview']],
+        //     ],
+        // });
         $('.js-example-basic-multiple').select2({
             tags: true
         });
@@ -263,7 +306,6 @@
                 $('#blog_modal_form').attr("action", "{{ route ('admin.blog.create') }}");
                 $('#blog_modal_form').trigger('reset');
                 // $('.js-example-basic-multiple').select2('destroy').find('option').prop('selected', false).end().select2();
-                $('#description_summernote').summernote('code', '');
                 $('#blog_modal').modal({
                     backdrop: 'static',
                     keyboard: false
@@ -275,7 +317,7 @@
             $(document).on('submit', 'form#blog_modal_form', function (e) {
                 e.preventDefault();
                 var formdata = new FormData(this);
-                var desc = $($('#description_summernote').summernote("code")).text();
+                var desc = tinymce.activeEditor.getContent("#description_summernote");
                 desc = $.trim(desc.slice(0, 140));
 
                 formdata.append("excerpt", desc.replaceAll('"', ''));
@@ -373,7 +415,7 @@
                         $('#blog_modal_form input[name="id"]').val(blog.id);
                         $('#blog_modal_form input[name="arthur"]').val(blog.arthur);
                         $('#blog_modal_form input[name="title"]').val(blog.title);
-                        $('#description_summernote').summernote('code', blog.description);
+                        tinymce.activeEditor.setContent(blog.description)
                         $('#blog_modal_form select[name="category_id"] option[value="'+blog.category.id+'"]').prop('selected', true);
                         tags = [];
                         tag = blog.get_tags;

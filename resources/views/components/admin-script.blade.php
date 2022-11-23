@@ -23,8 +23,8 @@
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <!-- Summernote -->
-<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
-<!-- overlayScrollbars -->
+{{--<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>--}}
+<script src="https://cdn.tiny.cloud/1/lnlymabb2a3fs3di9908dpcoekdcf6eh5d3gi2gevbbldjko/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script><!-- overlayScrollbars -->
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.js') }}"></script>

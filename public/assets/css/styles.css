@@ -17478,8 +17478,9 @@ body.offcanvas-active {
 }
 
 .content_styling{
-    display: flex;
     text-align: justify;
     line-height: 30px;
     font-size: 20px;
 }
+
+

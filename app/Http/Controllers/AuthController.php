@@ -129,7 +129,6 @@ class AuthController extends Controller
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required|min:6',
-            'remember' => 'required',
         ]);
 
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -233,5 +232,40 @@ class AuthController extends Controller
         $countries = Country::select('id','name')->get();
         $blogs = Blog::with('category')->where('user_id', Auth::user()->id)->paginate(10);
         return view('profile-setting', compact ('countries', 'blogs'));
+    }
+
+    public function updateProfile(Request $request){
+        try {
+            $user = User::find(Auth::user()->id);
+
+            if (isset($request->profile_pic)){
+                $this->validate($request, [
+                    'profile_pic'=>'image|mimes:jpeg,jpg,png,gif|max:10000',
+                ]);
+
+                $image_path = addFile ($request->profile_pic, 'profile_pic/');
+                if ($image_path['file_path']){
+                    $user->profile_pic = $image_path['file_path'];
+                }
+            }
+
+            $user->first_name =  $request->first_name ?? $user->first_name;
+            $user->last_name =  $request->last_name ?? $user->last_name;
+            $user->website =  $request->website ?? $user->website;
+            $user->bio =  $request->bio ?? $user->bio;
+            $user->phone_no =  $request->phone_no ?? $user->phone_no;
+            $user->facebook_url =  $request->facebook ?? $user->facebook_url;
+            $user->instagram_url =  $request->instagram ?? $user->instagram_url;
+            $user->twitter_url =  $request->twitter ?? $user->twitter_url;
+            $user->linkedin_url =  $request->linkedin ?? $user->linkedin_url;
+
+            if($user->save()){
+                return redirect()->route('profile.setting')->with('success', 'Your profile has been successfully updated.') ;
+            } else {
+                return redirect()->back()->with('error', "Something went wrong.") ;
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'something went '.$e->getMessage()) ;
+        }
     }
 }
