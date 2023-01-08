@@ -37,6 +37,7 @@ class CreateUsersTable extends Migration
             $table->string('twitter_url')->nullable();
             $table->string('linkedin_url')->nullable();
             $table->boolean ('status')->default (true)->nullable ();
+            $table->boolean ('admin_view')->default (false)->nullable ();
             $table->rememberToken();
             $table->timestamps();
         });

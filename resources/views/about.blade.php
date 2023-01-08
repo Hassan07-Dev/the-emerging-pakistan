@@ -20,7 +20,7 @@
                     <!-- End breadcrumb -->
 
                     <div class="wrap__about-us">
-                        <h2>Our Mission</h2>
+                        <h1>Our Mission</h1>
                         <h4>It is a long established fact that a reader will be distracted</h4>
                         <p>
 

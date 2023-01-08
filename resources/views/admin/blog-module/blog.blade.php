@@ -147,6 +147,44 @@
             </div>
         </div>
 
+        {{--  SEO TAGS --}}
+        <div class="modal fade" id="blog_modal_seo">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Meta Data</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="blog_modal_form_seo" onsubmit="return false;" action="" method="POST">
+                        @csrf
+                        <input name="id" type="hidden">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Meta Title</label>
+                                <input type="text" name="meta_title" class="form-control" id="meta_title"
+                                       placeholder="Enter Meta title...">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Meta Description</label>
+                                <textarea placeholder="Enter Meta description..." name="meta_description" rows="5" class="form-control" id="meta_description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Meta Keywords</label>
+                                <input type="text" name="meta_keywords" class="form-control" id="meta_keywords"
+                                       placeholder="Enter Meta keywords...">
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary submit_btn_seo">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="description_modal">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -433,6 +471,62 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+            });
+
+            $(document).on('click', '#meta_data', function (e) {
+                e.preventDefault();
+                var href = "{{ route ('admin.blog.show') }}";
+                var id	 = $(this).data('id');
+                axios.post(href, {
+                        id: id
+                    },
+                )
+                    .then(function (response) {
+                        var data = response.data;
+                        if(data.status == false){
+                            toastr.error(data.message);
+                        } else if(data.status == true){
+                            var blog = data.data.blog;
+                            $('#blog_modal_form_seo input[name="id"]').val(blog.id);
+                            $('#blog_modal_form_seo input[name="meta_title"]').val(blog.meta_title);
+                            $('#blog_modal_form_seo textarea[name="meta_description"]').val(blog.meta_description);
+                            $('#blog_modal_form_seo input[name="meta_keywords"]').val(blog.meta_keywords);
+                            $('#blog_modal_seo').modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            });
+                            $('#blog_modal_form_seo').attr("action", "{{ route ('admin.blog.update.meta') }}");
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+
+            $(document).on('submit', 'form#blog_modal_form_seo', function (e) {
+                e.preventDefault();
+                var formdata = new FormData(this);
+                axios.post($(this).attr('action'),
+                    formdata,
+                    buttonDisable('submit_btn_seo')
+                )
+                    .then(function (response) {
+                        data = response.data;
+                        if(data.status == false){
+                            toastr.error(data.message);
+                        } else if(data.status == true){
+                            getdata();
+                            $('#blog_modal_seo').modal('hide');
+                            toastr.success(data.message);
+                        }
+                        buttonEnabled('submit_btn_seo', 'Update');
+                    })
+                    .catch(function (error) {
+                        if (error.response.data.status == false) {
+                            buttonEnabled('submit_btn_seo', 'Update');
+                            toastr.error(error.response.data.message);
+                        }
+                    });
             });
 
             $(document).on('click', 'button.view_description', function (e) {

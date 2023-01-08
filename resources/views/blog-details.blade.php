@@ -1,7 +1,9 @@
 @extends('layout.web-app', ['title'=>"Blog Details"])
 
 @section('head')
-    <title>test</title>
+    <title>{{ isset($blog_details) ? isset($blog_details->meta_title) ? $blog_details->meta_title : "TEP" : "TEP" }}</title>
+    <meta name="description" content="{{ isset($blog_details) ? isset($blog_details->meta_description) ? $blog_details->meta_description : "Test Description" : "Test Description" }}">
+    <meta name="keywords" content="{{ isset($blog_details) ? isset($blog_details->meta_keywords) ? $blog_details->meta_keywords : "HTML, CSS, JavaScript" : "HTML, CSS, JavaScript" }}">
 @endsection
 
 @section('content')

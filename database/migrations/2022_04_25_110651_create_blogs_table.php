@@ -26,6 +26,9 @@ class CreateBlogsTable extends Migration
             $table->longText ('description')->nullable ();
             $table->longText ('excerpt')->nullable ();
             $table->boolean ('status')->default (true)->nullable ();
+            $table->text ('meta_title')->nullable ();
+            $table->text ('meta_description')->nullable ();
+            $table->text ('meta_keywords')->nullable ();
             $table->timestamps();
         });
     }

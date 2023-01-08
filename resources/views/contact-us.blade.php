@@ -24,7 +24,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <h5>contact us</h5>
+                    <h1>contact us</h1>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-group-name">

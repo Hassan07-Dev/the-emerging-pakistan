@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth.admin'], function () {
                 Route::post ('/blog/delete', 'destroy')->name ('blog.delete');
                 Route::post ('/blog/show', 'show')->name ('blog.show');
                 Route::post ('/blog/update', 'update')->name ('blog.update');
+                Route::post ('/blog/meta/update', 'updateMeta')->name ('blog.update.meta');
             });
         });
 

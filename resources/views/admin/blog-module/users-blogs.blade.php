@@ -66,64 +66,39 @@
             <div class="card-footer">
             </div>
         </div>
-        {{-- Modal --}}
-        <div class="modal fade" id="blog_modal">
+
+        {{--  SEO TAGS --}}
+        <div class="modal fade" id="blog_modal_seo">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"></h4>
+                        <h4 class="modal-title">Meta Data</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="blog_modal_form" onsubmit="return false;" action="" method="POST">
+                    <form id="blog_modal_form_seo" onsubmit="return false;" action="" method="POST">
                         @csrf
                         <input name="id" type="hidden">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Category</label>
-                                <select class="form-control" name="category_id" id="category_id">
-                                    <option selected disabled="disabled"> -- Select Category -- </option>
-                                    @foreach($categorys as $category)
-                                        <option value="{{ $category->id }}" data-name="{{ $category->category_name }}">{{ $category->category_name }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="exampleInputEmail1">Meta Title</label>
+                                <input type="text" name="meta_title" class="form-control" id="meta_title"
+                                       placeholder="Enter Meta title...">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Tags</label>
-                                <select class="form-control js-example-basic-multiple" name="tag_id[]" id="tag_id" multiple="multiple">
-                                    @foreach($tags as $tag)
-                                        <option value="{{ $tag->tag_name }}" data-name="{{ $tag->tag_name }}">{{ $tag->tag_name }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="exampleInputEmail1">Meta Description</label>
+                                <textarea placeholder="Enter Meta description..." name="meta_description" rows="5" class="form-control" id="meta_description"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Blog Title</label>
-                                <input type="text" name="title" class="form-control" id="exampleInputEmail1"
-                                       placeholder="Enter title...">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Blog Image</label>
-                                <input type="file" name="blog_image" class="form-control" id="exampleInputEmail1">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Arthur</label>
-                                <input type="text" name="arthur" class="form-control" id="exampleInputEmail1"
-                                       placeholder="Enter arthur...">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Description</label>
-                                <textarea name="description" class="form-control" id="description_summernote"></textarea>
-                            </div>
-                            <div class="form-group active_status">
-                                <label for="exampleInputEmail1">Status</label><br>
-                                <input type="radio" name="status" value="1" id="option_a1" autocomplete="off"> Active
-                                <input type="radio" name="status" value="0" id="option_a2" autocomplete="off"> De-Active
+                                <label for="exampleInputEmail1">Meta Keywords</label>
+                                <input type="text" name="meta_keywords" class="form-control" id="meta_keywords"
+                                       placeholder="Enter Meta keywords...">
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submit_btn">Save changes</button>
+                            <button type="submit" class="btn btn-primary submit_btn_seo">Update</button>
                         </div>
                     </form>
                 </div>
@@ -304,6 +279,63 @@
                         toastr.error('Your imaginary row is safe :)');
                     }
                 });
+            });
+
+            $(document).on('click', '#meta_data', function (e) {
+                e.preventDefault();
+                var href = "{{ route ('admin.blog.show') }}";
+                var id	 = $(this).data('id');
+                axios.post(href, {
+                        id: id
+                    },
+                )
+                    .then(function (response) {
+                        var data = response.data;
+                        if(data.status == false){
+                            toastr.error(data.message);
+                        } else if(data.status == true){
+                            var blog = data.data.blog;
+                            console.log(blog.meta_description);
+                            $('#blog_modal_form_seo input[name="id"]').val(blog.id);
+                            $('#blog_modal_form_seo input[name="meta_title"]').val(blog.meta_title);
+                            $('#blog_modal_form_seo textarea[name="meta_description"]').val(blog.meta_description);
+                            $('#blog_modal_form_seo input[name="meta_keywords"]').val(blog.meta_keywords);
+                            $('#blog_modal_seo').modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            });
+                            $('#blog_modal_form_seo').attr("action", "{{ route ('admin.blog.update.meta') }}");
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+
+            $(document).on('submit', 'form#blog_modal_form_seo', function (e) {
+                e.preventDefault();
+                var formdata = new FormData(this);
+                axios.post($(this).attr('action'),
+                    formdata,
+                    buttonDisable('submit_btn_seo')
+                )
+                    .then(function (response) {
+                        data = response.data;
+                        if(data.status == false){
+                            toastr.error(data.message);
+                        } else if(data.status == true){
+                            getdata();
+                            $('#blog_modal_seo').modal('hide');
+                            toastr.success(data.message);
+                        }
+                        buttonEnabled('submit_btn_seo', 'Update');
+                    })
+                    .catch(function (error) {
+                        if (error.response.data.status == false) {
+                            buttonEnabled('submit_btn_seo', 'Update');
+                            toastr.error(error.response.data.message);
+                        }
+                    });
             });
 
             $(document).on('click', 'button.view_description', function (e) {

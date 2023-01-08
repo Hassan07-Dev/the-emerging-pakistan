@@ -8,7 +8,7 @@
                     <div class="col-md-8">
                         <!-- Category news -->
                         <div class="wrapper__list__article">
-                            <h4 class="border_section">Latest Blog</h4>
+                            <h1 class="border_section">Latest Blog</h1>
                             <div class="wrapp__list__article-responsive">
                                 @isset($latest_blogs)
                                     @foreach($latest_blogs as $latest_blog)

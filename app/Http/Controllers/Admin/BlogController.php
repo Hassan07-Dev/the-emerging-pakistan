@@ -170,6 +170,7 @@ class BlogController extends Controller
                 ->addColumn('action',function($row){
                     $btn = '<a id="edit_data" class="btn btn-primary btn-sm editProduct" data-original-title="Edit" data-id="'.$row->id.'"><i class="fas fa-pen text-white"></i></a>';
                     $btn = $btn.'<a id="delete_data" class="btn btn-danger btn-sm deleteProduct" data-original-title="Delete" data-id="'.$row->id.'"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>';
+                    $btn = $btn.'<a id="meta_data" class="btn btn-info btn-sm" data-original-title="Tag Data" data-id="'.$row->id.'">SEO</a>';
 
                     return $btn;
                 })
@@ -190,6 +191,7 @@ class BlogController extends Controller
                         $btn = '<a class="btn btn-primary btn-sm editProduct change_status_data" data-original-title="Edit" data-val="0" data-id="'.$row->id.'">Disable</a>';
                     }
                     $btn = $btn.'<a id="delete_data" class="btn btn-danger btn-sm deleteProduct ml-1" data-original-title="Delete" data-id="'.$row->id.'"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>';
+                    $btn = $btn.'<a id="meta_data" class="btn btn-info btn-sm" data-original-title="Tag Data" data-id="'.$row->id.'">SEO</a>';
 
                     return $btn;
                 })
@@ -332,5 +334,35 @@ class BlogController extends Controller
         }else {
             return sendError ('Something went wrong...!!!', null);
         }
+    }
+
+    public function updateMeta(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id'	=> 'required',
+            'meta_title'	=> 'required|max:255',
+            'meta_description'	=> 'required|max:255',
+            'meta_keywords'	=> 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return sendError($validator->messages()->first(), null);
+        }
+
+        $blog = Blog::find($request->id);
+
+        if(!$blog){
+            return sendError ('Unable to find blog.', null);
+        }
+
+        $updateMeta = $blog->update([
+            'meta_title' => $request->meta_title,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
+        ]);
+
+        if($updateMeta){
+            return sendSuccess ('Data Updated Successfully', null);
+        }
+        return sendError ('Something went wrong...!!!', null);
     }
 }

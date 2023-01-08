@@ -22,11 +22,11 @@
                                                         latest news
                                                     </div>
                                                     <div class="card__post__title">
-                                                        <h2>
-                                                            <a href="{{ route ('blog.details', [$latest_blog['slug']]) }}">
+                                                        <h1>
+                                                            <a class="text-white text-decoration-none" href="{{ route ('blog.details', [$latest_blog['slug']]) }}">
                                                                 {{ $latest_blog['title'] }}
                                                             </a>
-                                                        </h2>
+                                                        </h1>
                                                     </div>
                                                     <div class="card__post__author-info">
                                                         <ul class="list-inline">

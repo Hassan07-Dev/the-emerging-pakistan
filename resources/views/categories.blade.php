@@ -8,7 +8,7 @@
                 <div class="col-md-8">
                     <!-- Category news -->
                     <div class="wrapper__list__article">
-                        <h4 class="border_section">All Categories</h4>
+                        <h1 class="border_section">All Categories</h1>
                         <div class="widget widget__category">
                             <ul class="list-unstyled">
                                 @isset($categories)

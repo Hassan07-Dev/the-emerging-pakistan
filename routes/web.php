@@ -23,6 +23,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/migrate/country', function(){
+    Artisan::call('migrate', ['--path' => '/database/migrations/2022_09_28_123424_create_countries_table.php']);
+});
+
+Route::get('/migrate/cities', function(){
+    Artisan::call('migrate', ['--path' => '/database/migrations/2022_09_28_124310_create_cities_table.php']);
+});
+
 Route::get('/migrate', function(){
     Artisan::call('migrate', ['--force' => true]);
 });
@@ -34,6 +42,7 @@ Route::get('/rollback', function(){
 Route::get('/adminseeder', function(){
     Artisan::call('db:seed');
 });
+
 Route::get('/categories/seeder', function(){
     Artisan::call('db:seed', ['--class' => 'CategorySeeder']);
 });

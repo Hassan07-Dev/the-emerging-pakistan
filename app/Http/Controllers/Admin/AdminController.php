@@ -67,7 +67,7 @@ class AdminController extends Controller
         if ($message == true){
             Session::flash('success', 'Password changed, Please login with new password.');
         }
-        return Redirect::to(route('admin'));
+        return Redirect::to(route('admin.login'));
     }
 
     /**
