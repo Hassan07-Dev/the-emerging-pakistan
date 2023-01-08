@@ -89,6 +89,9 @@ class UserController extends Controller
                         $btn = '<a id="block_data" class="btn btn-info btn-sm deleteProduct" data-toggle="tooltip" data-placement="right" title="Un-Block" data-original-title="Block" data-val="1" data-id="' . $row->id . '"><i class="fa-solid fa-ban"></i></a>';
                     }
                     $btn = $btn.'<a id="delete_data" class="btn btn-warning btn-sm deleteProduct ml-1" data-toggle="tooltip" data-placement="left" title="Delete" data-original-title="Delete" data-id="'.$row->id.'"><i class="far fa-trash-alt text-white" data-feather="delete"></i></a>';
+                    if($row->admin_view == 0){
+                        $btn = $btn.'<a id="view_data" class="btn btn-info btn-sm deleteProduct ml-1" data-toggle="tooltip" data-placement="left" title="View" data-original-title="View" data-id="'.$row->id.'"><i class="fa-solid fa-eye"></i></a>';
+                    }
                     return $btn;
                 })
                 ->rawColumns(['action'])->make(true);
@@ -156,6 +159,29 @@ class UserController extends Controller
         if ($catgeory->update(['status'=>$request->val])){
             $text = $request->val == '1'? 'un-blocked':'blocked';
             return sendSuccess ('User '.$text.' successfully...!!!', null);
+        }else {
+            return sendError ('Something went wrong...!!!', null);
+        }
+    }
+
+    public function viewUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id'	=> 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return sendError($validator->messages()->first(), null);
+        }
+
+        $catgeory = User::find($request->id);
+
+        if(!$catgeory){
+            return sendError ('Unable to find user.', null);
+        }
+
+        if ($catgeory->update(['admin_view'=>'1'])){
+            return sendSuccess ('User viewed successfully...!!!', null);
         }else {
             return sendError ('Something went wrong...!!!', null);
         }

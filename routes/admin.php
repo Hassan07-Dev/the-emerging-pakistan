@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TrendingNewsController;
@@ -115,8 +116,14 @@ Route::group(['middleware' => 'auth.admin'], function () {
 //            Route::post ('/users/create', 'create')->name ('users.create');
             Route::post ('/users/delete', 'destroy')->name ('users.delete');
             Route::post ('/usesr/block', 'block')->name ('users.block');
+            Route::post ('/usesr/view', 'viewUser')->name ('users.view.status');
             Route::post ('/users/show', 'show')->name ('users.show');
 //            Route::post ('/users/update', 'update')->name ('users.update');
+        });
+        Route::controller (PageController::class)->group (function (){
+            Route::get ('/', 'index')->name ('pages');
+            Route::post ('/pages/data', 'fetchPageData')->name ('pages.fetch');
+            Route::post ('/pages/update', 'pageDataUpdate')->name ('pages.update');
         });
 
     });

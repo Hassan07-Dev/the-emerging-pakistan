@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
+use App\Mail\BlogStatusMail;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogTag;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use DataTables;
 
@@ -323,6 +325,9 @@ class BlogController extends Controller
 
         if ($blog->update(['status'=>$request->val])){
             $text = $request->val == '1'? 'approve':'disable';
+            $viewData['full_name'] = Auth::user()->first_name."".Auth::user()->last_name;
+            $viewData['text'] = "Your Blog is ".$text." by the Emerging Pakistan Admin...!!!";
+            Mail::to(Auth::user()->email)->send(new BlogStatusMail($viewData));
             return sendSuccess ('Blog '.$text.' successfully...!!!', null);
         }else {
             return sendError ('Something went wrong...!!!', null);

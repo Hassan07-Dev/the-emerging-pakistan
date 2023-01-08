@@ -1,4 +1,4 @@
-@extends('layout.web-app', ['title'=>"Home"])
+@extends('layout.web-app')
 
 
 @section('content')

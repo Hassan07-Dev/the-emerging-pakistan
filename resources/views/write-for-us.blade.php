@@ -124,12 +124,12 @@
     <script>
         tinymce.init({
             selector: '#description_summernote',
-            plugins: 'image code',
+            plugins: 'image code link',
             toolbar: 'undo redo | link image | code | formatpainter casechange blocks | bold italic backcolor | ' +
                 'alignleft aligncenter alignright alignjustify | ' +
                 'bullist numlist checklist outdent indent | help',
             // enable title field in the Image dialog
-            image_title: true, 
+            image_title: true,
             // enable automatic uploads of images represented by blob or data URIs
             automatic_uploads: true,
             // add custom filepicker only to Image dialog
@@ -142,7 +142,7 @@
                 input.onchange = function() {
                 var file = this.files[0];
                 var reader = new FileReader();
-                
+
                 reader.onload = function () {
                     var id = 'blobid' + (new Date()).getTime();
                     var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
@@ -153,7 +153,7 @@
                 };
                 reader.readAsDataURL(file);
                 };
-                
+
                 input.click();
             }
         });

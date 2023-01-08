@@ -9,6 +9,7 @@ use App\Models\BlogTag;
 use App\Models\City;
 use App\Models\ClientTestimonials;
 use App\Models\Country;
+use App\Models\Page;
 use App\Models\Services;
 use App\Models\Tag;
 use Carbon\Carbon;

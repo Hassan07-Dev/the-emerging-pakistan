@@ -1,4 +1,4 @@
-<x-web-head :title="$title" />
+<x-web-head/>
 
 <!-- Pre_loader -->
 <x-web-preloader />

@@ -2,7 +2,9 @@
 
 namespace App\View\Components;
 
+use App\Models\Blog;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\View\Component;
 
 class AdminSidebar extends Component
@@ -25,6 +27,8 @@ class AdminSidebar extends Component
     public function render()
     {
         $commentCount = Comment::where('approval', '0')->count();
-        return view('components.admin-sidebar', compact('commentCount'));
+        $bogCount = Blog::whereNotNull('user_id')->where('status', '0')->count();
+        $userCount = User::where('admin_view', '0')->count();
+        return view('components.admin-sidebar', compact('commentCount', 'bogCount', 'userCount'));
     }
 }

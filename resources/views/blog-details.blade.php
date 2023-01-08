@@ -1,5 +1,8 @@
 @extends('layout.web-app', ['title'=>"Blog Details"])
 
+@section('head')
+    <title>test</title>
+@endsection
 
 @section('content')
     <section class="bg-white pb-60">

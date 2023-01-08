@@ -62,7 +62,7 @@
                     <a href="{{ route ('admin.users') }}" class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Users Lists
+                            Users Lists <span class="custom-style-count">{{ isset($userCount) ? $userCount:'0' }}</span>
                         </p>
                     </a>
                 </li>
@@ -70,7 +70,7 @@
                     <a href="{{ route ('admin.users.blogs') }}" class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Users Blogs
+                            Users Blogs <span class="custom-style-count">{{ isset($bogCount) ? $bogCount:'0' }}</span>
                         </p>
                     </a>
                 </li>
@@ -78,7 +78,7 @@
                     <a href="{{ route ('admin.users.comments.index') }}" class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Users Comments <span style="margin-left: 30px;color: red;font-weight: bolder;">{{ isset($commentCount) ? $commentCount:'0' }}</span>
+                            Users Comments <span class="custom-style-count">{{ isset($commentCount) ? $commentCount:'0' }}</span>
                         </p>
                     </a>
                 </li>
@@ -110,6 +110,14 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route ('admin.pages') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+                        <p>
+                            Pages Data
+                        </p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route ('admin.logout') }}" class="nav-link">

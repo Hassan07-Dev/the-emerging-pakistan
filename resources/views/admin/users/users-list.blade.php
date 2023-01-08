@@ -327,6 +327,31 @@
                     console.log(error);
                 });
             });
+
+            $(document).on('click', 'a#view_data', function (e) {
+                e.preventDefault();
+                var href = "{{ route ('admin.users.view.status') }}";
+                var id	 = $(this).data('id');
+                axios.post(href,{
+                        id: id,
+                    },
+                )
+                .then(function (response) {
+                    data = response.data;
+                    if(data.status == false){
+                        toastr.error(data.message);
+                    } else if(data.status == true){
+                        getdata();
+                        toastr.success(data.message);
+                        setTimeout(function() {location.reload();}, 1000);
+                    }
+                })
+                .catch(function (error) {
+                    if (error.response.data.status == false) {
+                        toastr.error(error.response.data.message);
+                    }
+                });
+            });
         });
     </script>
 @endsection

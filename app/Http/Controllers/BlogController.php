@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BlogStatusMail;
+use App\Mail\RegisterConfirmation;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogTag;
@@ -10,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -137,6 +140,9 @@ class BlogController extends Controller
                 }
                 $blogtags = new BlogTag();
                 if($blogtags->insert ($insert_data)){
+                    $viewData['full_name'] = Auth::user()->first_name."".Auth::user()->last_name;
+                    $viewData['text'] = "Your Blog is in Review will let you by email once it's done...!!!";
+                    Mail::to(Auth::user()->email)->send(new BlogStatusMail($viewData));
                     return sendSuccess ('Blog is send for review...!!!', null);
                 }
                 return sendError ('Tags are not saved...!!!', null);

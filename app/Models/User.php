@@ -35,7 +35,8 @@ class User extends Authenticatable
         'instagram_url',
         'twitter_url',
         'linkedin_url',
-        'status'
+        'status',
+        'admin_view'
     ];
 
     /**
